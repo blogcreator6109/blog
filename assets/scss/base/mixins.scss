@@ -1,0 +1,49 @@
+@mixin textClip($line: 2, $lineHeight: 1.3em) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: $lineHeight;
+  max-height: calc(#{$line} * #{$lineHeight});
+  -webkit-line-clamp: $line; /* 표시하고자 하는 라인 수 */
+  -webkit-box-orient: vertical;
+}
+
+@mixin scrollTheme(
+  $width: 6px,
+  $height: 4px,
+  $bg: #333,
+  $bar: rgb(143, 143, 143)
+) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $height;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $bg;
+    border-radius: 8px;
+    background-clip: padding-box;
+    // border: 3px solid transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: $bar;
+  }
+}
+
+@mixin skeleton {
+  position: relative;
+  background-color: #ededed;
+  overflow: hidden;
+  border-radius: 0.5rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    box-shadow: 0 0 40px 21px white;
+    animation: skeleton 2s infinite;
+  }
+}

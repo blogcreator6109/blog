@@ -1,0 +1,80 @@
+html {
+  scroll-behavior: smooth;
+  background-color: #222;
+  color: #222;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  word-break: keep-all;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+}
+
+input,
+textarea {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+:focus-visible {
+  outline: none;
+}
+
+.notion-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.2em 0.5em;
+  border-radius: 0.2em;
+  color: #aaa;
+  background-color: #373734;
+  filter: brightness(150%);
+  &.gray {
+    background-color: #5b595a;
+  }
+  &.brown {
+    background-color: #5f3b2e;
+  }
+  &.orange {
+    background-color: #874e19;
+  }
+  &.green {
+    background-color: #275a3a;
+  }
+  &.blue {
+    background-color: #244064;
+  }
+  &.purple {
+    background-color: #4b3063;
+  }
+  &.pink {
+    background-color: #67304b;
+  }
+  &.red {
+    background-color: #6d3731;
+  }
+}
