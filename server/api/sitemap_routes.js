@@ -21,7 +21,7 @@ export default defineEventHandler(async ({ req, res }) => {
 
     for (const r of res.results) {
       routes.push({
-        url: "/post/" + r.id,
+        url: "/post/" + getProp(r.properties?.number),
         lastmod: r.last_edited_time,
       });
     }

@@ -32,7 +32,7 @@ export default defineNuxtConfig({
   },
 
   sitemap: {
-    hostname: "https://vue-log.com",
+    hostname: "https://blogcreator.blog",
     cacheTime: 1,
     routes: dynamicRoutes,
   },
