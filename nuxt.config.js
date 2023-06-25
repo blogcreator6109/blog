@@ -52,7 +52,7 @@ export default defineNuxtConfig({
         },
         {
           name: "naver-site-verification",
-          content: "4d043e47da86db9a54e655b0c98b04051110c397",
+          content: "0a206cd8c8459d557904dab8b1a699db97b2aa45",
         },
         {
           hid: "og:locale",
