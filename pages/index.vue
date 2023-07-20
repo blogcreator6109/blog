@@ -30,7 +30,7 @@ useHead({
     {
       hid: "og:url",
       property: "og:url",
-      content: "https://blogcreator.dev",
+      content: "https://blogcreator.blog",
     },
     {
       hid: "description",
