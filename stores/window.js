@@ -4,32 +4,22 @@ const windowOpts = {
   Post: {
     w: 800,
     h: 800,
-    minW: 300,
-    minH: 400,
   },
   Twitter: {
     w: 400,
     h: 800,
-    minW: 300,
-    minH: 500,
   },
   GuestBook: {
     w: 400,
     h: 600,
-    minW: 300,
-    minH: 500,
   },
   BlogDiary: {
     w: 500,
     h: 800,
-    minW: 300,
-    minH: 500,
   },
   Book: {
     w: 767, // 모바일 모드가 되도록
     h: 800,
-    minW: 300,
-    minH: 400,
   },
 };
 export const windowNames = Object.keys(windowOpts);
@@ -241,8 +231,8 @@ export const useWindowStore = defineStore("window", {
       let t = this.topWindow.y;
       let b = this.topWindow.y + this.topWindow.h;
 
-      let minW = this.topWindow.minW;
-      let minH = this.topWindow.minH;
+      let minW = this.topWindow.minW || 300;
+      let minH = this.topWindow.minH || 500;
 
       if (pos === "resize-tl") {
         if (minW < r - nx) {

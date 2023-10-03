@@ -6,7 +6,7 @@
       @mouseenter="menuHover = true"
       @mouseleave="menuHover = false"
     >
-      <MenuBtn class="btn" :class="{ active: menuHover }" />
+      <WindowsCommonMenuBtns class="btn" :class="{ active: menuHover }" />
       <span>TOC</span>
     </button>
   </div>

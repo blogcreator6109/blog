@@ -6,7 +6,7 @@
       @mouseenter="menuHover = true"
       @mouseleave="menuHover = false"
     >
-      <MenuBtn class="btn" :class="{ active: menuHover }" />
+      <WindowsCommonMenuBtns class="btn" :class="{ active: menuHover }" />
       <span>Menu</span>
     </button>
     <button class="return-top" @click="$emit('returnToTop')">

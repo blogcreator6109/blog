@@ -1,7 +1,7 @@
 <template>
   <section class="window" ref="win">
     <div class="header" @dblclick.self="onDBClick">
-      <MacBtns
+      <WindowsCommonMacBtns
         class="btns"
         @close="close(name)"
         @minimize="minimize(name)"

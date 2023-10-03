@@ -11,7 +11,7 @@
       <!-- <MusicPlayer /> -->
       <HeaderDateTime class="time" />
       <div class="dock-btn">
-        <HamburgerBtn />
+        <HeaderHamburgerBtn />
       </div>
     </div>
   </header>
