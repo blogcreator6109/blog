@@ -1,8 +1,8 @@
 <template>
+  <Background />
   <Header />
   <Dock />
 
-  <Background />
   <NuxtPage />
 </template>
 

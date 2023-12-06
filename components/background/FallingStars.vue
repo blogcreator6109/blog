@@ -134,4 +134,10 @@ $shining-length: 30px;
     transform: rotate(45 + 5deg);
   }
 }
+
+@media (max-width: $breakpoint-tablet) {
+  .night {
+    top: $header-height-tablet;
+  }
+}
 </style>

@@ -81,15 +81,8 @@ const onMouseMove = (e) => {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/base/variable.scss";
 .window-list {
   position: relative;
-  height: calc(100% - $header-height);
-}
-
-@media (max-width: $breakpoint-tablet) {
-  .window-list {
-    height: calc(100% - $header-height-tablet);
-  }
+  height: 100%;
 }
 </style>

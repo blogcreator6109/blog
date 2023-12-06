@@ -4,7 +4,7 @@
       <NuxtLink to="/" class="logo" @click="closeAllWindows">
         <img src="/images/logo.svg" alt="logo" />
       </NuxtLink>
-      <span class="title">Blog Creator</span>
+      <button class="title" @click="toggleShowProfile">Blog Creator</button>
     </div>
 
     <div class="right">
@@ -19,13 +19,16 @@
 
 <script setup>
 import { useWindowStore } from "@/stores/window";
+import { useCommonStore } from "@/stores/common";
 const { closeAllWindows } = useWindowStore();
+const { toggleShowProfile } = useCommonStore();
 </script>
 
 <style lang="scss">
 @import "~/assets/scss/base/variable.scss";
 .main-header {
   display: flex;
+  position: relative;
   height: $header-height;
   background-color: #333;
   padding-left: 2.5rem;
@@ -33,6 +36,7 @@ const { closeAllWindows } = useWindowStore();
   color: white;
   font-size: 1.4rem;
   font-weight: bold;
+  z-index: 10000;
 
   .left {
     display: flex;
@@ -50,7 +54,12 @@ const { closeAllWindows } = useWindowStore();
     }
 
     .title {
+      padding: 0 1rem;
       margin-left: 1.5rem;
+      height: 100%;
+      &:hover {
+        background-color: #444;
+      }
     }
   }
 

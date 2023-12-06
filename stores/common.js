@@ -5,8 +5,12 @@ export const useCommonStore = defineStore("common", {
     dockInfo: {
       active: false,
     },
+    showProfile: false,
   }),
   actions: {
+    toggleShowProfile() {
+      this.showProfile = !this.showProfile;
+    },
     toggleDock() {
       this.dockInfo.active = !this.dockInfo.active;
     },
