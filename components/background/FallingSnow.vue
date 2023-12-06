@@ -13,8 +13,8 @@ const numSnow = 400;
 .snow {
   $total: 400;
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 0.5vw;
+  height: 0.5vw;
   background: white;
   border-radius: 50%;
   box-shadow: 0 0 3px 3px white;
