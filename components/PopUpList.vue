@@ -40,6 +40,7 @@ const data = [
   right: 0;
   padding: 1.5rem;
   width: 35rem;
+  z-index: -1;
 
   .item {
     width: 100%;
