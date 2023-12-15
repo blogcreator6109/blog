@@ -15,6 +15,7 @@
         {{ d.content }}
       </p>
       <span class="time">방금</span>
+      <!-- TODO: 닫기 버튼 추가 -->
     </a>
   </nav>
 </template>
@@ -27,7 +28,7 @@ const data = [
     imgSrc: vueImage,
     title: "블로거의 Vue 강의",
     content: "이번에 Vue.js 강의를 만들었어요. 한 번 보고 가세요~!",
-    href: "https://www.inflearn.com/course/%EC%89%BD%EA%B3%A0-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EB%B0%B0%EC%9A%B0%EB%8A%94-vue3/",
+    href: "https://inf.run/raB1f",
   },
 ];
 </script>
@@ -95,6 +96,7 @@ const data = [
 
 @media (max-width: $breakpoint-tablet) {
   .pop-up-list {
+    display: none;
     top: $header-height-tablet;
   }
 }
