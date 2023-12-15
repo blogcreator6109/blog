@@ -9,7 +9,7 @@
 
     <div class="right">
       <!-- <MusicPlayer /> -->
-      <HeaderDateTime class="time" />
+      <HeaderDateTime class="time" @click="togglePopup" />
       <div class="dock-btn">
         <HeaderHamburgerBtn />
       </div>
@@ -21,7 +21,7 @@
 import { useWindowStore } from "@/stores/window";
 import { useCommonStore } from "@/stores/common";
 const { closeAllWindows } = useWindowStore();
-const { toggleShowProfile } = useCommonStore();
+const { toggleShowProfile, togglePopup } = useCommonStore();
 </script>
 
 <style lang="scss">

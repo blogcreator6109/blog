@@ -20,7 +20,6 @@ const { sidebarActive } = storeToRefs(usePostStore());
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/transitions.scss";
 .sidebar {
   position: absolute;
   top: $window-header-height;

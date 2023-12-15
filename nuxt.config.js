@@ -33,6 +33,7 @@ export default defineNuxtConfig({
           @import "~/assets/scss/base/variables.scss";
           @import "~/assets/scss/base/keyframes.scss";
           @import "~/assets/scss/base/mixins.scss";
+          @import "~/assets/scss/base/transitions.scss";
           `,
         },
       },

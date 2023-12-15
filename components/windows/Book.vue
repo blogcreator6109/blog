@@ -132,8 +132,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/transitions.scss";
-
 .book {
   width: 100%;
   height: 100%;
