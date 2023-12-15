@@ -96,7 +96,6 @@ const data = [
 
 @media (max-width: $breakpoint-tablet) {
   .pop-up-list {
-    display: none;
     top: $header-height-tablet;
   }
 }
