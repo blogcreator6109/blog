@@ -1,5 +1,5 @@
 <template>
-  <Background />
+  <MainPage />
   <Header />
   <Dock />
 

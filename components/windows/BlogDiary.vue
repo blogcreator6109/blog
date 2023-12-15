@@ -65,7 +65,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/mixins.scss";
 .blog-diary {
   background-color: #222;
   height: fit-content;

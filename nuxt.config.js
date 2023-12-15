@@ -24,8 +24,20 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@funken-studio/sitemap-nuxt-3",
     "@nuxtjs/robots",
-    "@nuxt/image-edge",
   ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `
+          @import "~/assets/scss/base/variables.scss";
+          @import "~/assets/scss/base/keyframes.scss";
+          @import "~/assets/scss/base/mixins.scss";
+          `,
+        },
+      },
+    },
+  },
 
   image: {
     domains: ["s3.us-west-2.amazonaws.com"],

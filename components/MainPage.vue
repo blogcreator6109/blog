@@ -8,6 +8,8 @@
     </picture>
     <FallingSnow />
     <WindowList />
+    <PopUpList />
+
     <KeepAlive>
       <Profile v-if="showProfile" />
     </KeepAlive>
@@ -26,7 +28,6 @@ const { showProfile } = storeToRefs(useCommonStore());
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/base/variable.scss";
 .site-background {
   position: fixed;
   top: $header-height;

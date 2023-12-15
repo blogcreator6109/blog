@@ -133,8 +133,6 @@ watch(
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
-@import "@/assets/scss/base/mixins.scss";
 .list-wrapper {
   height: fit-content;
   padding: 7rem;

@@ -16,7 +16,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/base/mixins.scss";
 article {
   width: 100%;
   padding: 4rem 0;

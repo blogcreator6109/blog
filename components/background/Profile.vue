@@ -5,8 +5,6 @@
 <script setup></script>
 
 <style lang="scss" scoped>
-@import "~/assets/scss/base/variable.scss";
-
 @keyframes circle-trans {
   0% {
     width: 0;

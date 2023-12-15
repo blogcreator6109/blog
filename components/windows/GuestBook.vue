@@ -189,7 +189,6 @@ watch(refs, () => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/mixins.scss";
 .guestbook {
   background-color: #222;
   width: 100%;

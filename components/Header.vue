@@ -25,12 +25,12 @@ const { toggleShowProfile } = useCommonStore();
 </script>
 
 <style lang="scss">
-@import "~/assets/scss/base/variable.scss";
 .main-header {
   display: flex;
   position: relative;
   height: $header-height;
-  background-color: #333;
+  background-color: $primary-color;
+  opacity: 0.7;
   padding-left: 2.5rem;
   padding-right: 1.5rem;
   color: white;

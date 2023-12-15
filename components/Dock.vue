@@ -122,7 +122,6 @@ const selectDockItem = function (name) {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
 .dock {
   display: flex;
   flex-direction: column;

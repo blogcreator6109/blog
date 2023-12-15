@@ -133,8 +133,6 @@ watch(
 
 <style lang="scss" scoped>
 @import "@/assets/scss/base/transitions.scss";
-@import "@/assets/scss/base/variable.scss";
-@import "@/assets/scss/base/mixins.scss";
 
 .book {
   width: 100%;

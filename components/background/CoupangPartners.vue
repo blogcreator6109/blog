@@ -36,8 +36,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
-
 @keyframes slide {
   0% {
     transform: translateX(100%);

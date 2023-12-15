@@ -53,9 +53,6 @@ const returnToTop = function () {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
-@import "@/assets/scss/base/mixins.scss";
-
 .window {
   position: fixed;
   border: 1px solid #666;

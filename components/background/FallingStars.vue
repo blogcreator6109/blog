@@ -29,7 +29,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
 $shooting-time: 3000ms;
 $tail-length: 200px;
 $shining-length: 30px;

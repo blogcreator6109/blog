@@ -81,7 +81,6 @@ useFetch("/api/post/bookmark", {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/base/mixins.scss";
 $transition-time: 0.4s;
 .bookmark {
   display: flex;

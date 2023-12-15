@@ -22,7 +22,6 @@ const menuClick = function () {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/base/variable.scss";
 .book-header {
   flex: 1;
   display: flex;

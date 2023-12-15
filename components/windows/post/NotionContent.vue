@@ -101,10 +101,7 @@ const postStore = usePostStore();
 const { page } = storeToRefs(postStore);
 </script>
 
-<style lang="scss">
-@import "@/assets/scss/base/variable.scss";
-@import "@/assets/scss/base/mixins.scss";
-
+<style lang="scss" scoped>
 .content {
   display: flex;
   flex-direction: column;

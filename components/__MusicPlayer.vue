@@ -146,8 +146,6 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-@import "@/assets/scss/base/variable.scss";
-
 .music-player {
   display: flex;
   align-items: center;
