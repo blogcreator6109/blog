@@ -7,8 +7,9 @@
       <img src="/images/mobile-bg.webp" alt="Responsive image" />
     </picture>
     <FallingSnow />
-    <WindowList />
-    <PopUpList />
+    <WindowList>
+      <PopUpList />
+    </WindowList>
 
     <KeepAlive>
       <Profile v-if="showProfile" />

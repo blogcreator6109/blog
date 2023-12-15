@@ -6,6 +6,7 @@
     @mouseup="onMouseUp"
     @mousemove="onMouseMove($event)"
   >
+    <slot></slot>
     <!-- <CoupangPartners /> -->
     <Window
       v-for="(w, i) of store.loadedWindows"
