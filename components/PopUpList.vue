@@ -74,6 +74,7 @@ setTimeout(() => {
   .item {
     width: 100%;
     user-select: none;
+    position: relative;
 
     display: grid;
     grid-template-columns: 3rem 1fr 3.5rem;
