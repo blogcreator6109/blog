@@ -167,6 +167,9 @@ setTimeout(() => {
     .item {
       .close-btn {
         opacity: 1;
+        scale: 1.2;
+        top: 0.5rem;
+        left: 0.5rem;
       }
     }
   }

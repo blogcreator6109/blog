@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt deㅁv",
     "dev:host": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
