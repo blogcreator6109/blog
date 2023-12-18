@@ -10,6 +10,16 @@
   }
 }
 
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
 @keyframes skeleton {
   from {
     left: -50%;

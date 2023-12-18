@@ -6,18 +6,24 @@ export default defineNuxtConfig({
     // client-side
     public: {
       github: {
-        baseUrl: "https://github.com/",
-        clientId: process.env.GITHUB_CLIENT_ID,
-        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        BASE_URL: "https://github.com/",
+        CLIENT_ID: process.env.GITHUB_CLIENT_ID,
+        CLIENT_SECRET: process.env.GITHUB_CLIENT_SECRET,
+      },
+      firebase: {
+        API_KEY: process.env.FIREBASE_API_KEY,
+        AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+        DATABASE_URL: process.env.FIREBASE_DATABASE_RUL,
+        PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+        STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+        MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+        APP_ID: process.env.FIREBASE_APP_ID,
+        MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+        DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
       },
     },
   },
-  nitro: {
-    compressPublicAssets: true,
-    prerender: {
-      crawlLinks: true,
-    },
-  },
+
   css: ["~/assets/scss/index.scss"],
   modules: [
     // ...
@@ -40,9 +46,7 @@ export default defineNuxtConfig({
     },
   },
 
-  image: {
-    domains: ["s3.us-west-2.amazonaws.com"],
-  },
+  plugins: ["~/plugins/firebase.js"],
 
   sitemap: {
     hostname: "https://blogcreator.blog",
@@ -57,7 +61,7 @@ export default defineNuxtConfig({
     head: {
       charset: "UTF-8",
       viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
-      title: "Blog Creator's World",
+      title: "Blog Creator's blog",
       meta: [
         {
           name: "google-site-verification",

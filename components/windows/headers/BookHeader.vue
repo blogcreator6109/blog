@@ -1,67 +1,33 @@
 <template>
-  <div class="book-header">
-    <button
-      class="menu"
-      @click.stop="menuClick"
-      @mouseenter="menuHover = true"
-      @mouseleave="menuHover = false"
-    >
-      <WindowsCommonMenuBtns class="btn" :class="{ active: menuHover }" />
-      <span>TOC</span>
-    </button>
+  <div class="window-book-header">
+    <MenuBtn class="menu" @click.stop="menuClick">TOC</MenuBtn>
   </div>
 </template>
 
 <script setup>
+import MenuBtn from "@/components/windows/common/MenuBtn.vue";
 import { useBookStore } from "@/stores/book";
 const { toggleSidebar } = useBookStore();
-const menuHover = ref(false);
 const menuClick = function () {
   toggleSidebar();
 };
 </script>
 
-<style lang="scss" scoped>
-.book-header {
-  flex: 1;
+<style lang="scss">
+.window-book-header {
   display: flex;
   align-items: center;
-  color: white;
-  font-size: 1.4rem;
-  padding: 0 1rem;
-  pointer-events: none;
-  height: $window-header-height-tablet;
 
-  button {
-    cursor: pointer;
-    pointer-events: initial;
-  }
+  padding-left: $window-header-padding-left;
 
   .menu {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 40%;
-
-    .btn,
-    span {
-      display: flex;
-    }
-
-    span {
-      margin-left: 1.2rem;
-      transition: all 0.3s;
-    }
-
-    &:hover {
-      span {
-        transform: translateX(3px) scale(1.1);
-      }
-    }
-
-    &:active {
-      opacity: 0.7;
-    }
+    height: 2rem;
+  }
+}
+@media (max-width: $breakpoint-tablet) {
+  .window-book-header {
+    height: $window-header-height-tablet;
+    padding-left: 1rem;
   }
 }
 </style>

@@ -10,8 +10,10 @@ const windowOpts = {
     h: 800,
   },
   GuestBook: {
-    w: 400,
-    h: 600,
+    w: 450,
+    h: 650,
+    minW: 450,
+    minH: 650,
   },
   BlogDiary: {
     w: 500,

@@ -14,7 +14,6 @@
     <KeepAlive>
       <Profile v-if="showProfile" />
     </KeepAlive>
-    <!-- <MouseIcon /> -->
   </div>
 </template>
 

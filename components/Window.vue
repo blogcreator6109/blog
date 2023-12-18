@@ -1,16 +1,16 @@
 <template>
   <section class="window" ref="win">
     <div class="header" @dblclick.self="onDBClick">
+      <component :is="loadedHeaderComp" />
+
       <WindowsCommonMacBtns
         class="btns"
         @close="close(name)"
         @minimize="minimize(name)"
         @maximize="onDBClick"
       />
-
-      <component :is="loadedHeaderComp" @return-to-top="returnToTop" />
     </div>
-    <main class="body" ref="body">
+    <main class="body">
       <component :is="loadedComp" />
     </main>
   </section>
@@ -23,9 +23,14 @@ const loadedComp = defineAsyncComponent(() =>
   import(`@/components/windows/${name}.vue`)
 );
 
-const loadedHeaderComp = defineAsyncComponent(() =>
-  import(`@/components/windows/headers/${name}Header.vue`)
-);
+const loadedHeaderComp = defineAsyncComponent(async () => {
+  try {
+    return await import(`~/components/windows/headers/${name}Header.vue`);
+  } catch (error) {
+    console.error("WindowHeader", error);
+    return undefined;
+  }
+});
 
 const { close, maximize, minimize } = useWindowStore();
 
@@ -44,12 +49,6 @@ const onDBClick = function () {
     }, 300);
   }
 };
-
-const body = ref(null);
-
-const returnToTop = function () {
-  body.value.scrollTo(0, 0);
-};
 </script>
 
 <style lang="scss" scoped>
@@ -57,7 +56,7 @@ const returnToTop = function () {
   position: fixed;
   border: 1px solid #666;
   box-sizing: border-box;
-  box-shadow: 1px 3px 5px 0px rgba(0, 0, 0, 0.8);
+  box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.8);
   border-radius: 8px;
   overflow: hidden;
   user-select: none;
@@ -66,14 +65,15 @@ const returnToTop = function () {
     color: white;
     height: $window-header-height;
     background-color: #222;
-    backdrop-filter: blur(3px);
     display: flex;
     align-items: center;
-    padding: 0 1.5rem;
-    user-select: none;
+    position: relative;
 
     .btns {
-      padding-right: 1.5rem;
+      position: absolute;
+      left: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
     }
   }
 

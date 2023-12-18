@@ -92,7 +92,6 @@ setTimeout(() => {
     border: 1px solid rgb(120, 120, 120);
     box-shadow: 2px 2px 30px 0px rgba(30, 30, 30, 0.5);
     font-size: 1.3rem;
-    cursor: pointer;
 
     &:hover {
       .close-btn {

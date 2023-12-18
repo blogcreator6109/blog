@@ -22,7 +22,6 @@ button {
   align-items: center;
   height: 100%;
   aspect-ratio: 1;
-  cursor: pointer;
   transition: all $transition-time;
 
   div {

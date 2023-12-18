@@ -1,5 +1,5 @@
 <template>
-  <div class="profile"></div>
+  <div class="profile">프로필 공사중</div>
 </template>
 
 <script setup></script>
@@ -25,8 +25,10 @@
   border-radius: 50%;
   background-color: #222;
   animation: circle-trans 1s forwards;
-}
-
-@media (max-width: $breakpoint-tablet) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: white;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
-  <ul>
-    <li v-for="(name, link) in category" :key="link">
-      <NuxtLink :to="`/post/${link}`" @click="closeSidebar">
+  <ul class="post-sidebar">
+    <li class="post-sidebar-item" v-for="(name, link) in category" :key="link">
+      <NuxtLink :to="`/post/${link}`" @click="closeSidebar" class="link">
         <div class="icon">
           <img :src="`/images/apps/post/${name}.svg`" />
         </div>
@@ -20,11 +20,10 @@ import { usePostStore } from "@/stores/post";
 const { category, closeSidebar } = usePostStore();
 </script>
 
-<style lang="scss" scoped>
-ul {
-  margin-top: 3rem;
-  li {
-    a {
+<style lang="scss">
+.post-sidebar {
+  &-item {
+    .link {
       position: relative;
       display: flex;
       align-items: center;

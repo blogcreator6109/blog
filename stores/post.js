@@ -1,4 +1,6 @@
 import { defineStore } from "pinia";
+
+// TODO: Composition API로 바꾸기
 export const usePostStore = defineStore("post", {
   state: () => ({
     sidebarActive: false,
