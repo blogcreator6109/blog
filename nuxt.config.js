@@ -1,10 +1,9 @@
-import dynamicRoutes from "./src/sitemapRoute";
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   runtimeConfig: {
     // client-side
     public: {
+      siteUrl: "https://blogcreator.blog",
       github: {
         BASE_URL: "https://github.com/",
         CLIENT_ID: process.env.GITHUB_CLIENT_ID,
@@ -26,9 +25,8 @@ export default defineNuxtConfig({
   css: ["~/assets/scss/index.scss"],
   modules: [
     // ...
-    "@pinia/nuxt",
-    "@funken-studio/sitemap-nuxt-3",
-    "@nuxtjs/robots",
+    ["@pinia/nuxt", {}],
+    ["@nuxtjs/robots", {}],
   ],
   vite: {
     css: {
@@ -47,11 +45,6 @@ export default defineNuxtConfig({
 
   plugins: ["~/plugins/firebase.js"],
 
-  sitemap: {
-    hostname: "https://blogcreator.blog",
-    cacheTime: 1,
-    routes: dynamicRoutes,
-  },
   robots: {
     UserAgent: "*",
     Allow: "/",
@@ -88,6 +81,14 @@ export default defineNuxtConfig({
           crossorigin: "anonymous",
         },
       ],
+    },
+  },
+  sitemap: {
+    sitemaps: true,
+    urls: async () => {
+      console.log("TEST");
+
+      return [];
     },
   },
 });

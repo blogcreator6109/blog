@@ -1,12 +1,8 @@
-import { notion, getProp } from "./utils/notion";
+import { SitemapStream, streamToPromise } from "sitemap";
+import { notion, getProp } from "~/server/api/utils/notion";
 
-export default defineEventHandler(async ({ req, res }) => {
-  if (req.method !== "POST") {
-    res.statusCode = 405;
-    res.end();
-    return;
-  }
-
+export default defineEventHandler(async () => {
+  // Fetch all documents
   const routes = [];
 
   let startCursor;
@@ -38,5 +34,26 @@ export default defineEventHandler(async ({ req, res }) => {
     });
   }
 
-  return routes;
+  const sitemap = new SitemapStream({
+    hostname: "https://blogcreator.blog",
+  });
+
+  sitemap.write({
+    url: "/",
+    lastmod: new Date().toISOString(),
+    priority: 1,
+    changefreq: "daily",
+  });
+  for (const route of routes) {
+    sitemap.write({
+      url: route.url,
+      priority: 1,
+      lastmod: route.lastmod,
+      changefreq: "monthly",
+    });
+  }
+
+  sitemap.end();
+
+  return streamToPromise(sitemap);
 });

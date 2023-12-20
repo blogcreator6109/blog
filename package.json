@@ -13,7 +13,6 @@
     "sass": "^1.58.3"
   },
   "dependencies": {
-    "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@notionhq/client": "^2.2.3",
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.9",
@@ -24,6 +23,7 @@
     "octokit": "^2.0.14",
     "open-graph-scraper": "^5.2.2",
     "pinia": "^2.0.35",
+    "sitemap": "^7.1.1",
     "twitter-api-v2": "^1.14.1",
     "vue-gtag-next": "^1.14.0"
   }
