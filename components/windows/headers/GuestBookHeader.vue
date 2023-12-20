@@ -1,6 +1,6 @@
 <template>
   <div class="guest-book-header">
-    <div v-if="isAuthenticated" class="user" @click="logout">
+    <button v-if="isAuthenticated" class="user" @click="store.openLogout()">
       <span v-if="user?.displayName" class="name">{{ user.displayName }}</span>
       <span v-else class="name">{{ user.email }}</span>
 
@@ -10,7 +10,7 @@
       <div class="user-profile" v-else>
         <img :src="user?.photoURL" />
       </div>
-    </div>
+    </button>
   </div>
 </template>
 
@@ -19,18 +19,14 @@ import { useFBStore } from "~/stores/firebase.js";
 import { storeToRefs } from "pinia";
 
 const store = useFBStore();
-const { user, isAuthenticated } = storeToRefs(store);
-
-const logout = function () {
-  useFBLogout();
-};
+const { user, showLogin, isAuthenticated } = storeToRefs(store);
 </script>
 
 <style lang="scss">
 .guest-book-header {
-  height: 100%;
+  height: $header-height-tablet;
   width: 100%;
-  background: $primary-color;
+  background: #191919;
   display: flex;
   justify-content: flex-end;
   align-items: center;

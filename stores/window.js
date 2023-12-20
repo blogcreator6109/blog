@@ -10,9 +10,9 @@ const windowOpts = {
     h: 800,
   },
   GuestBook: {
-    w: 450,
+    w: 400,
     h: 650,
-    minW: 450,
+    minW: 400,
     minH: 650,
   },
   BlogDiary: {
@@ -30,6 +30,7 @@ export const useWindowStore = defineStore("window", {
   state: () => ({
     loadedWindows: [],
     headerHeight: 50,
+    // 가로 Dock과 상단 header가 한계선이 된다.
     // TODO: 62와 30 값을 변화에 맞춰 가져올 방법을 연구해야겠다.
     boundary: { x: 62, y: 30 },
     // TODO: window의 테두리에서 마우스 오차
@@ -56,6 +57,9 @@ export const useWindowStore = defineStore("window", {
         result.push(w.name);
       }
       return result;
+    },
+    currFocusedWindow() {
+      return this.loadedWindowNames[this.loadedWindowNum - 1];
     },
   },
   actions: {

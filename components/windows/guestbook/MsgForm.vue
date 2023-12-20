@@ -1,9 +1,198 @@
 <template>
-  <article class="textbox">
-    <input type="text" />
-  </article>
+  <div class="guestbook-msg-form">
+    <div class="textbox">
+      <textarea
+        :placeholder="placeholder"
+        :disabled="!store.isAuthenticated"
+        type="text"
+        maxlength="1000"
+        v-model="message"
+        @keyup.ctrl.enter="sendMessage"
+        @keyup.meta.enter="sendMessage"
+      />
+      <div class="sns-list" v-if="!store.isAuthenticated">
+        <button
+          class="sns-item"
+          :class="sns.name"
+          v-for="sns in snsList"
+          :key="sns.name"
+          @click="login(sns.name)"
+        >
+          <img :src="sns.src" :alt="sns.name" />
+        </button>
+      </div>
+      <div class="bottom">
+        <div
+          class="count"
+          :class="{
+            over: message.length >= 1000,
+            warn: message.length >= 700 && message.length < 1000,
+          }"
+        >
+          {{ message.length }} / 1000
+        </div>
+        <button
+          class="send"
+          @click="sendMessage"
+          :class="{ active: message.length > 0 }"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+import { ref as dbRef, push, set } from "firebase/database";
+import { useFBStore } from "~/stores/firebase";
+import googleImg from "~/assets/images/guestbook/google.svg";
+import twitterImg from "~/assets/images/guestbook/twitter.svg";
+import githubImg from "~/assets/images/guestbook/github.svg";
 
-<style lang="scss" scoped></style>
+const { $db } = useNuxtApp();
+const store = useFBStore();
+const msgRef = dbRef($db, "guestbook");
+
+const placeholder = computed(() => {
+  return store.isAuthenticated
+    ? "메시지를 남겨주세요."
+    : "로그인 후 메시지를 남길 수 있습니다.";
+});
+
+const snsList = [
+  { name: "google", src: googleImg },
+  { name: "twitter", src: twitterImg },
+  { name: "github", src: githubImg },
+];
+
+const login = async (type) => {
+  await useSnsLogin(type);
+};
+
+const message = ref("");
+
+const sendMessage = () => {
+  if (message.value) {
+    set(push(msgRef), {
+      name: store.user?.displayName || store.email,
+      text: message.value,
+      photoURL: store.user?.photoURL,
+      time: Date.now(),
+    });
+  }
+  message.value = "";
+};
+</script>
+
+<style lang="scss" scoped>
+.guestbook-msg-form {
+  border-top: 1px solid #555;
+  padding: 1.5rem;
+  background-color: #262626;
+  display: flex;
+
+  .textbox {
+    position: relative;
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .sns-list {
+      position: absolute;
+      top: 3rem;
+
+      display: flex;
+      align-items: center;
+      .sns-item {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+        margin-right: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.5;
+        transition: opacity 0.3s ease-in-out;
+
+        &:hover {
+          opacity: 1;
+        }
+
+        &.twitter {
+          background-color: #1da1f2;
+        }
+        &.github {
+          background-color: #111;
+          img {
+            height: 90%;
+          }
+        }
+        &.google {
+          background-color: white;
+        }
+        img {
+          height: 60%;
+          aspect-ratio: 1;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    textarea {
+      flex: 1;
+      color: #ccc;
+      font-size: 1.6rem;
+      width: 100%;
+      background-color: transparent;
+      resize: none;
+    }
+
+    .bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      .count {
+        color: #ccc;
+        font-size: 1.2em;
+
+        &.over {
+          color: #ff0000;
+        }
+
+        &.warn {
+          color: #ff8c00;
+        }
+      }
+      .send {
+        padding: 1rem 2rem;
+        background-color: #666;
+        border-radius: 0.6rem;
+        color: #999;
+        font-size: 1.4rem;
+
+        &.active {
+          background-color: $third-color;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .guestbook-msg-form {
+    .textbox {
+      .sns-list {
+        .sns-item {
+          width: 4.5rem;
+          height: 4.5rem;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+</style>

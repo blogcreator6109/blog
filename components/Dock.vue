@@ -141,6 +141,7 @@ const selectDockItem = function (name) {
     display: flex;
     align-items: center;
     margin-bottom: 0.7rem;
+    cursor: initial;
     &:last-child {
       margin-bottom: 0;
     }

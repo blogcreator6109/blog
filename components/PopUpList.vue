@@ -41,7 +41,7 @@ const { triggerPopUp } = storeToRefs(useCommonStore());
 
 watch(triggerPopUp, () => {
   for (const d of data.value) {
-    d.isActive = true;
+    d.isActive = !d.isActive;
   }
 });
 

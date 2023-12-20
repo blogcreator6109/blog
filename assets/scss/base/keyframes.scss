@@ -1,6 +1,6 @@
-@keyframes fade-slide {
+@keyframes fade-slide-down {
   from {
-    transform: translateY(-70px);
+    transform: translateY(-10%);
     opacity: 0;
   }
 
@@ -12,7 +12,7 @@
 
 @keyframes slide-down {
   from {
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
 
   to {

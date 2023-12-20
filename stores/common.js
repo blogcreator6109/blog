@@ -7,8 +7,12 @@ export const useCommonStore = defineStore("common", {
     },
     showProfile: false,
     triggerPopUp: false, // 값이 바뀔 때마다 Popup의 모든 창이 나타난다.
+    isMainMenuOpened: false,
   }),
   actions: {
+    toggleMainMenu() {
+      this.isMainMenuOpened = !this.isMainMenuOpened;
+    },
     togglePopup() {
       this.triggerPopUp = !this.triggerPopUp;
     },
@@ -23,6 +27,9 @@ export const useCommonStore = defineStore("common", {
     },
     openDock() {
       this.dockInfo.active = true;
+    },
+    closeMainMenu() {
+      this.isMainMenuOpened = false;
     },
   },
 });

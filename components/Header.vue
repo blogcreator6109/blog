@@ -1,15 +1,24 @@
 <template>
   <header class="main-header">
     <div class="left">
-      <NuxtLink to="/" class="logo" @click="closeAllWindows">
-        <img src="/images/logo.svg" alt="logo" />
-      </NuxtLink>
-      <button class="title" @click="toggleShowProfile">Blog Creator</button>
+      <div class="main-menu">
+        <button
+          class="logo"
+          :class="{ active: commonStore.isMainMenuOpened }"
+          @click.stop="commonStore.toggleMainMenu"
+        >
+          <img src="/images/logo.svg" alt="logo" />
+        </button>
+        <HeaderSubmenu v-if="commonStore.isMainMenuOpened" />
+      </div>
+      <button class="title">
+        {{ windowStore.currFocusedWindow || "Blog Creator" }}
+      </button>
     </div>
 
     <div class="right">
       <!-- <MusicPlayer /> -->
-      <HeaderDateTime class="time" @click="togglePopup" />
+      <HeaderDateTime class="time" @click="commonStore.togglePopup" />
       <div class="dock-btn">
         <HeaderHamburgerBtn />
       </div>
@@ -20,8 +29,14 @@
 <script setup>
 import { useWindowStore } from "@/stores/window";
 import { useCommonStore } from "@/stores/common";
-const { closeAllWindows } = useWindowStore();
-const { toggleShowProfile, togglePopup } = useCommonStore();
+const windowStore = useWindowStore();
+const commonStore = useCommonStore();
+
+onMounted(() => {
+  window.addEventListener("click", () => {
+    commonStore.closeMainMenu();
+  });
+});
 </script>
 
 <style lang="scss">
@@ -29,41 +44,52 @@ const { toggleShowProfile, togglePopup } = useCommonStore();
   display: flex;
   position: relative;
   height: $header-height;
-  background-color: $primary-color;
-  opacity: 0.7;
+  background-color: rgba($primary-color, 0.8);
+  backdrop-filter: blur(10px);
   padding-left: 2.5rem;
   padding-right: 1.5rem;
-  color: white;
+  color: #ddd;
   font-size: 1.4rem;
-  font-weight: bold;
   z-index: 10000;
 
   .left {
     display: flex;
     align-items: center;
     height: 100%;
-    .logo {
+    .main-menu {
+      position: relative;
       height: 100%;
       display: flex;
       align-items: center;
-      img {
-        height: 50%;
-        object-fit: contain;
-        filter: invert(1);
+
+      .logo {
+        height: 100%;
+        padding: 0 1.5rem;
+        border-radius: 0.5rem;
+        &.active {
+          background-color: #555;
+        }
+        img {
+          height: 50%;
+          object-fit: contain;
+          filter: invert(1);
+        }
       }
     }
 
     .title {
       padding: 0 1rem;
-      margin-left: 1.5rem;
+      margin-left: -0.5rem;
       height: 100%;
-      &:hover {
-        background-color: #444;
+      font-weight: bold;
+      &:active {
+        background-color: #555;
       }
     }
   }
 
   .right {
+    font-weight: bold;
     display: flex;
     align-items: center;
     margin-left: auto;
@@ -76,6 +102,12 @@ const { toggleShowProfile, togglePopup } = useCommonStore();
     height: $header-height-tablet;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
+
+    .left {
+      .title {
+        font-size: 1.6rem;
+      }
+    }
 
     .right {
       .time {

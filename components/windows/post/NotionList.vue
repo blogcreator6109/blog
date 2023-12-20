@@ -173,7 +173,7 @@ watch(
       overflow: hidden;
       box-shadow: 2px 2px 2px lightgray;
       transition: all 0.3s;
-      animation: fade-slide 0.7s;
+      animation: fade-slide-down 0.7s;
       animation-fill-mode: backwards;
 
       @for $i from 1 to 7 {
