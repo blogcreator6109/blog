@@ -1,20 +1,49 @@
 <template>
   <div class="guestbook">
-    <MsgList class="msg-list" />
+    <MsgList class="msg-list" @remove="openRemoveModal" />
     <MsgForm class="msg-form" />
-    <LogoutModal v-show="showLogout" />
+    <Modal v-show="showLogout" @cancel="store.closeLogout" @confirm="logout">
+      <template v-slot:text> 로그아웃 하시겠습니까? </template>
+    </Modal>
+    <Modal v-show="showRemove" @cancel="store.closeRemove" @confirm="removeMsg">
+      <template v-slot:text> 정말로 지우시겠습니까? </template>
+    </Modal>
   </div>
 </template>
 
 <script setup>
 import MsgForm from "./guestbook/MsgForm.vue";
 import MsgList from "./guestbook/MsgList.vue";
-import LogoutModal from "./guestbook/LogoutModal.vue";
+import Modal from "./guestbook/Modal.vue";
 
 import { useFBStore } from "~/stores/firebase";
 import { storeToRefs } from "pinia";
+import { remove, ref as dbRef } from "firebase/database";
 
-const { showLogout } = storeToRefs(useFBStore());
+const store = useFBStore();
+const { showLogout, showRemove, isAuthenticated } = storeToRefs(store);
+const { $db } = useNuxtApp();
+
+let removeId = null;
+
+const openRemoveModal = (id) => {
+  if (isAuthenticated.value) {
+    removeId = id;
+    store.openRemove();
+  }
+};
+
+const removeMsg = () => {
+  if (removeId) {
+    store.closeRemove();
+    const messagesRef = dbRef($db, "guestbook/" + removeId);
+    remove(messagesRef);
+  }
+};
+const logout = () => {
+  useFBLogout();
+  store.closeLogout();
+};
 
 const router = useRouter();
 router.push("/guestbook");

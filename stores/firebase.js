@@ -4,6 +4,7 @@ export const useFBStore = defineStore("firebase", {
     user: null,
     showLogin: false,
     showLogout: false,
+    showRemove: false,
   }),
   getters: {
     isAuthenticated(state) {
@@ -25,6 +26,12 @@ export const useFBStore = defineStore("firebase", {
     },
     closeLogout() {
       this.showLogout = false;
+    },
+    openRemove() {
+      this.showRemove = true;
+    },
+    closeRemove() {
+      this.showRemove = false;
     },
   },
 });

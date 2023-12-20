@@ -76,6 +76,7 @@ const message = ref("");
 const sendMessage = () => {
   if (message.value) {
     set(push(msgRef), {
+      userId: store.user?.uid,
       name: store.user?.displayName || store.email,
       text: message.value,
       photoURL: store.user?.photoURL,

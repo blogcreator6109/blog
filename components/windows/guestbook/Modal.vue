@@ -3,23 +3,14 @@
     <div class="overlay"></div>
     <div class="modal">
       <img class="warn" src="@/assets/images/guestbook/warn.svg" alt="warn" />
-      <p class="text">로그아웃 하시겠습니까?</p>
+      <p class="text"><slot name="text"></slot></p>
       <div class="btns">
-        <button class="cancel" @click="store.closeLogout">취소</button>
-        <button class="confirm" @click="logout">확인</button>
+        <button class="cancel" @click="$emit('cancel')">취소</button>
+        <button class="confirm" @click="$emit('confirm')">확인</button>
       </div>
     </div>
   </div>
 </template>
-
-<script setup>
-import { useFBStore } from "~/stores/firebase.js";
-const store = useFBStore();
-const logout = () => {
-  useFBLogout();
-  store.closeLogout();
-};
-</script>
 
 <style lang="scss">
 .logout-modal {

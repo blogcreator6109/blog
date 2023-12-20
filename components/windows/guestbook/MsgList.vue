@@ -22,10 +22,17 @@
         <div class="text">
           <p class="name">{{ msg.name }}</p>
 
-          <p class="content">
-            <span class="message">{{ msg.text }}</span>
-            <span class="time">{{ msg.time }}</span>
-          </p>
+          <div class="content">
+            <div class="message">{{ msg.text }}</div>
+            <button
+              class="remove"
+              v-show="store.isAuthenticated"
+              @click="$emit('remove', msg.id)"
+            >
+              <span class="material-symbols-outlined"> delete </span>
+            </button>
+            <div class="time">{{ msg.time }}</div>
+          </div>
         </div>
       </article>
     </section>
@@ -60,7 +67,9 @@ const makeList = () => {
       const lastIdx = result.length - 1;
       const lastUserIdx = result[lastIdx]?.userMsgs.length - 1;
 
-      const isSameUser = result[lastIdx]?.userMsgs[lastUserIdx]?.name == d.name;
+      const isNewDate = result.length == 0 || result[lastIdx]?.date != date;
+      const isSameUser =
+        !isNewDate && result[lastIdx]?.userMsgs[lastUserIdx]?.name == d.name;
       const nextTime = dateToStr(data[keysSorted[i + 1]]?.time, "HH:mm A");
       const currTime = dateToStr(d.time, "HH:mm A");
       let isSameTime = false;
@@ -78,14 +87,13 @@ const makeList = () => {
       };
 
       // 처음이거나 마지막 날짜가 다르면 새로운 날짜 추가
-      if (result.length == 0 || result[lastIdx]?.date != date) {
+      if (isNewDate) {
         result.push({ date, userMsgs: [newData] });
         // 마지막 날짜가 같으면 같은 날짜에 추가
       } else {
         result[lastIdx].userMsgs.push(newData);
       }
     }
-    console.log(result);
 
     messages.value = result;
   }
@@ -108,125 +116,167 @@ onValue(messagesRef, (snapshot) => {
   padding: 2rem;
   box-sizing: border-box;
   background-color: #191919;
+  border-top: 1px solid #333;
 
   @include scrollTheme;
 
-  .date {
-    [class*="material-symbols"] {
-      font-size: 1.2em;
-      margin-right: 0.4rem;
+  .msgs-of-date {
+    margin-top: 2rem;
+    &:first-child {
+      margin-top: 0;
     }
-    color: #ccc;
-    font-size: 1.3rem;
-    background-color: #3a3a3a;
-    width: fit-content;
-    margin: 0 auto;
-    padding: 0.6rem 1.3rem;
-    line-height: 0;
-    display: flex;
-    align-items: center;
+    .date {
+      [class*="material-symbols"] {
+        font-size: 1.2em;
+        margin-right: 0.4rem;
+      }
+      color: #ccc;
+      font-size: 1.3rem;
+      background-color: #3a3a3a;
+      width: fit-content;
+      margin: 0 auto;
+      padding: 0.6rem 1.3rem;
+      line-height: 0;
+      display: flex;
+      align-items: center;
 
-    margin-bottom: 1.5rem;
-    border-radius: 4rem;
-  }
+      border-radius: 4rem;
+    }
 
-  .msg {
-    display: flex;
-    column-gap: 1rem;
-    margin-bottom: 0.8rem;
+    .msg {
+      display: flex;
+      column-gap: 1rem;
+      margin-bottom: 0.8rem;
 
-    &.me {
-      flex-direction: row-reverse;
+      &.me {
+        flex-direction: row-reverse;
 
-      .text {
-        align-items: flex-end;
+        .text {
+          align-items: flex-end;
 
-        .content {
-          flex-direction: row-reverse;
+          .content {
+            flex-direction: row-reverse;
 
-          .message {
-            color: #efefef;
-            background: linear-gradient(to right, #689bff, #266fff);
+            .message {
+              color: #efefef;
+              background: linear-gradient(to right, #689bff, #266fff);
+            }
+          }
+          &:hover {
+            .remove {
+              display: flex;
+            }
           }
         }
       }
-    }
 
-    &.diff-user {
-      margin-top: 2rem;
-      .profile {
-        opacity: 1;
-        height: 4rem;
-      }
-      .text {
+      &.diff-user {
         margin-top: 1rem;
-        .name {
-          display: block;
+        .profile {
+          opacity: 1;
+          height: 4rem;
         }
-      }
-    }
-
-    &.diff-time {
-      .text {
-        .content {
-          .time {
+        .text {
+          margin-top: 1rem;
+          .name {
             display: block;
           }
         }
       }
-    }
 
-    .profile {
-      width: 4rem;
-      overflow: hidden;
-      background-color: white;
-      margin-top: 0.5rem;
-      border-radius: 44%;
-      opacity: 0;
-      height: 0;
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-    }
-
-    .text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      flex: 1;
-      font-size: 1.2rem;
-
-      .name {
-        display: none;
-        margin-bottom: 1rem;
-        font-weight: bold;
-        color: #999;
-      }
-
-      .content {
-        display: flex;
-        align-items: flex-end;
-
-        .message {
-          min-height: 2rem;
-          box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
-          background-color: #eee;
-          border-radius: 0.3rem;
-          padding: 0.5rem 1rem;
-          width: fit-content;
-          font-size: 1.2em;
-          line-height: normal;
-          line-break: anywhere;
-          user-select: text;
+      &.diff-time {
+        .text {
+          .content {
+            .time {
+              display: block;
+            }
+          }
         }
-        .time {
-          margin: 0 0.5rem;
-          font-size: 0.8em;
-          color: gray;
-          white-space: nowrap;
+      }
+
+      .profile {
+        width: 4rem;
+        overflow: hidden;
+        background-color: white;
+        margin-top: 0.5rem;
+        border-radius: 44%;
+        opacity: 0;
+        height: 0;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      .text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        flex: 1;
+        font-size: 1.2rem;
+
+        .name {
           display: none;
+          margin-bottom: 1rem;
+          font-weight: bold;
+          color: #999;
+        }
+
+        .content {
+          display: flex;
+          align-items: flex-end;
+
+          .message {
+            min-height: 2rem;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            background-color: #eee;
+            border-radius: 0.3rem;
+            padding: 0.5rem 1rem;
+            width: fit-content;
+            font-size: 1.2em;
+            line-height: normal;
+            line-break: anywhere;
+            user-select: text;
+            position: relative;
+          }
+          .remove {
+            display: none;
+            align-self: center;
+            margin: 0 1rem;
+            border-radius: 50%;
+            background-color: #333;
+            align-items: center;
+            color: #999;
+
+            span {
+              font-size: 1.2em;
+              margin: 0.5rem;
+            }
+          }
+          .time {
+            margin: 0 0.5rem;
+            font-size: 0.8em;
+            color: gray;
+            white-space: nowrap;
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $breakpoint-tablet) {
+  .guestbook-msg-list {
+    .msgs-of-date {
+      .msg.me {
+        .text {
+          .content {
+            .remove {
+              display: flex;
+            }
+          }
         }
       }
     }
