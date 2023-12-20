@@ -81,6 +81,13 @@ export default defineNuxtConfig({
           content: "summary_large_image",
         },
       ],
+      script: [
+        {
+          src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4009482052735536",
+          async: true,
+          crossorigin: "anonymous",
+        },
+      ],
     },
   },
 });
