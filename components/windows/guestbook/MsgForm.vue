@@ -34,9 +34,11 @@
         <button
           class="send"
           @click="sendMessage"
-          :class="{ active: message.length > 0 }"
+          :class="{ active: message.length > 0 && !isCounting }"
+          :disabled="isCounting"
         >
-          Send
+          <Counter :count="5" v-if="isCounting" @done="isCounting = false" />
+          <span v-else>Send</span>
         </button>
       </div>
     </div>
@@ -72,6 +74,7 @@ const login = async (type) => {
 };
 
 const message = ref("");
+const isCounting = ref(false);
 
 const sendMessage = () => {
   if (message.value) {
@@ -82,8 +85,11 @@ const sendMessage = () => {
       photoURL: store.user?.photoURL,
       time: Date.now(),
     });
+    message.value = "";
+    if (!isCounting.value) {
+      isCounting.value = true;
+    }
   }
-  message.value = "";
 };
 </script>
 
@@ -168,15 +174,18 @@ const sendMessage = () => {
         }
       }
       .send {
-        padding: 1rem 2rem;
         background-color: #666;
+        width: 7.3rem;
+        height: 3.5rem;
         border-radius: 0.6rem;
         color: #999;
         font-size: 1.4rem;
+        cursor: initial;
 
         &.active {
           background-color: $third-color;
           color: white;
+          cursor: pointer;
         }
       }
     }
