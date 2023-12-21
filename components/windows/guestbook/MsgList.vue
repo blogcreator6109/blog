@@ -107,6 +107,14 @@ onValue(messagesRef, (snapshot) => {
   data = snapshot.val();
   makeList();
 });
+
+onUpdated(() => {
+  // updated 될 때마다 스크롤 아래로 내려주기
+  const el = document.querySelector(".guestbook-msg-list");
+  if (el) {
+    el.scrollTop = el.scrollHeight;
+  }
+});
 </script>
 
 <style lang="scss">
