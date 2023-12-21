@@ -46,7 +46,7 @@ onMounted(() => {
   height: $header-height;
   background-color: rgba($primary-color, 0.8);
   backdrop-filter: blur(10px);
-  padding-left: 2.5rem;
+  padding-left: 0.5rem;
   padding-right: 1.5rem;
   color: #ddd;
   font-size: 1.4rem;
@@ -100,7 +100,6 @@ onMounted(() => {
 @media (max-width: $breakpoint-tablet) {
   .main-header {
     height: $header-height-tablet;
-    padding-left: 1.5rem;
     padding-right: 1.5rem;
 
     .left {
