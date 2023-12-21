@@ -82,7 +82,7 @@ const makeList = () => {
         ...d,
         time: currTime,
         isSameUser,
-        isMe: store.user?.displayName == d.name,
+        isMe: store.user?.uid == d.userId,
         isSameTime, // 다음 값과 현재 값의 time이 같은지 여부
       };
 
@@ -121,6 +121,8 @@ onValue(messagesRef, (snapshot) => {
   @include scrollTheme;
 
   .msgs-of-date {
+    display: flex;
+    flex-direction: column;
     margin-top: 2rem;
     &:first-child {
       margin-top: 0;
@@ -148,28 +150,6 @@ onValue(messagesRef, (snapshot) => {
       column-gap: 1rem;
       margin-bottom: 0.8rem;
 
-      &.me {
-        flex-direction: row-reverse;
-
-        .text {
-          align-items: flex-end;
-
-          .content {
-            flex-direction: row-reverse;
-
-            .message {
-              color: #efefef;
-              background: linear-gradient(to right, #689bff, #266fff);
-            }
-          }
-          &:hover {
-            .remove {
-              display: flex;
-            }
-          }
-        }
-      }
-
       &.diff-user {
         margin-top: 1rem;
         .profile {
@@ -177,7 +157,6 @@ onValue(messagesRef, (snapshot) => {
           height: 4rem;
         }
         .text {
-          margin-top: 1rem;
           .name {
             display: block;
           }
@@ -194,11 +173,38 @@ onValue(messagesRef, (snapshot) => {
         }
       }
 
+      &.me {
+        flex-direction: row-reverse;
+        .profile {
+          display: none;
+        }
+
+        .text {
+          align-items: flex-end;
+
+          .content {
+            flex-direction: row-reverse;
+
+            .message {
+              color: #efefef;
+              background: linear-gradient(to right, #689bff, #266fff);
+            }
+          }
+          .name {
+            display: none;
+          }
+          &:hover {
+            .remove {
+              display: flex;
+            }
+          }
+        }
+      }
+
       .profile {
         width: 4rem;
         overflow: hidden;
         background-color: white;
-        margin-top: 0.5rem;
         border-radius: 44%;
         opacity: 0;
         height: 0;

@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article class="post-article">
     <Block v-for="b of blocks" :key="b.id" :block="b" />
   </article>
 </template>
@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-article {
+.post-article {
   width: 100%;
   padding: 4rem 0;
   font-size: 1.6rem;
