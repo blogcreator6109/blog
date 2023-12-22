@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // client-side
     public: {
+      gtagId: "G-WWRFZC0F1B",
       siteUrl: "https://blogcreator.blog",
       github: {
         BASE_URL: "https://github.com/",
@@ -27,11 +28,8 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxtjs/robots",
-    "nuxt-gtag",
   ],
-  gtag: {
-    id: "G-WWRFZC0F1B",
-  },
+
   vite: {
     css: {
       preprocessorOptions: {

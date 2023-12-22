@@ -11,7 +11,6 @@
   },
   "devDependencies": {
     "nuxt": "^3.4.2",
-    "nuxt-gtag": "^1.1.2",
     "sass": "^1.58.3"
   },
   "dependencies": {
