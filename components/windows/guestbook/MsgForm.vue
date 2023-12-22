@@ -7,8 +7,7 @@
         type="text"
         maxlength="1000"
         v-model="message"
-        @keyup.ctrl.enter="sendMessage"
-        @keyup.meta.enter="sendMessage"
+        @keyup.enter.exact="sendMessage"
       />
       <div class="sns-list" v-if="!store.isAuthenticated">
         <button
