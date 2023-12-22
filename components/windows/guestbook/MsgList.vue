@@ -72,6 +72,7 @@ const makeList = () => {
         !isNewDate && result[lastIdx]?.userMsgs[lastUserIdx]?.name == d.name;
       const nextTime = dateToStr(data[keysSorted[i + 1]]?.time, "HH:mm A");
       const currTime = dateToStr(d.time, "HH:mm A");
+
       let isSameTime = false;
       if (i < keysSorted.length - 1) {
         isSameTime = nextTime == currTime;
@@ -273,7 +274,6 @@ onUpdated(() => {
             font-size: 0.8em;
             color: gray;
             white-space: nowrap;
-            display: none;
           }
         }
       }
