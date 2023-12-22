@@ -6,7 +6,8 @@
     "dev:host": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "ndev": "netlify dev --functionsPort 9999"
   },
   "devDependencies": {
     "nuxt": "^3.4.2",
@@ -18,13 +19,13 @@
     "@pinia/nuxt": "^0.4.9",
     "dayjs": "^1.11.7",
     "firebase": "^10.7.1",
+    "firebase-admin": "^12.0.0",
     "highlight.js": "^11.7.0",
     "lodash": "^4.17.21",
     "octokit": "^2.0.14",
     "open-graph-scraper": "^5.2.2",
     "pinia": "^2.0.35",
     "sitemap": "^7.1.1",
-    "twitter-api-v2": "^1.14.1",
-    "vue-gtag-next": "^1.14.0"
+    "twitter-api-v2": "^1.14.1"
   }
 }

@@ -1,2 +1,3 @@
 [build]
   functions = "functions"
+  port = 8888 
