@@ -24,7 +24,6 @@ onBeforeUnmount(() => {
 function startCountdown() {
   if (timer) clearInterval(timer);
   timer = setInterval(() => {
-    console.log(counter.value);
     if (--counter.value < 0) {
       clearInterval(timer);
       emit("done");

@@ -74,9 +74,10 @@ const login = async (type) => {
 
 const message = ref("");
 const isCounting = ref(false);
-const isSending = false;
+let isSending = false;
 
 const sendMessage = () => {
+  console.log(isSending);
   if (message.value && !isSending) {
     isSending = true;
     set(push(msgRef), {
