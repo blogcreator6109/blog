@@ -4,16 +4,14 @@ import { uploadFile } from "./firebase/storage.mjs";
 import { saveFirestore } from "./firebase/firestore.mjs";
 
 exports.handler = async function (event, context) {
+  console.log("run");
   const tableData = await getTableData();
 
   await saveFirestore(tableData);
 
   return {
     statusCode: 200,
-    body: JSON.stringify({}),
-    headers: {
-      "Content-Type": "application/json",
-    },
+    body: JSON.stringify({ message: "백그라운드 작업 완료" }),
   };
 
   // // Firestore 데이터베이스 초기화
