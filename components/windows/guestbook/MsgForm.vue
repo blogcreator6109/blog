@@ -74,12 +74,11 @@ const login = async (type) => {
 
 const message = ref("");
 const isCounting = ref(false);
-let isSending = false;
 
 const sendMessage = () => {
-  console.log(isSending);
-  if (message.value && !isSending) {
-    isSending = true;
+  if (message.value.trim() && !isCounting.value) {
+    isCounting.value = true;
+
     set(push(msgRef), {
       userId: store.user?.uid,
       name: store.user?.displayName || store.email,
@@ -88,10 +87,6 @@ const sendMessage = () => {
       time: Date.now(),
     }).finally(() => {
       message.value = "";
-      isSending = false;
-      if (!isCounting.value) {
-        isCounting.value = true;
-      }
     });
   }
 };
