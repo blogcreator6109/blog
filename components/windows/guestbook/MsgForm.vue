@@ -74,20 +74,24 @@ const login = async (type) => {
 
 const message = ref("");
 const isCounting = ref(false);
+const isSending = false;
 
 const sendMessage = () => {
-  if (message.value) {
+  if (message.value && !isSending) {
+    isSending = true;
     set(push(msgRef), {
       userId: store.user?.uid,
       name: store.user?.displayName || store.email,
       text: message.value,
       photoURL: store.user?.photoURL,
       time: Date.now(),
+    }).finally(() => {
+      message.value = "";
+      isSending = false;
+      if (!isCounting.value) {
+        isCounting.value = true;
+      }
     });
-    message.value = "";
-    if (!isCounting.value) {
-      isCounting.value = true;
-    }
   }
 };
 </script>
