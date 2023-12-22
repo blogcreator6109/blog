@@ -25,9 +25,13 @@ export default defineNuxtConfig({
   css: ["~/assets/scss/index.scss"],
   modules: [
     // ...
-    ["@pinia/nuxt", {}],
-    ["@nuxtjs/robots", {}],
+    "@pinia/nuxt",
+    "@nuxtjs/robots",
+    "nuxt-gtag",
   ],
+  gtag: {
+    id: "G-WWRFZC0F1B",
+  },
   vite: {
     css: {
       preprocessorOptions: {
