@@ -78,11 +78,6 @@ useHead(() => ({
       content: "Blog",
     },
     {
-      hid: "article:tag",
-      name: "article:tag",
-      content: props.post ? props.post.tags : "Loading...",
-    },
-    {
       hid: "twitter:card",
       name: "twitter:card",
       content: "summary_large_image",

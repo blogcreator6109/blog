@@ -62,14 +62,27 @@ export default defineNuxtConfig({
           name: "naver-site-verification",
           content: "0a206cd8c8459d557904dab8b1a699db97b2aa45",
         },
-        { property: "og:title", content: "Blog Creator's blog" },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: "https://blogcreator.blog" },
+        {
+          property: "og:title",
+          hid: "og:title",
+          content: "Blog Creator's blog",
+        },
+        { property: "og:type", hid: "og:type", content: "website" },
+        {
+          property: "og:url",
+          hid: "og:url",
+          content: "https://blogcreator.blog",
+        },
         {
           property: "og:description",
+          hid: "og:description",
           content: "Blog 꾸미는 걸 좋아하는 Blog Creator의 공간입니다.",
         },
-        { property: "og:image", content: "/images/logo.svg" },
+        {
+          property: "og:image",
+          hid: "og:image",
+          content: "/images/logo.svg",
+        },
         { hid: "og:locale", property: "og:locale", content: "ko_KR" },
         {
           hid: "twitter:card",
