@@ -110,7 +110,7 @@ const selectDockItem = function (name) {
     const isPostOpened =
       loadedWindows.filter((w) => w.name === "Post").length > 0;
     if (!isPostOpened) {
-      router.push({ path: "/post" });
+      router.push({ path: "/post/category/all" });
     }
   }
 

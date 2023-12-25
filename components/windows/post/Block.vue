@@ -1,22 +1,22 @@
 <template>
-  <Paragraph v-if="block.type == 'paragraph'" :block="block" />
-  <Embed v-else-if="block.type == 'embed'" :block="block" />
-  <Quote v-else-if="block.type == 'quote'" :block="block" />
-  <Callout v-else-if="block.type == 'callout'" :block="block" />
-  <Image v-else-if="block.type == 'image'" :block="block" />
-  <Bookmark v-else-if="block.type == 'bookmark'" :block="block" />
-  <CodeBlock v-else-if="block.type == 'code'" :block="block" />
+  <Paragraph v-if="block.type == 'paragraph'" v-bind="block" />
+  <Embed v-else-if="block.type == 'embed'" v-bind="block" />
+  <Quote v-else-if="block.type == 'quote'" v-bind="block" />
+  <Callout v-else-if="block.type == 'callout'" v-bind="block" />
+  <Image v-else-if="block.type == 'image'" v-bind="block" />
+  <Bookmark v-else-if="block.type == 'bookmark'" v-bind="block" />
+  <CodeBlock v-else-if="block.type == 'code'" v-bind="block" />
   <List
     v-else-if="
       block.type == 'bulleted_list_item' || block.type == 'numbered_list_item'
     "
-    :block="block"
+    v-bind="block"
   />
 
   <hr v-else-if="block.type == 'divider'" />
-  <Heading v-else-if="block.type.startsWith('heading_')" :block="block" />
-  <Youtube v-else-if="block.type == 'video'" :block="block" />
-  <Audio v-else-if="block.type == 'audio'" :block="block" />
+  <Heading v-else-if="block.type.startsWith('heading_')" v-bind="block" />
+  <Youtube v-else-if="block.type == 'video'" v-bind="block" />
+  <Audio v-else-if="block.type == 'audio'" v-bind="block" />
 </template>
 
 <script setup>
@@ -32,7 +32,7 @@ import Youtube from "@/components/windows/post/blocks/Youtube.vue";
 import Audio from "@/components/windows/post/blocks/Audio.vue";
 import CodeBlock from "@/components/windows/post/blocks/CodeBlock.vue";
 
-const { block } = defineProps(["block"]);
+const props = defineProps(["block"]);
 </script>
 
 <style lang="scss" scoped></style>

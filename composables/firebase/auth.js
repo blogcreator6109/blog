@@ -5,11 +5,12 @@ import {
   GithubAuthProvider,
   TwitterAuthProvider,
   signInWithPopup,
+  onAuthStateChanged,
 } from "firebase/auth";
+import { auth } from "./base.js";
 
-export const useSnsLogin = async (type) => {
+export const login = async (type) => {
   const fbStore = useFBStore();
-  const { $auth } = useNuxtApp();
 
   let provider = null;
   if (type == "google") {
@@ -21,20 +22,23 @@ export const useSnsLogin = async (type) => {
   }
 
   if (provider) {
-    let userCredential = await signInWithPopup($auth, provider);
+    let userCredential = await signInWithPopup(auth, provider);
     if (userCredential) {
       fbStore.setUser(userCredential.user);
     }
   }
 };
 
-export const useFBLogout = async (auth) => {
+export const logout = async () => {
   const fbStore = useFBStore();
-  const { $auth } = useNuxtApp();
   try {
-    await signOut($auth);
+    await signOut(auth);
     fbStore.setUser(null);
   } catch (error) {
     console.error("[useFBLogout] Error", error);
   }
+};
+
+export const onAuthChanged = (callback) => {
+  return onAuthStateChanged(auth, callback);
 };

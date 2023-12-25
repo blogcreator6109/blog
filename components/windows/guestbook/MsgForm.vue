@@ -52,9 +52,9 @@ import googleImg from "~/assets/images/guestbook/google.svg";
 import twitterImg from "~/assets/images/guestbook/twitter.svg";
 import githubImg from "~/assets/images/guestbook/github.svg";
 
-const { $db } = useNuxtApp();
 const store = useFBStore();
-const msgRef = dbRef($db, "guestbook");
+
+const { login, setRTData } = useFirebase();
 
 const placeholder = computed(() => {
   return store.isAuthenticated
@@ -68,25 +68,23 @@ const snsList = [
   { name: "github", src: githubImg },
 ];
 
-const login = async (type) => {
-  await useSnsLogin(type);
-};
-
 const message = ref("");
 const isCounting = ref(false);
+
+const scrollDown = () => {
+  const el = document.querySelector(".guestbook-msg-list");
+  if (el) {
+    el.scrollTop = el.scrollHeight;
+  }
+};
 
 const sendMessage = () => {
   if (message.value.trim() && !isCounting.value) {
     isCounting.value = true;
 
-    set(push(msgRef), {
-      userId: store.user?.uid,
-      name: store.user?.displayName || store.email,
-      text: message.value,
-      photoURL: store.user?.photoURL,
-      time: Date.now(),
-    }).finally(() => {
+    setRTData("guestbook", message.value).finally(() => {
       message.value = "";
+      scrollDown();
     });
   }
 };

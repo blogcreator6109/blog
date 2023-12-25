@@ -2,15 +2,14 @@
   <blockquote>
     <img src="@/assets/images/quote.svg" />
     <pre>
-      <Text :text="data.rich_text" />
+      <Text :text="text" />
     </pre>
   </blockquote>
 </template>
 
 <script setup>
 import Text from "@/components/windows/post/blocks/Text.vue";
-const { block } = defineProps(["block"]);
-const data = computed(() => block[block.type]);
+defineProps(["type", "text", "children"]);
 </script>
 
 <style lang="scss" scoped>

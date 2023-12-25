@@ -2,7 +2,7 @@
   <div class="guestbook">
     <MsgList class="msg-list" @remove="openRemoveModal" />
     <MsgForm class="msg-form" />
-    <Modal v-show="showLogout" @cancel="store.closeLogout" @confirm="logout">
+    <Modal v-show="showLogout" @cancel="store.closeLogout" @confirm="signout">
       <template v-slot:text> 로그아웃 하시겠습니까? </template>
     </Modal>
     <Modal v-show="showRemove" @cancel="store.closeRemove" @confirm="removeMsg">
@@ -18,11 +18,11 @@ import Modal from "./guestbook/Modal.vue";
 
 import { useFBStore } from "~/stores/firebase";
 import { storeToRefs } from "pinia";
-import { remove, ref as dbRef } from "firebase/database";
+
+const { logout, removeRTData } = useFirebase();
 
 const store = useFBStore();
 const { showLogout, showRemove, isAuthenticated } = storeToRefs(store);
-const { $db } = useNuxtApp();
 
 let removeId = null;
 
@@ -36,12 +36,11 @@ const openRemoveModal = (id) => {
 const removeMsg = () => {
   if (removeId) {
     store.closeRemove();
-    const messagesRef = dbRef($db, "guestbook/" + removeId);
-    remove(messagesRef);
+    removeRTData("guestbook/" + removeId);
   }
 };
-const logout = () => {
-  useFBLogout();
+const signout = () => {
+  logout();
   store.closeLogout();
 };
 

@@ -41,17 +41,19 @@
 
 <script setup>
 import { dateToStr } from "~/src/util";
-import { ref as dbRef, onValue } from "firebase/database";
 import { useFBStore } from "~/stores/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+
+const { onAuthChanged, onDataChanged } = useFirebase();
 
 const store = useFBStore();
-const { $db, $auth } = useNuxtApp();
-const messagesRef = dbRef($db, "guestbook");
 
 const messages = ref([]);
 let data = null;
 
+// 메시지를 그냥 보여주는게 아닌 날짜별로 분류
+// 그 와중에 같은 유저가 연속으로 메시지를 보낸 경우에는
+// 프로필 사진을 보여주지 않고, 메시지만 보여줌
+// 시간이 같은 경우에는 시간을 보여주지 않음
 const makeList = () => {
   if (data) {
     const result = [];
@@ -64,6 +66,7 @@ const makeList = () => {
       const d = data[key];
 
       const date = dateToStr(d.time, "YYYY년 MM월 DD일 dddd");
+
       const lastIdx = result.length - 1;
       const lastUserIdx = result[lastIdx]?.userMsgs.length - 1;
 
@@ -100,15 +103,18 @@ const makeList = () => {
   }
 };
 
-onAuthStateChanged($auth, () => {
+// 아이디 변화가 있을 때 다시 새로 그리기
+onAuthChanged(() => {
   makeList();
 });
 
-onValue(messagesRef, (snapshot) => {
+// 메시지들 값 변화가 있으면 다시 새로 그리기
+onDataChanged("guestbook", (snapshot) => {
   data = snapshot.val();
   makeList();
 });
 
+// 메시지 최하로 이동
 const scrollDown = () => {
   const el = document.querySelector(".guestbook-msg-list");
   if (el) {

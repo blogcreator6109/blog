@@ -1,52 +1,34 @@
 <template>
-  <ul v-if="block.type == 'bulleted_list_item'">
-    <li>
-      <Text :text="data.rich_text" />
-      <Block v-for="b of children" :key="b.id" :block="b" />
-    </li>
-  </ul>
-  <ol v-if="block.type == 'numbered_list_item'" :start="block.start">
-    <li>
-      <Text :text="data.rich_text" />
-      <Block v-for="b of children" :key="b.id" :block="b" />
-    </li>
-  </ol>
+  <div v-if="type == 'bulleted_list_item'" class="ul">
+    <Text :text="text" />
+    <Block v-for="(b, idx) of children" :key="idx" :block="b" />
+  </div>
+  <div v-if="type == 'numbered_list_item'" class="ol">
+    <span>{{ count }}. </span>
+    <Text :text="text" />
+    <Block v-for="(b, idx) of children" :key="idx" :block="b" />
+  </div>
 </template>
 
 <script setup>
 import Text from "@/components/windows/post/blocks/Text.vue";
 import Block from "@/components/windows/post/Block.vue";
-const { block } = defineProps(["block"]);
-const data = computed(() => block[block.type]);
-const children = ref([]);
 
-if (block.has_children) {
-  useFetch("/api/post/blocks", {
-    key: block.id,
-    method: "post",
-    body: { blockId: block.id },
-    server: false,
-  }).then(({ data }) => {
-    children.value = data.value;
-  });
-}
+defineProps(["type", "text", "count", "children"]);
 </script>
 
 <style lang="scss" scoped>
-ul {
-  list-style-type: disc;
+.ul {
   padding-left: 3rem;
-}
-ol {
-  list-style-type: decimal;
-  padding-left: 3rem;
-}
+  margin-top: 0.5rem;
 
-ul,
-ol {
-  li {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+  &::before {
+    content: "•";
+    margin-right: 1rem;
   }
+}
+.ol {
+  padding-left: 3rem;
+  margin-top: 0.5rem;
 }
 </style>

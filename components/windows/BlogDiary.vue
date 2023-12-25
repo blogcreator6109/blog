@@ -16,6 +16,8 @@
 
 <script setup>
 import { dateToStr } from "@/src/util";
+const router = useRouter();
+router.push("/diary");
 
 let startCursor = undefined;
 const list = ref([]);

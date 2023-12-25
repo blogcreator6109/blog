@@ -3,10 +3,5 @@
 </template>
 
 <script setup>
-const { block } = defineProps(["block"]);
-const src = computed(() => {
-  return block[block.type]?.audio?.file?.url;
-});
+defineProps(["type", "children", "src"]);
 </script>
-
-<style lang="scss" scoped></style>

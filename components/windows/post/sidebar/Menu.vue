@@ -1,11 +1,19 @@
 <template>
   <ul class="post-sidebar">
-    <li class="post-sidebar-item" v-for="(name, link) in category" :key="link">
-      <NuxtLink :to="`/post/${link}`" @click="closeSidebar" class="link">
+    <li
+      class="post-sidebar-item"
+      v-for="category of postStore.categories"
+      :key="category.id"
+    >
+      <NuxtLink
+        :to="`/post/category/${category.path}`"
+        @click="selectCategory(category)"
+        class="link"
+      >
         <div class="icon">
-          <img :src="`/images/apps/post/${name}.svg`" />
+          <img :src="category.img" />
         </div>
-        <span class="text">{{ name }}</span>
+        <span class="text">{{ category.name }}</span>
         <img
           class="arrow"
           src="@/assets/images/windows/post/sidebar/right-arrow.svg"
@@ -16,8 +24,14 @@
 </template>
 
 <script setup>
-import { usePostStore } from "@/stores/post";
-const { category, closeSidebar } = usePostStore();
+import { usePostStore } from "~/stores/post";
+const { closeSidebar } = usePostStore();
+const postStore = usePostStore();
+const selectCategory = (category) => {
+  closeSidebar();
+  postStore.setView("list");
+  postStore.setCategory(category);
+};
 </script>
 
 <style lang="scss">

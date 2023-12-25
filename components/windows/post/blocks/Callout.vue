@@ -2,20 +2,20 @@
   <div class="callout" :class="theme">
     <img :src="`/images/${theme}.svg`" />
     <pre>
-      <Text :text="block[block.type].rich_text" />
+      <Text :text="text" />
     </pre>
   </div>
 </template>
 
 <script setup>
 import Text from "@/components/windows/post/blocks/Text.vue";
-const { block } = defineProps(["block"]);
+const props = defineProps(["type", "children", "text", "emoji"]);
+console.log(props.text);
 const theme = computed(() => {
-  const emoji = block[block.type]?.icon?.emoji;
   let result = "";
-  if (emoji === "⚠️") {
+  if (props.emoji === "⚠️") {
     result = "warn";
-  } else if (emoji === "ℹ️") {
+  } else if (props.emoji === "ℹ️") {
     result = "info";
   }
   return result;

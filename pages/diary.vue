@@ -7,5 +7,5 @@ import { useWindowStore } from "@/stores/window";
 
 const { openWindow } = useWindowStore();
 
-openWindow("GuestBook");
+openWindow("BlogDiary");
 </script>

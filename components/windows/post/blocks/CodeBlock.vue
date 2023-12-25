@@ -11,20 +11,8 @@
 </template>
 
 <script setup>
-import hljs from "highlight.js";
 import "highlight.js/styles/vs2015.css";
-const { block } = defineProps(["block"]);
-
-const caption = computed(() => block?.code?.caption?.[0]?.plain_text);
-const lang = computed(() => block?.code?.language);
-
-let html = ref(null);
-onMounted(() => {
-  const code = block?.code?.rich_text?.[0]?.plain_text;
-  html.value = hljs.highlight(code, {
-    language: block?.code?.language,
-  }).value;
-});
+defineProps(["html", "caption", "lang", "type", "children"]);
 </script>
 
 <style lang="scss" scoped>
@@ -56,6 +44,9 @@ onMounted(() => {
       }
       &.css {
         color: #5757d9;
+      }
+      &.vue {
+        color: #41b883;
       }
     }
 

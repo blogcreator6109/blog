@@ -10,20 +10,7 @@
 </template>
 
 <script setup>
-const { block } = defineProps(["block"]);
-const videoId = computed(() => {
-  const url = block[block.type]?.external?.url;
-  if (url) {
-    const u = new URL(url);
-    let value = u.searchParams.get("v");
-    if (value) {
-      return value;
-    } else {
-      const str = url.split("/");
-      return str[str.length - 1];
-    }
-  }
-});
+defineProps(["type", "children", "videoId"]);
 </script>
 
 <style lang="scss" scoped>

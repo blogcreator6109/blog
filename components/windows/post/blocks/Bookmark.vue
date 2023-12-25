@@ -1,83 +1,31 @@
 <template>
-  <a class="bookmark" :href="url" v-if="bookmark">
+  <a class="bookmark" :href="ogUrl" v-if="ogTitle">
     <div class="left">
-      <h4>{{ title }}</h4>
-      <p>{{ desc }}</p>
+      <h4>{{ ogTitle }}</h4>
+      <p>{{ ogDesc }}</p>
       <div class="url">
-        <img :src="icon" v-if="icon" />
-        <span>{{ url }}</span>
+        <img :src="ogFavicon" v-if="ogFavicon" />
+        <span>{{ ogUrl }}</span>
       </div>
     </div>
-    <div class="right" v-if="image">
-      <img :src="image" />
+    <div class="right" v-if="ogImage">
+      <img :src="ogImage" />
     </div>
   </a>
-  <Loading v-else="!bookmark" />
+  <Loading v-else />
 </template>
 
 <script setup>
-const { block } = defineProps(["block"]);
-
-const bookmark = ref(null);
-
-const title = computed(() => {
-  return bookmark.value?.ogTitle;
-});
-
-const url = computed(() => {
-  return bookmark.value?.ogUrl || bookmark.value?.requestUrl;
-});
-
-const desc = computed(() => {
-  return bookmark.value?.ogDescription;
-});
-
-const image = computed(() => {
-  let result = "";
-  let maxWidth = 0;
-  if (bookmark.value?.ogImage) {
-    if (bookmark.value.length) {
-      for (const img of bookmark.value?.ogImage) {
-        if (img.width === null) {
-          result = img.url;
-        } else if (img.width > maxWidth) {
-          maxWidth = img.width;
-          result = img.url;
-        }
-      }
-    } else {
-      result = bookmark.value?.ogImage?.url;
-    }
-  }
-  return result;
-});
-
-const icon = computed(() => {
-  let result = "";
-  const f = bookmark.value?.favicon;
-  if (f) {
-    if (f.startsWith("http")) {
-      result = f;
-    } else if (f.startsWith("/")) {
-      const u = new URL(url.value);
-      result = u.origin + f;
-    }
-  }
-  return result;
-});
-
-useFetch("/api/post/bookmark", {
-  key: block.id,
-  method: "post",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: {
-    url: block[block.type]?.url,
-  },
-}).then(({ data }) => {
-  bookmark.value = data.value;
-});
+defineProps([
+  "ogTitle",
+  "ogDesc",
+  "ogType",
+  "ogUrl",
+  "ogFavicon",
+  "ogImage",
+  "type",
+  "children",
+]);
 </script>
 
 <style lang="scss">

@@ -19,7 +19,7 @@ import { useFBStore } from "~/stores/firebase.js";
 import { storeToRefs } from "pinia";
 
 const store = useFBStore();
-const { user, showLogin, isAuthenticated } = storeToRefs(store);
+const { user, isAuthenticated } = storeToRefs(store);
 </script>
 
 <style lang="scss">

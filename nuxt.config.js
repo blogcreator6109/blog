@@ -22,7 +22,6 @@ export default defineNuxtConfig({
       },
     },
   },
-
   css: ["~/assets/scss/index.scss"],
   modules: [
     // ...
@@ -44,8 +43,6 @@ export default defineNuxtConfig({
       },
     },
   },
-
-  plugins: ["~/plugins/firebase.js"],
 
   robots: {
     UserAgent: "*",
@@ -83,14 +80,6 @@ export default defineNuxtConfig({
           crossorigin: "anonymous",
         },
       ],
-    },
-  },
-  sitemap: {
-    sitemaps: true,
-    urls: async () => {
-      console.log("TEST");
-
-      return [];
     },
   },
 });

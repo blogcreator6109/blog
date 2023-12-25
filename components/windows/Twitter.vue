@@ -39,6 +39,9 @@
 <script setup>
 const user = ref(null);
 const loaded = ref(false);
+const router = useRouter();
+router.push("/twitter");
+
 useFetch("/api/twitter").then(({ data }) => {
   user.value = data.value;
 });

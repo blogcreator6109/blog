@@ -1,18 +1,12 @@
 <template>
   <article class="post-article">
-    <Block v-for="b of blocks" :key="b.id" :block="b" />
+    <Block v-for="(b, idx) of content" :key="idx" :block="b" />
   </article>
 </template>
 
 <script setup>
 import Block from "@/components/windows/post/Block.vue";
-const { blocks } = defineProps(["blocks"]);
-
-onMounted(() => {
-  const body = document.querySelector(".window-list main.body");
-
-  body.scrollTo(0, 0);
-});
+defineProps(["content"]);
 </script>
 
 <style lang="scss">

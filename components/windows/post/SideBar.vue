@@ -31,6 +31,7 @@ const { sidebarActive } = storeToRefs(usePostStore());
   box-sizing: border-box;
   z-index: 3;
   overflow-y: auto;
+  box-shadow: 2px 2px 4px #0000001a;
 }
 
 @media (max-width: $breakpoint-tablet) {
