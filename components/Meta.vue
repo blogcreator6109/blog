@@ -9,52 +9,52 @@ useHead(() => ({
   meta: [
     {
       hid: "description",
-      name: "description",
+      property: "description",
       content: props.post ? props.post.description : "Loading...",
     },
     {
       hid: "og:title",
-      name: "og:title",
+      property: "og:title",
       content: props.post ? props.post.title : "Loading...",
     },
     {
       hid: "og:description",
-      name: "og:description",
+      property: "og:description",
       content: props.post ? props.post.description : "Loading...",
     },
     {
       hid: "og:image",
-      name: "og:image",
+      property: "og:image",
       content: props.post ? props.post.cover : "Loading...",
     },
     {
       hid: "og:url",
-      name: "og:url",
+      property: "og:url",
       content: props.url ? props.url : "Loading...",
     },
     {
       hid: "og:site_name",
-      name: "og:site_name",
+      property: "og:site_name",
       content: "Blog Creator's blog",
     },
     {
       hid: "og:locale",
-      name: "og:locale",
+      property: "og:locale",
       content: "ko_KR",
     },
     {
       hid: "og:type",
-      name: "og:type",
+      property: "og:type",
       content: "article",
     },
     {
       hid: "icon",
-      name: "icon",
+      property: "icon",
       content: "/favicon.ico",
     },
     {
       hid: "lang",
-      name: "lang",
+      property: "lang",
       content: "ko",
     },
     {
