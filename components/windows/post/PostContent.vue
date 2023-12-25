@@ -110,6 +110,7 @@ const { getPage } = useFirebase();
 if (props.postId) {
   getPage("posts", props.postId).then((p) => {
     post.value = p;
+    postStore.setPost(p);
   });
 }
 </script>

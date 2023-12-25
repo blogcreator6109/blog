@@ -10,6 +10,12 @@ export default defineEventHandler(async () => {
     const res = await notion.databases.query({
       database_id: process.env.NOTION_POST_TABLE_ID,
       start_cursor: startCursor,
+      filter: {
+        property: "published",
+        checkbox: {
+          equals: true,
+        },
+      },
     });
     if (res.has_more) {
       startCursor = res.next_cursor;

@@ -17,6 +17,7 @@
     "@notionhq/client": "^2.2.3",
     "@nuxtjs/robots": "^3.0.0",
     "@pinia/nuxt": "^0.4.9",
+    "@vueuse/head": "^2.0.0",
     "dayjs": "^1.11.7",
     "firebase": "^10.7.1",
     "firebase-admin": "^12.0.0",

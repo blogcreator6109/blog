@@ -6,7 +6,7 @@ export const usePostStore = defineStore("post", {
     sidebarActive: false,
     category: null,
     categories: [],
-    page: null,
+    post: null,
     view: "list",
   }),
   actions: {
@@ -28,8 +28,8 @@ export const usePostStore = defineStore("post", {
     toggleSidebar() {
       this.sidebarActive = !this.sidebarActive;
     },
-    setPage(data) {
-      this.page = data;
+    setPost(data) {
+      this.post = data;
     },
   },
 });
