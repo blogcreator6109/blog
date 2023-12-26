@@ -63,6 +63,11 @@ export default defineNuxtConfig({
           content: "0a206cd8c8459d557904dab8b1a699db97b2aa45",
         },
         {
+          name: "description",
+          hid: "description",
+          content: "Blog 꾸미는 걸 좋아하는 Blog Creator의 공간입니다.",
+        },
+        {
           property: "og:title",
           hid: "og:title",
           content: "Blog Creator's blog",
@@ -108,6 +113,11 @@ export default defineNuxtConfig({
           hid: "twitter:creator",
           name: "twitter:creator",
           content: "@BlogCreator6109",
+        },
+        {
+          hid: "og:site_name",
+          property: "og:site_name",
+          content: "Blog Creator's blog",
         },
       ],
       script: [
