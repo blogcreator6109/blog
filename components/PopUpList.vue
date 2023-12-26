@@ -1,14 +1,11 @@
 <template>
   <nav class="pop-up-list">
+    <div style="height: 100px">
+      <GoogleAdsense type="0" style="height: 100%" />
+    </div>
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
-        <a
-          class="item"
-          v-if="d.title != 'adsense'"
-          v-show="d.isActive"
-          :href="d.href"
-          target="_blank"
-        >
+        <a class="item" v-show="d.isActive" :href="d.href" target="_blank">
           <button class="close-btn" @click.stop.prevent="d.isActive = false">
             <span class="material-symbols-outlined"> close </span>
           </button>
@@ -24,12 +21,6 @@
           </div>
           <span class="time">방금</span>
         </a>
-        <div class="ad" v-else v-show="d.isActive">
-          <button class="close-btn" @click.stop.prevent="d.isActive = false">
-            <span class="material-symbols-outlined"> close </span>
-          </button>
-          <GoogleAdsense type="0" />
-        </div>
       </template>
     </TransitionGroup>
   </nav>
@@ -53,18 +44,20 @@ watch(triggerPopUp, () => {
 
 const data = ref([
   {
-    isActive: true,
+    isActive: false,
     imgSrc: vueImage,
     subImgSrc: inflearnImage,
     title: "블로거의 Vue 강의",
     content: "이번에 Vue.js 강의를 만들었어요. 한 번 보고 가세요~!",
     href: "https://inf.run/raB1f",
   },
-  {
-    isActive: true,
-    title: "adsense",
-  },
 ]);
+
+setTimeout(() => {
+  for (const d of data.value) {
+    d.isActive = true;
+  }
+}, 700);
 </script>
 
 <style lang="scss" scoped>
