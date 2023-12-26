@@ -28,7 +28,7 @@
           <button class="close-btn" @click.stop.prevent="d.isActive = false">
             <span class="material-symbols-outlined"> close </span>
           </button>
-          <GoogleAdsense />
+          <GoogleAdsense type="0" />
         </div>
       </template>
     </TransitionGroup>
