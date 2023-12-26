@@ -53,7 +53,7 @@ watch(triggerPopUp, () => {
 
 const data = ref([
   {
-    isActive: false,
+    isActive: true,
     imgSrc: vueImage,
     subImgSrc: inflearnImage,
     title: "블로거의 Vue 강의",
@@ -61,16 +61,10 @@ const data = ref([
     href: "https://inf.run/raB1f",
   },
   {
-    isActive: false,
+    isActive: true,
     title: "adsense",
   },
 ]);
-
-setTimeout(() => {
-  for (const d of data.value) {
-    d.isActive = true;
-  }
-}, 700);
 </script>
 
 <style lang="scss" scoped>
