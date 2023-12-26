@@ -2,7 +2,6 @@
   <ins
     class="adsbygoogle"
     style="display: block"
-    :style="{ height: '100px' }"
     data-ad-client="ca-pub-4009482052735536"
     v-bind="attrs"
   ></ins>
