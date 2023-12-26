@@ -43,6 +43,9 @@ if (props.type == 0) {
 onMounted(() => {
   (window.adsbygoogle = window.adsbygoogle || []).push({});
 });
+onUpdated(() => {
+  (window.adsbygoogle = window.adsbygoogle || []).push({});
+});
 </script>
 
 <style lang="scss" scoped></style>
