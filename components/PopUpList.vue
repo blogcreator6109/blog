@@ -1,34 +1,37 @@
 <template>
   <nav class="pop-up-list">
     <TransitionGroup name="slide-right">
-      <a
-        class="item"
-        v-show="d.isActive"
-        v-for="d of data"
-        :key="d.title"
-        :href="d.href"
-        target="_blank"
-      >
-        <button class="close-btn" @click.stop.prevent="d.isActive = false">
-          <span class="material-symbols-outlined"> close </span>
-        </button>
-        <div class="main-image">
-          <img :src="d.imgSrc" />
+      <template v-for="d of data" :key="d.title">
+        <a
+          class="item"
+          v-if="d.title != 'adsense'"
+          v-show="d.isActive"
+          :href="d.href"
+          target="_blank"
+        >
+          <button class="close-btn" @click.stop.prevent="d.isActive = false">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+          <div class="main-image">
+            <img :src="d.imgSrc" />
+          </div>
+          <h3 class="title">{{ d.title }}</h3>
+          <p class="content">
+            {{ d.content }}
+          </p>
+          <div class="sub-image" v-if="d.subImgSrc">
+            <img :src="d.subImgSrc" />
+          </div>
+          <span class="time">방금</span>
+        </a>
+        <div class="ad" v-else v-show="d.isActive">
+          <button class="close-btn" @click.stop.prevent="d.isActive = false">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+          <GoogleAdsense />
         </div>
-        <h3 class="title">{{ d.title }}</h3>
-        <p class="content">
-          {{ d.content }}
-        </p>
-        <div class="sub-image" v-if="d.subImgSrc">
-          <img :src="d.subImgSrc" />
-        </div>
-        <span class="time">방금</span>
-      </a>
+      </template>
     </TransitionGroup>
-
-    <Transition name="slide-right">
-      <GoogleAdsense :type="0" />
-    </Transition>
   </nav>
 </template>
 
@@ -57,6 +60,10 @@ const data = ref([
     content: "이번에 Vue.js 강의를 만들었어요. 한 번 보고 가세요~!",
     href: "https://inf.run/raB1f",
   },
+  {
+    isActive: false,
+    title: "adsense",
+  },
 ]);
 
 setTimeout(() => {
@@ -73,6 +80,9 @@ setTimeout(() => {
   right: 0;
   padding: 1.5rem;
   width: 35rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
 
   .item {
     width: 100%;
@@ -158,6 +168,44 @@ setTimeout(() => {
       color: #aaa;
       font-size: 0.8em;
       text-align: right;
+    }
+  }
+
+  .ad {
+    width: 100%;
+    height: fit-content;
+    background-color: rgba(#333, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    color: #ddd;
+
+    border: 1px solid rgb(120, 120, 120);
+    box-shadow: 2px 2px 30px 0px rgba(30, 30, 30, 0.5);
+    font-size: 1.3rem;
+    &:hover {
+      .close-btn {
+        opacity: 1;
+      }
+    }
+
+    .close-btn {
+      opacity: 0;
+      transition: opacity 0.2s;
+      position: absolute;
+      top: 0.3rem;
+      left: 0.3rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background-color: rgba(#333, 0.8);
+      border: 1px solid rgb(120, 120, 120);
+      span {
+        font-size: 1.4rem;
+      }
     }
   }
 }
