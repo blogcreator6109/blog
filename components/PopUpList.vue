@@ -172,6 +172,27 @@ setTimeout(() => {
   }
 
   .ad {
+    width: 100%;
+    height: 100px;
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 3rem 1fr 3.5rem;
+    grid-template-rows: auto 1fr;
+    row-gap: 0.2rem;
+    column-gap: 1.2rem;
+
+    background-color: rgba(#333, 0.8);
+    backdrop-filter: blur(8px);
+    border-radius: 2rem;
+    padding: 1.2rem 2rem 1rem 2rem;
+    box-sizing: border-box;
+    color: #ddd;
+
+    border: 1px solid rgb(120, 120, 120);
+    box-shadow: 2px 2px 30px 0px rgba(30, 30, 30, 0.5);
+    font-size: 1.3rem;
+
     &:hover {
       .close-btn {
         opacity: 1;

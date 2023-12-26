@@ -41,11 +41,14 @@ if (props.type == 0) {
 }
 
 onMounted(() => {
-  (window.adsbygoogle = window.adsbygoogle || []).push({});
-});
-onUpdated(() => {
-  (window.adsbygoogle = window.adsbygoogle || []).push({});
+  nextTick(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  });
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.adsbygoogle {
+  border-radius: 2rem;
+}
+</style>
