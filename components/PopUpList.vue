@@ -1,8 +1,6 @@
 <template>
   <nav class="pop-up-list">
-    <div style="height: 100px">
-      <GoogleAdsense type="0" style="height: 100%" />
-    </div>
+    <GoogleAdsense type="0" />
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
         <a class="item" v-show="d.isActive" :href="d.href" target="_blank">

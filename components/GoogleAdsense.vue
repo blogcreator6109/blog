@@ -1,7 +1,6 @@
 <template>
   <ins
     class="adsbygoogle"
-    style="display: block"
     data-ad-client="ca-pub-4009482052735536"
     v-bind="attrs"
   ></ins>
@@ -17,6 +16,7 @@ const props = defineProps({
 let attrs = ref({});
 if (props.type == 0) {
   attrs.value = {
+    style: "display: block; height: 100px",
     "data-ad-slot": "2144639965",
     "data-ad-format": "auto",
     "data-full-width-responsive": "true",
