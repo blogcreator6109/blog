@@ -23,9 +23,12 @@
           <img :src="d.subImgSrc" />
         </div>
         <span class="time">방금</span>
-        <!-- TODO: 닫기 버튼 추가 -->
       </a>
     </TransitionGroup>
+
+    <Transition name="slide-right">
+      <GoogleAdsense :type="0" />
+    </Transition>
   </nav>
 </template>
 

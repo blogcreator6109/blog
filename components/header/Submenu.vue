@@ -1,12 +1,21 @@
 <template>
   <nav class="header-sub-menu">
     <button @click="toggleShowProfile">Blog Creator에 관하여</button>
+    <button @click="closeAllWindow">모든 창 닫기</button>
   </nav>
 </template>
 
 <script setup>
 import { useCommonStore } from "~/stores/common";
+import { useWindowStore } from "~/stores/window";
+const windowStore = useWindowStore();
 const { toggleShowProfile } = useCommonStore();
+
+const router = useRouter();
+const closeAllWindow = () => {
+  windowStore.closeAllWindows();
+  router.push("/");
+};
 </script>
 
 <style lang="scss">
@@ -17,7 +26,7 @@ const { toggleShowProfile } = useCommonStore();
   margin-top: 0.1rem;
   border: 1px solid gray;
   box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.4);
-  background-color: rgba($primary-color, 0.8);
+  background-color: $primary-color;
   padding: 0.4rem;
   border-radius: 0.6rem;
   white-space: nowrap;

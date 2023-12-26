@@ -5,6 +5,7 @@
       <h1 class="title">{{ category.name }}</h1>
     </div>
     <div class="list">
+      <!-- <GoogleAdsense type="1" /> -->
       <NuxtLink
         :to="`/post/${post.number}`"
         @click="$emit('select', post.number)"
