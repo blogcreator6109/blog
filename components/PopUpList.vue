@@ -173,6 +173,7 @@ setTimeout(() => {
 
   .ad {
     width: 100%;
+    height: 100px;
     height: fit-content;
     background-color: rgba(#333, 0.8);
     backdrop-filter: blur(8px);
