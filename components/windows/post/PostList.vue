@@ -36,9 +36,7 @@
         </div>
       </NuxtLink>
 
-      <div class="item">
-        <GoogleAdsense type="1" />
-      </div>
+      <GoogleAdsense type="1" />
     </div>
   </div>
 </template>
