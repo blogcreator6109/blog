@@ -22,7 +22,9 @@ export default defineNuxtConfig({
       },
     },
   },
+
   css: ["~/assets/scss/index.scss"],
+
   modules: [
     // ...
     "@pinia/nuxt",
@@ -48,11 +50,22 @@ export default defineNuxtConfig({
     UserAgent: "*",
     Allow: "/",
   },
+
   app: {
     head: {
       charset: "UTF-8",
       viewport: "width=device-width, initial-scale=1, viewport-fit=cover",
       title: "Blog Creator's blog",
+      htmlAttrs: {
+        lang: "en",
+      },
+      link: [
+        {
+          rel: "icon",
+          type: "image/ico",
+          href: "/favicon.ico",
+        },
+      ],
       meta: [
         {
           name: "google-site-verification",
@@ -89,6 +102,12 @@ export default defineNuxtConfig({
           content: "/images/logo.svg",
         },
         { hid: "og:locale", property: "og:locale", content: "ko_KR" },
+        {
+          hid: "icon",
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.ico",
+        },
         {
           hid: "twitter:card",
           name: "twitter:card",
@@ -138,6 +157,12 @@ export default defineNuxtConfig({
           "data-ad-client": "ca-pub-4009482052735536",
         },
       ],
+    },
+  },
+
+  devtools: {
+    timeline: {
+      enabled: true,
     },
   },
 });
