@@ -1,6 +1,11 @@
 <template>
   <nav class="pop-up-list">
-    <GoogleAdsense type="0" />
+    <div class="ad-popup" :class="{ active: adActive }">
+      <button class="close-btn" @click.stop.prevent="adActive = false">
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+      <GoogleAdsense type="0" />
+    </div>
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
         <a class="item" v-show="d.isActive" :href="d.href" target="_blank">
@@ -34,14 +39,32 @@ import { storeToRefs } from "pinia";
 import { useCommonStore } from "@/stores/common";
 const { triggerPopUp } = storeToRefs(useCommonStore());
 
+const adActive = ref(false);
+
+// 모두 접거나 펴기
 watch(triggerPopUp, () => {
+  let isAllClosed = true;
+
   for (const d of data.value) {
-    d.isActive = !d.isActive;
+    if (d.isActive) {
+      isAllClosed = false;
+      break;
+    }
   }
-  adActive.value = !adActive.value;
+
+  if (!adActive.value && isAllClosed) {
+    controlActives(true);
+  } else {
+    controlActives(false);
+  }
 });
 
-const adActive = ref(true);
+const controlActives = (bool) => {
+  for (const d of data.value) {
+    d.isActive = bool;
+  }
+  adActive.value = bool;
+};
 
 const data = ref([
   {
@@ -73,8 +96,58 @@ setTimeout(() => {
   flex-direction: column;
   row-gap: 1rem;
 
+  .ad-popup {
+    position: relative;
+    background-color: white;
+    border-radius: 2rem;
+    height: 10rem;
+    transform: translateX(calc(100% + 1.5rem));
+    transition: transform 0.2s ease-in-out;
+
+    &:hover {
+      .close-btn {
+        opacity: 1;
+      }
+    }
+
+    .close-btn {
+      color: white;
+      opacity: 0;
+      transition: opacity 0.2s;
+      position: absolute;
+      top: 0.3rem;
+      left: 0.3rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background-color: rgba(#333, 0.8);
+      border: 1px solid rgb(120, 120, 120);
+      z-index: 2;
+      span {
+        font-size: 1.4rem;
+      }
+
+      &:active {
+        opacity: 0;
+      }
+    }
+
+    ins {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &.active {
+      transform: translate(0);
+    }
+  }
+
   .item {
-    width: 100%;
     user-select: none;
     position: relative;
 

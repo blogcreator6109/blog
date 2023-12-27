@@ -1,13 +1,18 @@
 <template>
   <section class="window" ref="win">
-    <div class="header" @dblclick.self="onDBClick">
-      <component :is="loadedHeaderComp" />
+    <div class="header" @dblclick.self="maximizeWindow">
+      <template v-if="loadedHeaderComp">
+        <component :is="loadedHeaderComp" />
+      </template>
 
       <WindowsCommonMacBtns
         class="btns"
-        @close="close(name)"
+        @close="
+          close(name);
+          $router.push('/');
+        "
         @minimize="minimize(name)"
-        @maximize="onDBClick"
+        @maximize="maximizeWindow"
       />
     </div>
     <main class="body">
@@ -27,8 +32,7 @@ const loadedHeaderComp = defineAsyncComponent(async () => {
   try {
     return await import(`~/components/windows/headers/${name}Header.vue`);
   } catch (error) {
-    console.error("WindowHeader", error);
-    return undefined;
+    return null;
   }
 });
 
@@ -36,7 +40,7 @@ const { close, maximize, minimize } = useWindowStore();
 
 const win = ref(null);
 let timer = null;
-const onDBClick = function () {
+const maximizeWindow = function () {
   if (window.innerWidth < 768) return;
 
   win.value.classList.add("ani");
@@ -93,7 +97,7 @@ const onDBClick = function () {
 
 @media (max-width: $breakpoint-tablet) {
   .window {
-    display: flex;
+    display: absolute;
     flex-direction: column;
     position: absolute;
     top: 0 !important;

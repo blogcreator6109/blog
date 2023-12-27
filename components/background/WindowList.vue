@@ -18,7 +18,7 @@
         top: w.y + 'px',
         width: w.w + 'px',
         height: w.h + 'px',
-        zIndex: i,
+        zIndex: i + 1, // 최상위 창이 가장 높은 z-index를 가지도록 1부터 시작 (popup 창은 0)
       }"
     />
   </div>

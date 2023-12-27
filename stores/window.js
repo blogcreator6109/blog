@@ -23,6 +23,10 @@ const windowOpts = {
     w: 767, // 모바일 모드가 되도록
     h: 800,
   },
+  // MusicPlayer: {
+  //   w: 400,
+  //   h: 800,
+  // },
 };
 export const windowNames = Object.keys(windowOpts);
 
@@ -96,6 +100,11 @@ export const useWindowStore = defineStore("window", {
     },
     closeAllWindows() {
       this.loadedWindows = [];
+    },
+    minimizeAllWindows() {
+      for (const w of this.loadedWindows) {
+        w.minimized = true;
+      }
     },
     checkIsInside(window, pt) {
       return (

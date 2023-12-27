@@ -1,6 +1,7 @@
 <template>
   <nav class="header-sub-menu">
     <button @click="toggleShowProfile">Blog Creator에 관하여</button>
+    <button @click="minimizeAllWindows">모든 창 최소화</button>
     <button @click="closeAllWindow">모든 창 닫기</button>
   </nav>
 </template>
@@ -12,6 +13,9 @@ const windowStore = useWindowStore();
 const { toggleShowProfile } = useCommonStore();
 
 const router = useRouter();
+const minimizeAllWindows = () => {
+  windowStore.minimizeAllWindows();
+};
 const closeAllWindow = () => {
   windowStore.closeAllWindows();
   router.push("/");
