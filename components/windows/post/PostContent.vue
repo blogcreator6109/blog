@@ -98,27 +98,14 @@
 <script setup>
 import Article from "~/components/windows/post/Article.vue";
 import { usePostStore } from "~/stores/post";
+import { storeToRefs } from "pinia";
 const postStore = usePostStore();
-
-const props = defineProps({
-  postId: {
-    default: null,
-  },
-});
+const { post } = storeToRefs(postStore);
 
 const backToCategory = () => {
   postStore.setView("list");
-  postStore.setCategory(category);
+  router.push("/post/category/" + post.value.category.toLowerCase());
 };
-
-const post = ref(null);
-const { getPage } = useFirebase();
-if (props.postId) {
-  getPage("posts", props.postId).then((p) => {
-    post.value = p;
-    postStore.setPost(p);
-  });
-}
 </script>
 
 <style lang="scss">

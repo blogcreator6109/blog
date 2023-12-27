@@ -7,11 +7,17 @@ export const usePostStore = defineStore("post", {
     category: null,
     categories: [],
     post: null,
+    postList: [],
     view: "list",
   }),
   actions: {
-    setCategory(_category) {
-      this.category = _category;
+    setCategory(category) {
+      for (const c of this.categories) {
+        if (c.path === category) {
+          this.category = c;
+          break;
+        }
+      }
     },
     setCategories(_categories) {
       this.categories = _categories;
@@ -19,6 +25,7 @@ export const usePostStore = defineStore("post", {
     setView(_view) {
       this.view = _view;
     },
+
     openSidebar() {
       this.sidebarActive = true;
     },
@@ -27,6 +34,9 @@ export const usePostStore = defineStore("post", {
     },
     toggleSidebar() {
       this.sidebarActive = !this.sidebarActive;
+    },
+    setPostList(_postList) {
+      this.postList = _postList;
     },
     setPost(data) {
       this.post = data;

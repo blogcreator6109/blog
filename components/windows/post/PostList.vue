@@ -1,6 +1,6 @@
 <template>
   <div class="post-list">
-    <div class="header">
+    <div class="header" v-if="category">
       <img class="img" :src="category.img" :alt="category.name" />
       <h1 class="title">{{ category.name }}</h1>
     </div>
@@ -8,8 +8,7 @@
       <!-- <GoogleAdsense type="1" /> -->
       <NuxtLink
         :to="`/post/${post.number}`"
-        @click="$emit('select', post.number)"
-        v-for="post of posts"
+        v-for="post of postList"
         :key="post.id"
         class="item"
       >
@@ -45,23 +44,7 @@
 import { storeToRefs } from "pinia";
 import { usePostStore } from "~/stores/post";
 
-const { getTable } = useFirebase();
-const posts = ref([]);
-
-const { category } = storeToRefs(usePostStore());
-
-watch(
-  category,
-  async () => {
-    let cond = ["category", "==", category.value.path];
-    if (category.value.path == "all") {
-      cond = null;
-    }
-
-    posts.value = await getTable("table", cond, ["number", "desc"]);
-  },
-  { immediate: true }
-);
+const { category, postList } = storeToRefs(usePostStore());
 </script>
 
 <style lang="scss">

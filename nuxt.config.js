@@ -23,6 +23,15 @@ export default defineNuxtConfig({
     },
   },
 
+  routerRules: {
+    "/": { prerender: true },
+    "/post/*": {
+      cache: {
+        maxAge: 60 * 60 * 3, // 3시간
+      },
+    },
+  },
+
   css: ["~/assets/scss/index.scss"],
 
   modules: [

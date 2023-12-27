@@ -10,7 +10,6 @@
 <script setup>
 import Text from "@/components/windows/post/blocks/Text.vue";
 const props = defineProps(["type", "children", "text", "emoji"]);
-console.log(props.text);
 const theme = computed(() => {
   let result = "";
   if (props.emoji === "⚠️") {

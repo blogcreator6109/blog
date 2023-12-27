@@ -7,7 +7,7 @@
     >
       <NuxtLink
         :to="`/post/category/${category.path}`"
-        @click="selectCategory(category)"
+        @click="selectCategory"
         class="link"
       >
         <div class="icon">
@@ -27,10 +27,9 @@
 import { usePostStore } from "~/stores/post";
 const { closeSidebar } = usePostStore();
 const postStore = usePostStore();
-const selectCategory = (category) => {
+const selectCategory = () => {
   closeSidebar();
   postStore.setView("list");
-  postStore.setCategory(category);
 };
 </script>
 

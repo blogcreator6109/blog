@@ -4,7 +4,7 @@
     <Meta name="description" :content="post.description" />
     <Meta property="og:title" :content="post.title" />
     <Meta property="og:description" :content="post.description" />
-    <Meta property="og:type" :content="article" />
+    <Meta property="og:type" content="article" />
     <Meta property="og:image" :content="post?.cover" />
     <Meta
       property="og:url"
@@ -20,14 +20,22 @@
 <script setup>
 import { useWindowStore } from "@/stores/window";
 import { usePostStore } from "@/stores/post";
-import { storeToRefs } from "pinia";
 
 const { openWindow } = useWindowStore();
 const postStore = usePostStore();
-const { post } = storeToRefs(postStore);
+const post = ref({});
+const route = useRoute();
+
+post.value = null;
+postStore.setPost(null);
+useFetch("/api/postpage", {
+  method: "post",
+  body: { doc: "posts/" + route.params.postId },
+}).then((result) => {
+  post.value = result.data.value;
+  postStore.setPost(result.data.value);
+});
 
 postStore.setView("content");
-
-onMounted(() => {});
 openWindow("Post");
 </script>

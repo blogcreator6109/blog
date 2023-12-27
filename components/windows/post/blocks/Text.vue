@@ -1,5 +1,5 @@
 <template>
-  <template v-for="t of text" :key="t.content">
+  <template v-for="(t, idx) of text" :key="idx">
     <strong v-if="t.textType == 'bold'">{{ t.content }}</strong>
     <em v-else-if="t.textType == 'italic'">{{ t.content }}</em>
     <del v-else-if="t.textType == 'strikethrough'">{{ t.content }}</del>
