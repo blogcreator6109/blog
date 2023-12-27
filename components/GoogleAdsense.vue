@@ -17,7 +17,8 @@ const props = defineProps({
 let attrs = ref({});
 if (props.type == 0) {
   attrs.value = {
-    style: "display:inline-block;width:350px;height:100px !important;",
+    style: "display:inline-block;width:350px;height:100px",
+    class: "type0",
     "data-ad-slot": "2144639965",
     "data-ad-format": "auto",
     "data-full-width-responsive": "true",
@@ -52,5 +53,8 @@ onMounted(() => {
 .adsbygoogle {
   border-radius: 2rem;
   overflow: hidden;
+  &.type0 {
+    height: 100px !important;
+  }
 }
 </style>
