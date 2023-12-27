@@ -168,6 +168,9 @@ setTimeout(() => {
   }
 
   .ad {
+    width: 350px;
+    height: 100px;
+
     &:hover {
       .close-btn {
         opacity: 1;
