@@ -28,13 +28,13 @@ const route = useRoute();
 
 post.value = null;
 postStore.setPost(null);
-useFetch("/api/postpage", {
+const result = await useFetch("/api/postpage", {
   method: "post",
   body: { doc: "posts/" + route.params.postId },
-}).then((result) => {
-  post.value = result.data.value;
-  postStore.setPost(result.data.value);
 });
+
+post.value = result.data.value;
+postStore.setPost(result.data.value);
 
 postStore.setView("content");
 openWindow("Post");
