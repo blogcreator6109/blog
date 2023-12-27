@@ -1,6 +1,6 @@
 <template>
   <nav class="pop-up-list">
-    <div class="ad-popup" :class="{ active: adActive }">
+    <div class="ad-popup" :class="{ active: adActive, hidden: !adActive }">
       <button class="close-btn" @click.stop.prevent="adActive = false">
         <span class="material-symbols-outlined"> close </span>
       </button>
@@ -110,6 +110,15 @@ setTimeout(() => {
       }
     }
 
+    &.active {
+      transform: translate(0);
+    }
+    &.hidden {
+      .close-btn {
+        opacity: 0;
+      }
+    }
+
     .close-btn {
       color: white;
       opacity: 0;
@@ -130,20 +139,12 @@ setTimeout(() => {
       span {
         font-size: 1.4rem;
       }
-
-      &:active {
-        opacity: 0;
-      }
     }
 
     ins {
       position: absolute;
       top: 0;
       left: 0;
-    }
-
-    &.active {
-      transform: translate(0);
     }
   }
 
