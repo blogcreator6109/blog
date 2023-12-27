@@ -34,13 +34,19 @@ const result = await useFetch("/api/postpage", {
 });
 
 useSeoMeta({
+  icon: "/favicon.ico",
+  lang: "ko_KR",
   title: result.data.value.title,
   description: result.data.value.description,
   ogDescription: result.data.value.description,
   image: result.data.value.cover,
   ogImage: result.data.value.cover,
+  ogUrl: `https://blogcreator.blog/post/${result.data.value.number}`,
+  ogTitle: result.data.value.title,
+  ogType: "article",
   twitterCard: "summary_large_image",
   twitterImage: result.data.value.cover,
+  twitterDescription: result.data.value.description,
 });
 
 post.value = result.data.value;
