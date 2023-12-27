@@ -48,7 +48,7 @@ watch(triggerPopUp, () => {
   adActive.value = !adActive.value;
 });
 
-const adActive = ref(false);
+const adActive = ref(true);
 
 const data = ref([
   {
