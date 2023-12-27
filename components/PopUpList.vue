@@ -1,6 +1,13 @@
 <template>
   <nav class="pop-up-list">
-    <GoogleAdsense type="0" />
+    <Transition name="slide-right">
+      <div class="ad">
+        <button class="close-btn" @click.stop.prevent="adActive = false">
+          <span class="material-symbols-outlined"> close </span>
+        </button>
+        <GoogleAdsense type="0" v-show="adActive" />
+      </div>
+    </Transition>
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
         <a class="item" v-show="d.isActive" :href="d.href" target="_blank">
@@ -38,7 +45,10 @@ watch(triggerPopUp, () => {
   for (const d of data.value) {
     d.isActive = !d.isActive;
   }
+  adActive.value = !adActive.value;
 });
+
+const adActive = ref(false);
 
 const data = ref([
   {
@@ -52,6 +62,7 @@ const data = ref([
 ]);
 
 setTimeout(() => {
+  adActive.value = true;
   for (const d of data.value) {
     d.isActive = true;
   }
@@ -157,26 +168,6 @@ setTimeout(() => {
   }
 
   .ad {
-    width: 100%;
-    position: relative;
-
-    display: grid;
-    grid-template-columns: 3rem 1fr 3.5rem;
-    grid-template-rows: auto 1fr;
-    row-gap: 0.2rem;
-    column-gap: 1.2rem;
-
-    background-color: rgba(#333, 0.8);
-    backdrop-filter: blur(8px);
-    border-radius: 2rem;
-    padding: 1.2rem 2rem 1rem 2rem;
-    box-sizing: border-box;
-    color: #ddd;
-
-    border: 1px solid rgb(120, 120, 120);
-    box-shadow: 2px 2px 30px 0px rgba(30, 30, 30, 0.5);
-    font-size: 1.3rem;
-
     &:hover {
       .close-btn {
         opacity: 1;
