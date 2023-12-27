@@ -12,12 +12,7 @@ export const usePostStore = defineStore("post", {
   }),
   actions: {
     setCategory(category) {
-      for (const c of this.categories) {
-        if (c.path === category) {
-          this.category = c;
-          break;
-        }
-      }
+      this.category = category;
     },
     setCategories(_categories) {
       this.categories = _categories;

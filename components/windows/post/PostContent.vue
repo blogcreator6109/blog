@@ -101,6 +101,7 @@ import { usePostStore } from "~/stores/post";
 import { storeToRefs } from "pinia";
 const postStore = usePostStore();
 const { post } = storeToRefs(postStore);
+const router = useRouter();
 
 const backToCategory = () => {
   postStore.setView("list");

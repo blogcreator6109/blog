@@ -1,8 +1,8 @@
 <template>
   <div class="post-list">
-    <div class="header" v-if="category">
-      <img class="img" :src="category.img" :alt="category.name" />
-      <h1 class="title">{{ category.name }}</h1>
+    <div class="header" v-if="currCategory">
+      <img class="img" :src="currCategory.img" :alt="currCategory.name" />
+      <h1 class="title">{{ currCategory.name }}</h1>
     </div>
     <div class="list">
       <!-- <GoogleAdsense type="1" /> -->
@@ -44,7 +44,12 @@
 import { storeToRefs } from "pinia";
 import { usePostStore } from "~/stores/post";
 
-const { category, postList } = storeToRefs(usePostStore());
+const { categories, category, postList } = storeToRefs(usePostStore());
+const currCategory = computed(() => {
+  for (const c of categories.value) {
+    if (c.path == category.value) return c;
+  }
+});
 </script>
 
 <style lang="scss">
