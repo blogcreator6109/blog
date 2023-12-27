@@ -5,7 +5,6 @@
       <h1 class="title">{{ currCategory.name }}</h1>
     </div>
     <div class="list">
-      <!-- <GoogleAdsense type="1" /> -->
       <NuxtLink
         :to="`/post/${post.number}`"
         v-for="post of postList"
@@ -36,6 +35,8 @@
           <img class="cover no-image" src="/images/logo.svg" v-else />
         </div>
       </NuxtLink>
+
+      <GoogleAdsense type="1" />
     </div>
   </div>
 </template>

@@ -58,15 +58,13 @@
       </div>
       <hr />
     </div>
-    <!-- <div class="ads">
-      <GoogleAdsense type="2" />
-    </div> -->
+
     <div class="post-content__body">
       <Article :content="post.content" />
     </div>
-    <!-- <div class="ads">
+    <div class="ads">
       <GoogleAdsense type="3" />
-    </div> -->
+    </div>
   </div>
 
   <div class="skeleton" v-else>
