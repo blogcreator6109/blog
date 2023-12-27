@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 const windowOpts = {
   Post: {
     w: 800,
-    h: 1000,
+    h: 800,
   },
   Twitter: {
     w: 400,
