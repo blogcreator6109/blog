@@ -33,6 +33,16 @@ const result = await useFetch("/api/postpage", {
   body: { doc: "posts/" + route.params.postId },
 });
 
+useSeoMeta({
+  title: result.data.value.title,
+  description: result.data.value.description,
+  ogDescription: result.data.value.description,
+  image: result.data.value.cover,
+  ogImage: result.data.value.cover,
+  twitterCard: "summary_large_image",
+  twitterImage: result.data.value.cover,
+});
+
 post.value = result.data.value;
 postStore.setPost(result.data.value);
 
