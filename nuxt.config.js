@@ -119,6 +119,16 @@ export default defineNuxtConfig({
           property: "og:site_name",
           content: "Blog Creator's blog",
         },
+        {
+          hid: "twitter:site",
+          name: "twitter:site",
+          content: "@BlogCreator6109",
+        },
+        {
+          hid: "twitter:domain",
+          name: "twitter:domain",
+          content: "https://blogcreator.blog",
+        },
       ],
       script: [
         {

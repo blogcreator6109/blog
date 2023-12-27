@@ -1,5 +1,24 @@
 <template>
-  <noscript></noscript>
+  <Head v-if="post">
+    <Title>{{ post.title }}</Title>
+    <Meta name="description" :content="post.description" />
+    <Meta property="og:title" content="post.title" />
+    <Meta property="og:description" :content="post.description" />
+    <Meta property="og:type" content="article" />
+    <Meta property="og:image" :content="post?.cover" />
+    <Meta property="og:site_name" content="{{ post.title }}" />
+    <Meta
+      property="og:url"
+      :content="`https://blogcreator.blog/post/${post.number}`"
+    />
+    <Meta property="og:locale" content="ko_KR" />
+    <Meta property="article:author" content="Blog Creator" />
+    <Meta name="twitter:card" content="summary_large_image" />
+    <Meta name="article:author" content="Blog Creator" />
+    <Meta name="twitter:title" :content="post.title" />
+    <Meta name="twitter:description" :content="post.description" />
+    <Meta name="twitter:image" :content="post.cover" />
+  </Head>
 </template>
 
 <script setup>
@@ -13,25 +32,6 @@ const { post } = storeToRefs(postStore);
 
 postStore.setView("content");
 
-onMounted(() => {
-  useSeoMeta({
-    title: post.value?.title,
-    ogTitle: post.value?.title,
-    ogType: "article",
-    description: post.value?.description,
-    ogDescription: post.value?.description,
-    ogImage: post.value?.cover,
-    ogSiteName: "Blog Creator's blog",
-    ogUrl: window.location.href,
-    ogLocale: "ko_KR",
-    articleAuthor: "Blog Creator",
-    twitterCard: "summary_large_image",
-    twitterTitle: post.value?.title,
-    twitterDescription: post.value?.description,
-    twitterImage: post.value?.cover,
-    twitterCreator: "@BlogCreator6109",
-  });
-});
-
+onMounted(() => {});
 openWindow("Post");
 </script>
