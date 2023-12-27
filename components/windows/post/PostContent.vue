@@ -60,10 +60,8 @@
     </div>
 
     <div class="post-content__body">
-      <Article :content="post.content" />
-    </div>
-    <div class="ads">
       <GoogleAdsense type="3" />
+      <Article :content="post.content" />
     </div>
   </div>
 
