@@ -17,7 +17,7 @@ const props = defineProps({
 let attrs = ref({});
 if (props.type == 0) {
   attrs.value = {
-    style: "display:inline-block;width:350px;height:100px",
+    style: "display:inline-block;width:350px;height:100px !important;",
     "data-ad-slot": "2144639965",
     "data-ad-format": "auto",
     "data-full-width-responsive": "true",
