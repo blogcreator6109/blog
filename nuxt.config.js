@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     UserAgent: "*",
     Allow: "/",
   },
+  serverMiddleware: ["~/server/middleware/session.js"],
 
   app: {
     head: {

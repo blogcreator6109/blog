@@ -1,10 +1,9 @@
-import { db } from "./firebase/base";
-
+import admin from "firebase-admin";
 export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
 
-    let q = db.doc(doc);
+    let q = admin.firestore().doc(doc);
 
     const result = await q.get();
 

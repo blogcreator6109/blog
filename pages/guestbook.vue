@@ -7,5 +7,10 @@ import { useWindowStore } from "@/stores/window";
 
 const { openWindow } = useWindowStore();
 
+useSeoMeta({
+  title: "Guest Book",
+  description: "Guest Book",
+});
+
 openWindow("GuestBook");
 </script>

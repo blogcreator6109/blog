@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth } from "./base.js";
+import { auth } from "~/src/firebase.js";
 
 export const login = async (type) => {
   const fbStore = useFBStore();

@@ -1,5 +1,5 @@
 import { remove, ref, set, push, onValue } from "firebase/database";
-import { realtimeDB } from "./base.js";
+import { realtimeDB } from "~/src/firebase.js";
 import { useFBStore } from "~/stores/firebase";
 
 export const removeRTData = (id) => {

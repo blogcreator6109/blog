@@ -2,7 +2,6 @@
 
 <script setup>
 useHead({
-  titleTemplate: "Blog Creator's World - %s",
   htmlAttrs: {
     lang: "ko",
   },

@@ -18,6 +18,7 @@
 
     <div class="right">
       <!-- <MusicPlayer /> -->
+      <VisitorsCounter />
       <HeaderDateTime class="time" @click="commonStore.togglePopup" />
       <div class="dock-btn">
         <HeaderHamburgerBtn />
@@ -27,6 +28,7 @@
 </template>
 
 <script setup>
+import VisitorsCounter from "./header/VisitorsCounter.vue";
 import { useWindowStore } from "@/stores/window";
 import { useCommonStore } from "@/stores/common";
 const windowStore = useWindowStore();

@@ -7,7 +7,7 @@ import {
   orderBy,
   getDoc,
 } from "firebase/firestore";
-import { firestore } from "./base.js";
+import { firestore } from "~/src/firebase.js";
 
 export const getTable = async (col, condition = null, order = null) => {
   let q = query(collection(firestore, col));

@@ -6,6 +6,12 @@
   <NuxtPage />
 </template>
 
+<script setup>
+onNuxtReady(() => {
+  // TODO: Loading
+});
+</script>
+
 <style lang="scss">
 #__nuxt {
   width: 100%;

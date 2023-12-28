@@ -14,7 +14,7 @@
           <span>Category</span>
         </div>
         <NuxtLink
-          :to="`/post/category/${post.category.toLowerCase()}`"
+          :to="`/post/category/${post?.category?.toLowerCase()}`"
           @click="backToCategory"
           class="value cate notion-select"
           aria-label="Back to Category"
