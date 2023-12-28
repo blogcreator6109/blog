@@ -32,7 +32,7 @@ if (postStore.categories.length == 0) {
     method: "post",
     body: {
       col: "category",
-      orderBy: ["order", "asc"],
+      order: ["order", "asc"],
     },
   });
 

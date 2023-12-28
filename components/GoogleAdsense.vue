@@ -41,7 +41,11 @@ if (props.type == 0) {
 
 onMounted(() => {
   nextTick(() => {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("GoogleAdsense Error", e);
+    }
   });
 });
 </script>

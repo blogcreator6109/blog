@@ -4,7 +4,7 @@
       <img class="img" :src="currCategory.img" :alt="currCategory.name" />
       <h1 class="title">{{ currCategory.name }}</h1>
     </div>
-    <div class="list">
+    <div class="list" v-if="postList">
       <NuxtLink
         :to="`/post/${post.number}`"
         v-for="post of postList"
@@ -40,6 +40,7 @@
 
       <GoogleAdsense type="1" />
     </div>
+    <Loading v-else />
   </div>
 </template>
 

@@ -19,7 +19,7 @@ if (postStore.categories.length == 0) {
     method: "post",
     body: {
       col: "category",
-      orderBy: ["order", "asc"],
+      order: ["order", "asc"],
     },
   });
 
@@ -29,10 +29,9 @@ if (postStore.categories.length == 0) {
 postStore.setCategory(category);
 postStore.setPostList([]);
 if (postStore.allPostList.length > 0) {
-  const list = postStore.allPostList.filter((item) => {
-    if (category == "all") return true;
-    else return item.category == category;
-  });
+  const list = postStore.allPostList.filter((item) =>
+    category == "all" ? true : item.category == category
+  );
 
   postStore.setPostList(list);
 } else {
@@ -43,13 +42,17 @@ if (postStore.allPostList.length > 0) {
       condition,
       order: ["number", "desc"],
     },
-  }).then((result) => {
-    if (category == "all") {
-      postStore.setAllPostList(result.data.value);
-    } else {
-      postStore.setPostList(result.data.value);
-    }
-  });
+  })
+    .then((result) => {
+      if (category == "all") {
+        postStore.setAllPostList(result.data.value);
+      } else {
+        postStore.setPostList(result.data.value);
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
 
 postStore.setView("list");

@@ -1,0 +1,12 @@
+{
+  "rules": {
+    "guestbook": {
+      ".read": true, // 모든 사용자가 읽을 수 있습니다.
+      
+      // 각 게시물에 대해 인증된 사용자만 쓸 수 있고, 'text' 필드가 1000자 이하일 때만 쓸 수 있습니다.
+      "$msgId": {
+        ".write": "data.child('userId').val() === auth.uid || (newData.child('userId').val() === auth.uid && newData.child('text').val().length <= 1000)"
+      }
+    }
+  }
+}
