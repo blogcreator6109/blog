@@ -28,16 +28,29 @@ if (postStore.categories.length == 0) {
 
 postStore.setCategory(category);
 postStore.setPostList([]);
-useFetch("/api/firebase/table", {
-  method: "post",
-  body: {
-    col: "table",
-    condition,
-    order: ["number", "desc"],
-  },
-}).then((result) => {
-  postStore.setPostList(result.data.value);
-});
+if (postStore.allPostList.length > 0) {
+  const list = postStore.allPostList.filter((item) => {
+    if (category == "all") return true;
+    else return item.category == category;
+  });
+
+  postStore.setPostList(list);
+} else {
+  useFetch("/api/firebase/table", {
+    method: "post",
+    body: {
+      col: "table",
+      condition,
+      order: ["number", "desc"],
+    },
+  }).then((result) => {
+    if (category == "all") {
+      postStore.setAllPostList(result.data.value);
+    } else {
+      postStore.setPostList(result.data.value);
+    }
+  });
+}
 
 postStore.setView("list");
 

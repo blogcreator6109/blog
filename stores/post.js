@@ -7,10 +7,14 @@ export const usePostStore = defineStore("post", {
     category: null,
     categories: [],
     post: null,
+    allPostList: [],
     postList: [],
     view: "list",
   }),
   actions: {
+    setAllPostList(_allPostList) {
+      this.allPostList = _allPostList;
+    },
     setCategory(category) {
       this.category = category;
     },
