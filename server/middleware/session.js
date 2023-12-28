@@ -18,6 +18,7 @@ if (!admin.apps.length) {
 }
 export default defineEventHandler(async (event) => {
   let sessionId = getCookie(event, "sessionId");
+  // let sessionId = null;
 
   if (!sessionId) {
     // 1시간 동안 유효한 쿠키를 생성합니다
