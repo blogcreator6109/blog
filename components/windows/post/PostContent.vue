@@ -61,6 +61,7 @@
 
     <div class="post-content__body">
       <Article :content="post.content" />
+      <div ref="commentEl" class="comment"></div>
       <GoogleAdsense type="3" />
     </div>
   </div>
@@ -103,6 +104,28 @@ const backToCategory = () => {
   postStore.setView("list");
   router.push("/post/category/" + post.value.category.toLowerCase());
 };
+
+const commentEl = ref(null);
+
+onMounted(() => {
+  let script = document.createElement("script");
+  script.src = "https://giscus.app/client.js";
+  script.async = true;
+  script.setAttribute("data-repo", "blogcreator6109/blog-post-comment");
+  script.setAttribute("data-repo-id", "R_kgDOK-a-XA");
+  script.setAttribute("data-category", "Announcements");
+  script.setAttribute("data-category-id", "DIC_kwDOK-a-XM4CcDDj");
+  script.setAttribute("data-mapping", "title");
+  script.setAttribute("data-strict", "0");
+  script.setAttribute("data-reactions-enabled", "1");
+  script.setAttribute("data-emit-metadata", "0");
+  script.setAttribute("data-input-position", "top");
+  script.setAttribute("data-theme", "light");
+  script.setAttribute("data-lang", "ko");
+  script.setAttribute("data-loading", "lazy");
+
+  commentEl.value.appendChild(script);
+});
 </script>
 
 <style lang="scss">
