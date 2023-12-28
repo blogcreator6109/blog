@@ -1,5 +1,4 @@
-import "../utils/firebase";
-import admin from "firebase-admin";
+import admin from "../utils/firebase";
 import { Timestamp } from "firebase-admin/firestore";
 
 export default defineEventHandler(async (e) => {

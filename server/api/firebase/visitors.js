@@ -1,7 +1,6 @@
 // server/middleware/session.js
-import "../utils/firebase";
+import admin from "../utils/firebase";
 import { v4 as uuidv4 } from "uuid";
-import admin from "firebase-admin";
 
 export default defineEventHandler(async (e) => {
   let sessionId = getCookie(e, "sessionId");

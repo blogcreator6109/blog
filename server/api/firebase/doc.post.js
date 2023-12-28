@@ -1,5 +1,4 @@
-import "../utils/firebase";
-import admin from "firebase-admin";
+import admin from "../utils/firebase";
 export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
