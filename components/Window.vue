@@ -97,7 +97,7 @@ const maximizeWindow = function () {
 
 @media (max-width: $breakpoint-tablet) {
   .window {
-    display: absolute;
+    display: flex;
     flex-direction: column;
     position: absolute;
     top: 0 !important;
