@@ -155,13 +155,13 @@ setTimeout(() => {
     display: grid;
     grid-template-columns: 3rem 1fr 3.5rem;
     grid-template-rows: auto 1fr;
-    row-gap: 0.2rem;
+    row-gap: 0.3rem;
     column-gap: 1.2rem;
 
     background-color: rgba(#333, 0.8);
     backdrop-filter: blur(8px);
     border-radius: 2rem;
-    padding: 1.2rem 2rem 1rem 2rem;
+    padding: 1.2rem 2rem 0.3rem 2rem;
     box-sizing: border-box;
     color: #ddd;
 
@@ -210,6 +210,7 @@ setTimeout(() => {
       grid-column: 3;
       display: flex;
       align-items: flex-end;
+      margin-bottom: 0.5rem;
       img {
         width: 100%;
         border-radius: 0.4rem;
@@ -221,7 +222,7 @@ setTimeout(() => {
       font-weight: bold;
     }
     .content {
-      line-height: normal;
+      line-height: 1.4;
       grid-row: 2;
       grid-column: 2;
     }

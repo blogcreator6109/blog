@@ -82,6 +82,14 @@ const sendMessage = () => {
     isCounting.value = true;
 
     setRTData("guestbook", message.value).finally(() => {
+      useFetch("/api/firebase/sendemail", {
+        method: "post",
+        body: {
+          name: store.user.displayName,
+          content: message.value,
+        },
+      });
+
       message.value = "";
       scrollDown();
     });

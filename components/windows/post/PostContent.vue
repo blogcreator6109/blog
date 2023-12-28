@@ -1,6 +1,6 @@
 <template>
   <div class="post-content" v-if="post">
-    <div class="post-content__cover" :class="post.cover ? null : 'no-image'">
+    <div class="post-content__cover" v-if="post?.cover">
       <img :src="post.cover" v-if="post.cover" alt="cover" />
     </div>
     <div class="post-content__info">
@@ -117,10 +117,6 @@ const backToCategory = () => {
   &__cover {
     width: 100%;
     height: 40rem;
-
-    &.no-image {
-      height: 100px;
-    }
 
     img {
       width: 100%;
