@@ -46,6 +46,7 @@ if (postStore.allPostList.length > 0) {
     .then((result) => {
       if (category == "all") {
         postStore.setAllPostList(result.data.value);
+        postStore.setPostList(result.data.value);
       } else {
         postStore.setPostList(result.data.value);
       }
