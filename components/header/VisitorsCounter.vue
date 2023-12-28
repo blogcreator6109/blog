@@ -1,5 +1,5 @@
 <template>
-  <div class="visitors-counter">
+  <div class="visitors-counter" v-if="visitors != null">
     <img src="@/assets/images/visitors.webp" alt="visitors" />
     <div class="counter">{{ visitors }}</div>
     <div class="tooltip">일일 방문자 수</div>
@@ -7,23 +7,43 @@
 </template>
 
 <script setup>
-const visitors = ref(0);
+import { ref, onMounted } from "vue";
 
+const visitors = ref(null);
 const startOfToday = new Date();
-
 startOfToday.setHours(0, 0, 0, 0);
 
-useFetch("/api/firebase/table", {
-  method: "post",
-  body: {
-    col: "visits",
-    condition: ["timestamp", ">=", startOfToday.toISOString()],
-  },
-}).then((result) => {
-  visitors.value = result.data.value.length;
-});
-</script>
+const fetchVisitors = () => {
+  // Check if 30 minutes have passed since the last fetch
+  const savedVisitors = JSON.parse(localStorage.getItem("bc6109-visitors"));
+  if (savedVisitors && Date.now() - savedVisitors.timestamp < 30 * 60 * 1000) {
+    // Use the cached value
+    visitors.value = savedVisitors.num;
+  } else {
+    // Perform the fetch
+    useFetch("/api/firebase/table", {
+      method: "post",
+      body: {
+        col: "visits",
+        condition: ["timestamp", ">=", startOfToday.toISOString()],
+      },
+    }).then((result) => {
+      visitors.value = result.data.value.length;
+      // Save the new value and current time in localStorage
+      localStorage.setItem(
+        "bc6109-visitors",
+        JSON.stringify({
+          num: result.data.value.length,
+          timestamp: Date.now(),
+        })
+      );
+      console.log(result.data.value.length, Date.now());
+    });
+  }
+};
 
+onMounted(fetchVisitors);
+</script>
 <style lang="scss">
 .visitors-counter {
   display: flex;

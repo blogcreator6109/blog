@@ -4,6 +4,7 @@ import { Timestamp } from "firebase-admin/firestore";
 export default defineEventHandler(async (e) => {
   try {
     const { col, condition, order, limit } = await readBody(e);
+    console.log("TABLE 요청", col, condition, order);
 
     let q = admin.firestore().collection(col);
     if (condition) {

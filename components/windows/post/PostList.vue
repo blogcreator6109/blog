@@ -50,6 +50,9 @@ import { usePostStore } from "~/stores/post";
 const postStore = usePostStore();
 const { categories, category, postList } = storeToRefs(postStore);
 const currCategory = computed(() => {
+  // categories가 없으면 null
+  if (!categories?.value?.length) return null;
+
   for (const c of categories.value) {
     if (c.path == category.value) return c;
   }

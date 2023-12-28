@@ -49,10 +49,3 @@ onMounted(() => {
   });
 });
 </script>
-
-<style lang="scss" scoped>
-.adsbygoogle {
-  border-radius: 2rem;
-  overflow: hidden;
-}
-</style>
