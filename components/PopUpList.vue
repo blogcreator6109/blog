@@ -1,11 +1,5 @@
 <template>
   <nav class="pop-up-list">
-    <div class="ad-popup" :class="{ active: adActive, hidden: !adActive }">
-      <button class="close-btn" @click.stop.prevent="adActive = false">
-        <span class="material-symbols-outlined"> close </span>
-      </button>
-      <GoogleAdsense type="0" />
-    </div>
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
         <a class="item" v-show="d.isActive" :href="d.href" target="_blank">
@@ -26,6 +20,12 @@
         </a>
       </template>
     </TransitionGroup>
+    <div class="ad-popup" :class="{ active: adActive, hidden: !adActive }">
+      <button class="close-btn" @click.stop.prevent="adActive = false">
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+      <GoogleAdsense type="0" />
+    </div>
   </nav>
 </template>
 
