@@ -16,17 +16,17 @@ if (!admin.apps.length) {
 
 exports.handler = async function (event, context) {
   try {
-    // const db = admin.firestore();
-    // const visitsRef = db.collection("visits");
+    const db = admin.firestore();
+    const visitsRef = db.collection("visits");
 
-    // // Firestore 문서 삭제 로직
-    // const snapshot = await visitsRef.get();
-    // const deletePromises = [];
-    // snapshot.forEach((doc) => {
-    //   deletePromises.push(visitsRef.doc(doc.id).delete());
-    // });
+    // Firestore 문서 삭제 로직
+    const snapshot = await visitsRef.get();
+    const deletePromises = [];
+    snapshot.forEach((doc) => {
+      deletePromises.push(visitsRef.doc(doc.id).delete());
+    });
 
-    // await Promise.all(deletePromises);
+    await Promise.all(deletePromises);
 
     return {
       statusCode: 200,
