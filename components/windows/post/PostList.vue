@@ -36,6 +36,8 @@
         </div>
       </NuxtLink>
 
+      <Loading v-if="isLoading" />
+
       <GoogleAdsense type="1" />
     </div>
   </div>
@@ -44,13 +46,62 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { usePostStore } from "~/stores/post";
-
-const { categories, category, postList } = storeToRefs(usePostStore());
+const postStore = usePostStore();
+const { categories, category, postList } = storeToRefs(postStore);
 const currCategory = computed(() => {
   for (const c of categories.value) {
     if (c.path == category.value) return c;
   }
 });
+
+const isLoading = ref(false);
+
+// 일단 다 불러오는게 좋다 읽기 회수가 부족한거라 여러번 부르는게 오히려 손
+// onMounted(() => {
+//   const io = new IntersectionObserver(
+//     async (entries, io) => {
+//       isLoading.value = true;
+//       // observe 하고 있는 entry들
+//       for (const entry of entries) {
+//         // entry가 화면에 보이면
+//         if (entry.isIntersecting) {
+//           // entry를 unobserve하고
+//           io.unobserve(entry.target);
+
+//           const lastPost = postList.value[postList.value.length - 1];
+
+//           setTimeout(async () => {
+//             // 새로운 데이터를 가져온다.
+//             const { data } = await useFetch("/api/firebase/table", {
+//               method: "post",
+//               body: {
+//                 col: "table",
+//                 condition: ["number", "<", lastPost.number],
+//                 order: ["number", "desc"],
+//                 limit: 10,
+//               },
+//             });
+//             const newPostList = [...postList.value, ...data.value];
+//             postStore.setPostList(newPostList);
+
+//             const items = document.querySelectorAll(".post-list .item");
+//             if (data.value.length > 0) {
+//               io.observe(items[items.length - 1]);
+//             }
+//             isLoading.value = false;
+//           }, 2000);
+//         }
+//       }
+//     },
+//     { threshold: 0.7 }
+//   );
+
+//   const items = document.querySelectorAll(".post-list .item");
+
+//   if (items.length > 0) {
+//     io.observe(items[items.length - 1]);
+//   }
+// });
 </script>
 
 <style lang="scss">

@@ -26,6 +26,7 @@ const postStore = usePostStore();
 const post = ref({});
 const route = useRoute();
 
+// category 가져오기
 if (postStore.categories.length == 0) {
   const result = await useFetch("/api/firebase/table", {
     method: "post",

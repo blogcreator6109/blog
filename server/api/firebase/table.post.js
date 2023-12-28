@@ -3,7 +3,7 @@ import { Timestamp } from "firebase-admin/firestore";
 
 export default defineEventHandler(async (e) => {
   try {
-    const { col, condition, order } = await readBody(e);
+    const { col, condition, order, limit } = await readBody(e);
 
     let q = admin.firestore().collection(col);
     if (condition) {
@@ -16,6 +16,10 @@ export default defineEventHandler(async (e) => {
 
     if (order) {
       q = q.orderBy(...order);
+    }
+
+    if (limit) {
+      q = q.limit(limit);
     }
 
     const snapshot = await q.get();
