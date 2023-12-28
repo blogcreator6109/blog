@@ -82,14 +82,14 @@ const sendMessage = () => {
     isCounting.value = true;
 
     setRTData("guestbook", message.value).finally(() => {
-      // 메일 보내기 기능
-      useFetch("/api/firebase/sendemail", {
-        method: "post",
-        body: {
-          name: store.user.displayName,
-          content: message.value,
-        },
-      });
+      // // 메일 보내기 기능
+      // useFetch("/api/firebase/sendemail", {
+      //   method: "post",
+      //   body: {
+      //     name: store.user.displayName,
+      //     content: message.value,
+      //   },
+      // });
 
       message.value = "";
       scrollDown();
