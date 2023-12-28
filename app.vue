@@ -9,6 +9,7 @@
 <script setup>
 onNuxtReady(() => {
   // TODO: Loading
+  useFetch("/api/firebase/visitors");
 });
 </script>
 

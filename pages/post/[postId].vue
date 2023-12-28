@@ -28,7 +28,7 @@ const route = useRoute();
 
 post.value = null;
 postStore.setPost(null);
-const result = await useFetch("/api/postpage", {
+const result = await useFetch("/api/firebase/doc", {
   method: "post",
   body: { doc: "posts/" + route.params.postId },
 });

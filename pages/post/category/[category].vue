@@ -17,7 +17,7 @@ const condition = category == "all" ? null : ["category", "==", category];
 postStore.setCategory(category);
 postStore.setPostList([]);
 
-useFetch("/api/posttable", {
+useFetch("/api/firebase/table", {
   method: "post",
   body: {
     col: "table",

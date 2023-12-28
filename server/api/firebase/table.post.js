@@ -1,3 +1,4 @@
+import "../utils/firebase";
 import admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore";
 
