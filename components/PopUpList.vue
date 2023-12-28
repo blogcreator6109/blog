@@ -99,7 +99,6 @@ setTimeout(() => {
   .ad-popup {
     position: relative;
     background-color: white;
-    border-radius: 2rem;
     transform: translateX(calc(100% + 1.5rem));
     transition: transform 0.2s ease-in-out;
 

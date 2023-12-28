@@ -19,6 +19,8 @@ if (props.type == 0) {
   attrs.value = {
     style: "display:inline-block;width:350px;height:100px",
     "data-ad-slot": "4052865423",
+    "data-ad-format": "auto",
+    "data-full-width-responsive": "true",
   };
 } else if (props.type == 1) {
   attrs.value = {
