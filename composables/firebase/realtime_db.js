@@ -1,14 +1,14 @@
 import { remove, ref, set, push, onValue } from "firebase/database";
-import { realtimeDB } from "~/src/firebase.js";
 import { useFBStore } from "~/stores/firebase";
 
+const db = useNuxtApp().$realtimeDB;
 export const removeRTData = (id) => {
-  return remove(ref(realtimeDB, id));
+  return remove(ref(db, id));
 };
 
 export const setRTData = (name, data) => {
   const store = useFBStore();
-  return set(push(ref(realtimeDB, name)), {
+  return set(push(ref(db, name)), {
     userId: store.user?.uid,
     name: store.user?.displayName || store.email,
     text: data,
@@ -18,5 +18,5 @@ export const setRTData = (name, data) => {
 };
 
 export const onDataChanged = (name, callback) => {
-  return onValue(ref(realtimeDB, name), callback);
+  return onValue(ref(db, name), callback);
 };

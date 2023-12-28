@@ -43,7 +43,7 @@
           <span>Created</span>
         </div>
         <div class="value date">
-          {{ useDateFormat(post.created, "YYYY-MM-DD") }}
+          {{ useDateFormat(post.created, "YYYY-MM-DD A HH:mm") }}
         </div>
         <div class="label">
           <img
@@ -53,7 +53,7 @@
           <span>Updated</span>
         </div>
         <div class="value date">
-          {{ useDateFormat(post.updated, "YYYY-MM-DD") }}
+          {{ useDateFormat(post.updated, "YYYY-MM-DD A HH:mm") }}
         </div>
       </div>
       <hr />

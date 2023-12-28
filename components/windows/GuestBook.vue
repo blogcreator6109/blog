@@ -16,6 +16,7 @@ import MsgForm from "./guestbook/MsgForm.vue";
 import MsgList from "./guestbook/MsgList.vue";
 import Modal from "./guestbook/Modal.vue";
 
+import useFirebase from "~/composables/useFirebase";
 import { useFBStore } from "~/stores/firebase";
 import { storeToRefs } from "pinia";
 

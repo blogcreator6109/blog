@@ -4,7 +4,7 @@
     <ul>
       <li v-for="d of list" :key="d.title" ref="refs">
         <div class="created">
-          {{ dateToStr(d.created, "YYYY. MM. DD") }}
+          {{ useDateFormat(d.created, "YYYY. MM. DD") }}
         </div>
         <h3>{{ d.title }}</h3>
         <img v-if="d.image" :src="d.image" />
@@ -15,7 +15,6 @@
 </template>
 
 <script setup>
-import { dateToStr } from "@/src/util";
 const router = useRouter();
 router.push("/diary");
 

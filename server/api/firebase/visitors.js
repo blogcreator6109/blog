@@ -1,5 +1,5 @@
 // server/middleware/session.js
-import admin from "../utils/firebase";
+import admin from "firebase-admin";
 import { v4 as uuidv4 } from "uuid";
 
 export default defineEventHandler(async (e) => {

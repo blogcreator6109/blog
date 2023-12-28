@@ -1,12 +1,40 @@
 <template>
   <div class="fall-snow">
-    <div class="snow" v-for="i of numSnow"></div>
+    <div ref="snow" class="snow" v-for="i of numSnow"></div>
   </div>
 </template>
 
 <script setup>
 // https://csshint.com/css-snow-effects/
 const numSnow = 400;
+const snow = ref([]);
+
+const config = useRuntimeConfig();
+
+onMounted(() => {
+  for (let i = 0; i < snow.value.length; i++) {
+    const s = snow.value[i];
+    s.style.opacity = Math.random(); // 무작위 투명도
+
+    const startX = Math.random() * 100; // 시작 X 좌표 무작위
+    const endX = startX + (Math.random() * 20 - 10); // 종료 X 좌표 무작위
+    const scale = Math.max(Math.random() * 2, 0.9); // 무작위 크기
+
+    const keyframe = [
+      { transform: `translate(${startX}vw, 0) scale(${scale})` },
+      { transform: `translate(${endX}vw, 100vh) scale(${scale})` },
+    ];
+
+    const option = {
+      duration: 15000 + Math.random() * 25000, // 무작위 지속 시간
+      easing: "linear",
+      iterations: Infinity,
+      delay: -Math.random() * 20 * 1000, // 무작위 지연 시간
+    };
+
+    s.animate(keyframe, option);
+  }
+});
 </script>
 
 <style lang="scss">
@@ -18,34 +46,5 @@ const numSnow = 400;
   background: white;
   border-radius: 50%;
   box-shadow: 0 0 3px 3px white;
-
-  @for $i from 1 through $total {
-    $start-x: random(100) * 1vw;
-    $offset-x: (random(30) - 15) * 1vw;
-    $end-x: $start-x + $offset-x;
-
-    $start-y: 0;
-    $end-y: 100vh;
-
-    $duration: (random(30) + 20) * 1s;
-    $delay: random() * -30s;
-
-    $start-scale: random() * 1 + 1;
-    $end-scale: random() * 1 + 0.5;
-
-    &:nth-child(#{$i}) {
-      animation: fall-#{$i} $duration $delay linear infinite;
-      opacity: random();
-    }
-
-    @keyframes fall-#{$i} {
-      from {
-        transform: translate($start-x, $start-y) scale($start-scale);
-      }
-      to {
-        transform: translate($end-x, $end-y) scale($end-scale);
-      }
-    }
-  }
 }
 </style>

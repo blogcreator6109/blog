@@ -14,9 +14,20 @@ const category = route.params.category;
 
 const condition = category == "all" ? null : ["category", "==", category];
 
+if (postStore.categories.length == 0) {
+  const result = await useFetch("/api/firebase/table", {
+    method: "post",
+    body: {
+      col: "category",
+      orderBy: ["order", "asc"],
+    },
+  });
+
+  postStore.setCategories(result.data.value);
+}
+
 postStore.setCategory(category);
 postStore.setPostList([]);
-
 useFetch("/api/firebase/table", {
   method: "post",
   body: {

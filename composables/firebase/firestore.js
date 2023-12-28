@@ -7,8 +7,8 @@ import {
   orderBy,
   getDoc,
 } from "firebase/firestore";
-import { firestore } from "~/src/firebase.js";
 
+const firestore = useNuxtApp().$firestore;
 export const getTable = async (col, condition = null, order = null) => {
   let q = query(collection(firestore, col));
 

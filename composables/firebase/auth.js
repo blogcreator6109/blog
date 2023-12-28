@@ -7,8 +7,8 @@ import {
   signInWithPopup,
   onAuthStateChanged,
 } from "firebase/auth";
-import { auth } from "~/src/firebase.js";
 
+const auth = useNuxtApp().$auth;
 export const login = async (type) => {
   const fbStore = useFBStore();
 

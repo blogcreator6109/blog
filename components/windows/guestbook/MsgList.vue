@@ -40,8 +40,8 @@
 </template>
 
 <script setup>
-import { dateToStr } from "~/src/util";
 import { useFBStore } from "~/stores/firebase";
+import useFirebase from "~/composables/useFirebase";
 
 const { onAuthChanged, onDataChanged } = useFirebase();
 
@@ -65,7 +65,7 @@ const makeList = () => {
       const key = keysSorted[i];
       const d = data[key];
 
-      const date = dateToStr(d.time, "YYYY년 MM월 DD일 dddd");
+      const date = useDateFormat(d.time, "YYYY년 MM월 DD일 dddd");
 
       const lastIdx = result.length - 1;
       const lastUserIdx = result[lastIdx]?.userMsgs.length - 1;
@@ -73,8 +73,8 @@ const makeList = () => {
       const isNewDate = result.length == 0 || result[lastIdx]?.date != date;
       const isSameUser =
         !isNewDate && result[lastIdx]?.userMsgs[lastUserIdx]?.name == d.name;
-      const nextTime = dateToStr(data[keysSorted[i + 1]]?.time, "HH:mm A");
-      const currTime = dateToStr(d.time, "HH:mm A");
+      const nextTime = useDateFormat(data[keysSorted[i + 1]]?.time, "HH:mm A");
+      const currTime = useDateFormat(d.time, "HH:mm A");
 
       let isSameTime = false;
       if (i < keysSorted.length - 1) {
@@ -227,7 +227,7 @@ onUpdated(() => {
         width: 4rem;
         overflow: hidden;
         background-color: white;
-        border-radius: 44%;
+        border-radius: 1.5rem;
         opacity: 0;
         height: 0;
         img {

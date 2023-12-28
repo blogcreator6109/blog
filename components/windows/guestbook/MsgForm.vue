@@ -46,7 +46,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { ref as dbRef, push, set } from "firebase/database";
 import { useFBStore } from "~/stores/firebase";
 import googleImg from "~/assets/images/guestbook/google.svg";
 import twitterImg from "~/assets/images/guestbook/twitter.svg";

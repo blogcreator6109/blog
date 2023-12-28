@@ -26,6 +26,18 @@ const postStore = usePostStore();
 const post = ref({});
 const route = useRoute();
 
+if (postStore.categories.length == 0) {
+  const result = await useFetch("/api/firebase/table", {
+    method: "post",
+    body: {
+      col: "category",
+      orderBy: ["order", "asc"],
+    },
+  });
+
+  postStore.setCategories(result.data.value);
+}
+
 post.value = null;
 postStore.setPost(null);
 const result = await useFetch("/api/firebase/doc", {

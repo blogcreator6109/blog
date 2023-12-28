@@ -3,11 +3,9 @@
 </template>
 
 <script setup>
-import { dateToStr } from "@/src/util";
-
 const datetime = ref(new Date());
 const dateStr = computed(() =>
-  dateToStr(datetime.value, "MM월 DD일 (ddd) A HH:mm")
+  useDateFormat(datetime.value, "MM월 DD일 (ddd) A HH:mm")
 );
 
 onMounted(() => {

@@ -17,10 +17,12 @@
         <header class="header" v-if="currPage">
           <h1 class="title">{{ currPage.title }}</h1>
           <div class="created">
-            Created: {{ dateToStr(currPage.created, "YYYY. MM. DD hh:mm A") }}
+            Created:
+            {{ useDateFormat(currPage.created, "YYYY. MM. DD hh:mm A") }}
           </div>
           <div class="updated">
-            Updated: {{ dateToStr(currPage.updated, "YYYY. MM. DD hh:mm A") }}
+            Updated:
+            {{ useDateFormat(currPage.updated, "YYYY. MM. DD hh:mm A") }}
           </div>
         </header>
         <Article :blocks="blocks" />
@@ -64,8 +66,6 @@
 </template>
 
 <script setup>
-import { dateToStr } from "@/src/util";
-
 import { storeToRefs } from "pinia";
 import { useBookStore } from "@/stores/book";
 import Article from "@/components/windows/post/Article.vue";
