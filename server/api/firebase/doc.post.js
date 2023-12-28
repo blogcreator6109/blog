@@ -3,7 +3,7 @@ export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
 
-    console.log("doc", doc);
+    console.log("Doc 요청", doc);
     let q = admin.firestore().doc(doc);
 
     const result = await q.get();

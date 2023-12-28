@@ -20,7 +20,6 @@ openWindow("Post");
 
 onMounted(async () => {
   const categories = JSON.parse(localStorage.getItem("bc6109-categories"));
-  console.log(categories);
   if (categories) {
     postStore.setCategories(categories);
   } else {

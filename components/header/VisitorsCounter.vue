@@ -37,7 +37,6 @@ const fetchVisitors = () => {
           timestamp: Date.now(),
         })
       );
-      console.log(result.data.value.length, Date.now());
     });
   }
 };
