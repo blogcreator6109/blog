@@ -8,7 +8,6 @@ import { usePostStore } from "@/stores/post";
 
 const { openWindow } = useWindowStore();
 const postStore = usePostStore();
-const post = ref({});
 const route = useRoute();
 
 postStore.setView("content");
