@@ -7,9 +7,12 @@ export default defineEventHandler(async (e) => {
   try {
     const { col, condition, order, limit, select } = await readBody(e);
 
-    const cacheKey = `${col}-${JSON.stringify(condition || 0)}-${JSON.stringify(
-      order || 0
-    )}-${limit || 0}-${JSON.stringify(select || 0)}`;
+    const cacheKey = `${col}-${JSON.stringify(
+      condition || null
+    )}-${JSON.stringify(order || null)}-${limit || null}-${JSON.stringify(
+      select || null
+    )}`;
+    console.log(cacheKey);
 
     // 캐시에서 데이터 조회
     let cachedData = myCache.get(cacheKey);
@@ -18,12 +21,14 @@ export default defineEventHandler(async (e) => {
       console.log("캐시 데이터 반환");
       return cachedData;
     } else {
-      console.log("TABLE 요청", col, condition, order);
+      console.log("TABLE 요청", col, condition, order, limit, select);
       let q = admin.firestore().collection(col);
 
       if (condition) {
         for (const cond of condition) {
-          q = q.where(...cond);
+          if (cond.length > 0) {
+            q = q.where(...cond);
+          }
         }
       }
 
@@ -40,6 +45,7 @@ export default defineEventHandler(async (e) => {
 
       const snapshot = await q.get();
       const result = [];
+      console.log(snapshot);
 
       snapshot.forEach((doc) => {
         result.push({ id: doc.id, ...doc.data() });

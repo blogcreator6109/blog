@@ -77,19 +77,18 @@ onMounted(() => {
             const lastPost = postList.value[postList.value.length - 1];
             isLoading.value = true;
             // 새로운 데이터를 가져온다.
+            const categoryCond =
+              category.value == "all" ? [] : ["category", "==", category.value];
             const { data } = await useFetch("/api/firebase/table", {
               method: "post",
               body: {
                 col: "table",
-                condition: [
-                  ["number", "<", lastPost.number],
-                  ["category", "==", category.value],
-                ],
+                condition: [["number", "<", lastPost.number], categoryCond],
                 order: ["number", "desc"],
                 limit: LIMIT,
               },
             });
-            hasMore = data.value.length == 5;
+            hasMore = data.value.length == LIMIT;
             const newPostList = [...postList.value, ...data.value];
             postStore.setPostList(newPostList);
           }, 2000);
