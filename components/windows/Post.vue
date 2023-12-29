@@ -15,6 +15,15 @@ watch(
   }
 );
 
+watch(
+  () => postStore.category,
+  () => {
+    if (document) {
+      document.querySelector(".window .body").scrollTop = 0;
+    }
+  }
+);
+
 onBeforeMount(() => {
   // 닫히기전에 사이드바가 열려있었다면 닫아준다
   postStore.closeSidebar();

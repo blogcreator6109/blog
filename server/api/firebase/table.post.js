@@ -12,8 +12,6 @@ export default defineEventHandler(async (e) => {
     )}-${JSON.stringify(order || null)}-${limit || null}-${JSON.stringify(
       select || null
     )}`;
-    console.log(cacheKey);
-
     // 캐시에서 데이터 조회
     let cachedData = myCache.get(cacheKey);
 
@@ -45,7 +43,6 @@ export default defineEventHandler(async (e) => {
 
       const snapshot = await q.get();
       const result = [];
-      console.log(snapshot);
 
       snapshot.forEach((doc) => {
         result.push({ id: doc.id, ...doc.data() });

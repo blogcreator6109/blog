@@ -99,6 +99,7 @@ onMounted(() => {
   );
 
   const items = document.querySelectorAll(".post-list .item");
+  console.log(items.length, LIMIT, items.length >= LIMIT);
 
   if (items.length >= LIMIT) {
     io.observe(items[items.length - 1]);
@@ -111,7 +112,7 @@ watch(
   () => {
     const items = document.querySelectorAll(".post-list .item");
 
-    if (hasMore) {
+    if (hasMore && items.length >= LIMIT) {
       io.observe(items[items.length - 1]);
     }
 
