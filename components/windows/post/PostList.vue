@@ -4,7 +4,7 @@
       <img class="img" :src="currCategory.img" :alt="currCategory.name" />
       <h1 class="title">{{ currCategory.name }}</h1>
     </div>
-    <div class="list" v-if="postList">
+    <div class="list" v-if="postList" ref="el">
       <NuxtLink
         :to="`/post/${post.number}`"
         v-for="post of postList"
@@ -57,52 +57,65 @@ const currCategory = computed(() => {
 });
 
 const isLoading = ref(false);
+let hasMore = true;
+let io = null;
+onMounted(() => {
+  io = new IntersectionObserver(
+    async (entries, io) => {
+      // observe 하고 있는 entry들
+      for (const entry of entries) {
+        // entry가 화면에 보이면
+        if (entry.isIntersecting) {
+          // 이미 로딩 중이면 return
+          if (isLoading.value) return;
+          isLoading.value = true;
+          // entry를 unobserve하고
+          io.unobserve(entry.target);
 
-// onMounted(() => {
-//   const io = new IntersectionObserver(
-//     async (entries, io) => {
-//       isLoading.value = true;
-//       // observe 하고 있는 entry들
-//       for (const entry of entries) {
-//         // entry가 화면에 보이면
-//         if (entry.isIntersecting) {
-//           // entry를 unobserve하고
-//           io.unobserve(entry.target);
+          setTimeout(async () => {
+            const lastPost = postList.value[postList.value.length - 1];
+            isLoading.value = true;
+            // 새로운 데이터를 가져온다.
+            const { data } = await useFetch("/api/firebase/table", {
+              method: "post",
+              body: {
+                col: "table",
+                condition: ["number", "<", lastPost.number],
+                order: ["number", "desc"],
+                limit: 5,
+              },
+            });
+            hasMore = data.value.length == 5;
+            const newPostList = [...postList.value, ...data.value];
+            postStore.setPostList(newPostList);
+          }, 2000);
+        }
+      }
+    },
+    { threshold: 0.7 }
+  );
 
-//           const lastPost = postList.value[postList.value.length - 1];
+  const items = document.querySelectorAll(".post-list .item");
 
-//           setTimeout(async () => {
-//             // 새로운 데이터를 가져온다.
-//             const { data } = await useFetch("/api/firebase/table", {
-//               method: "post",
-//               body: {
-//                 col: "table",
-//                 condition: ["number", "<", lastPost.number],
-//                 order: ["number", "desc"],
-//                 limit: 10,
-//               },
-//             });
-//             const newPostList = [...postList.value, ...data.value];
-//             postStore.setPostList(newPostList);
+  if (items.length > 0) {
+    io.observe(items[items.length - 1]);
+  }
+});
 
-//             const items = document.querySelectorAll(".post-list .item");
-//             if (data.value.length > 0) {
-//               io.observe(items[items.length - 1]);
-//             }
-//             isLoading.value = false;
-//           }, 2000);
-//         }
-//       }
-//     },
-//     { threshold: 0.7 }
-//   );
+// postList가 갱신되면 새로운 item을 observe한다.
+watch(
+  postList,
+  () => {
+    const items = document.querySelectorAll(".post-list .item");
 
-//   const items = document.querySelectorAll(".post-list .item");
+    if (hasMore) {
+      io.observe(items[items.length - 1]);
+    }
 
-//   if (items.length > 0) {
-//     io.observe(items[items.length - 1]);
-//   }
-// });
+    isLoading.value = false;
+  },
+  { flush: "post" }
+);
 </script>
 
 <style lang="scss">
