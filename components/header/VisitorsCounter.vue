@@ -15,7 +15,7 @@ const startOfToday = new Date();
 startOfToday.setHours(0, 0, 0, 0);
 
 // 1시간마다 새로운 쿠키 발급!
-const cookie = useCookie("bc6109-visitor", {
+const cookie = useCookie("bc6109-visit", {
   path: "/",
   maxAge: 60 * 60,
 });
