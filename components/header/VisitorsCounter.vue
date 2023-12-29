@@ -39,7 +39,6 @@ if (process.server) {
     };
   }
 } else {
-  console.log(cookie.value);
   if (cookie.value) {
     visitors.value = cookie.value.visitors;
   }
