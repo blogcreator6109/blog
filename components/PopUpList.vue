@@ -133,7 +133,7 @@ setTimeout(() => {
       border-radius: 50%;
       background-color: rgba(#333, 0.8);
       border: 1px solid rgb(120, 120, 120);
-      z-index: 2;
+      z-index: 40;
       span {
         font-size: 1.4rem;
       }
@@ -270,6 +270,7 @@ setTimeout(() => {
     top: $header-height-tablet;
     .ad-popup {
       padding: 0 1rem;
+      height: 312px;
       box-sizing: border-box;
       .close-btn {
         opacity: 1;
