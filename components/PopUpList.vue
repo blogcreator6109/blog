@@ -268,6 +268,16 @@ setTimeout(() => {
 @media (max-width: $breakpoint-tablet) {
   .pop-up-list {
     top: $header-height-tablet;
+    .ad-popup {
+      padding: 0 1rem;
+      box-sizing: border-box;
+      .close-btn {
+        opacity: 1;
+        scale: 1.2;
+        top: 0.5rem;
+        left: 0.5rem;
+      }
+    }
 
     .item {
       .close-btn {

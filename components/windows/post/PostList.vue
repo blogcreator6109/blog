@@ -60,7 +60,6 @@ const currCategory = computed(() => {
 
 const isLoading = ref(false);
 
-// 일단 다 불러오는게 좋다 읽기 회수가 부족한거라 여러번 부르는게 오히려 손
 // onMounted(() => {
 //   const io = new IntersectionObserver(
 //     async (entries, io) => {
