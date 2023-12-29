@@ -17,10 +17,7 @@ export default defineEventHandler(async (e) => {
     });
 
     const db = admin.firestore();
-    await db.collection("visits").doc(sessionId).set({
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
-      userAgent: e.node.req.headers["user-agent"],
-    });
+    await db.collection("visitors").doc(sessionId).set({});
   }
   return e;
 });

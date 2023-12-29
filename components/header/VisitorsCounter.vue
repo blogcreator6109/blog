@@ -24,8 +24,7 @@ const fetchVisitors = () => {
     useFetch("/api/firebase/table", {
       method: "post",
       body: {
-        col: "visits",
-        condition: ["timestamp", ">=", startOfToday.toISOString()],
+        col: "visitors",
       },
     }).then((result) => {
       visitors.value = result.data.value.length;
