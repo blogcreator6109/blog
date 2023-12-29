@@ -1,4 +1,5 @@
 <template>
+  <MainLoading />
   <MainPage />
   <Header />
   <Dock />
@@ -7,9 +8,7 @@
 </template>
 
 <script setup>
-onNuxtReady(() => {
-  // TODO: Loading
-});
+preloadComponents(["MainLoading"]);
 </script>
 
 <style lang="scss">
