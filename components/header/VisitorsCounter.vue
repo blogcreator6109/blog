@@ -8,39 +8,44 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { v4 as uuidv4 } from "uuid";
 
 const visitors = ref(null);
 const startOfToday = new Date();
 startOfToday.setHours(0, 0, 0, 0);
 
-const fetchVisitors = () => {
-  // Check if 30 minutes have passed since the last fetch
-  const savedVisitors = JSON.parse(localStorage.getItem("bc6109-visitors"));
-  if (savedVisitors && Date.now() - savedVisitors.timestamp < 30 * 60 * 1000) {
-    // Use the cached value
-    visitors.value = savedVisitors.num;
-  } else {
-    // Perform the fetch
-    useFetch("/api/firebase/table", {
+// 1시간마다 새로운 쿠키 발급!
+const cookie = useCookie("bc6109-visitor", {
+  path: "/",
+  maxAge: 60 * 60,
+});
+
+if (process.server) {
+  if (!cookie.value) {
+    // Visitors 기록
+    useFetch("/api/firebase/visitors");
+    // Visitors 조회
+    const result = await useFetch("/api/firebase/table", {
       method: "post",
       body: {
         col: "visitors",
       },
-    }).then((result) => {
-      visitors.value = result.data.value.length;
-      // Save the new value and current time in localStorage
-      localStorage.setItem(
-        "bc6109-visitors",
-        JSON.stringify({
-          num: result.data.value.length,
-          timestamp: Date.now(),
-        })
-      );
     });
-  }
-};
 
-onMounted(fetchVisitors);
+    const sessionId = uuidv4();
+    cookie.value = {
+      sessionId,
+      visitors: result.data.value?.length || 0,
+    };
+  }
+} else {
+  console.log(cookie.value);
+  if (cookie.value) {
+    visitors.value = cookie.value.visitors;
+  }
+}
+
+// Perform the fetch
 </script>
 <style lang="scss">
 .visitors-counter {
