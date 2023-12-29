@@ -13,7 +13,7 @@ const route = useRoute();
 const category = route.params.category;
 postStore.setCategory(category);
 
-const condition = category == "all" ? null : ["category", "==", category];
+const condition = category == "all" ? null : [["category", "==", category]];
 
 postStore.setView("list");
 openWindow("Post");

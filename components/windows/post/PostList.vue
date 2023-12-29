@@ -59,6 +59,7 @@ const currCategory = computed(() => {
 const isLoading = ref(false);
 let hasMore = true;
 let io = null;
+const LIMIT = 5;
 onMounted(() => {
   io = new IntersectionObserver(
     async (entries, io) => {
@@ -80,9 +81,12 @@ onMounted(() => {
               method: "post",
               body: {
                 col: "table",
-                condition: ["number", "<", lastPost.number],
+                condition: [
+                  ["number", "<", lastPost.number],
+                  ["category", "==", category.value],
+                ],
                 order: ["number", "desc"],
-                limit: 5,
+                limit: LIMIT,
               },
             });
             hasMore = data.value.length == 5;
@@ -97,7 +101,7 @@ onMounted(() => {
 
   const items = document.querySelectorAll(".post-list .item");
 
-  if (items.length > 0) {
+  if (items.length >= LIMIT) {
     io.observe(items[items.length - 1]);
   }
 });

@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
 
 export default defineEventHandler(async (e) => {
   try {
@@ -8,11 +7,9 @@ export default defineEventHandler(async (e) => {
 
     let q = admin.firestore().collection(col);
     if (condition) {
-      if (condition[0] === "timestamp") {
-        condition[2] = Timestamp.fromDate(new Date(condition[2]));
+      for (const cond of condition) {
+        q = q.where(...cond);
       }
-
-      q = q.where(...condition);
     }
 
     if (order) {
