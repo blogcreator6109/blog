@@ -26,6 +26,7 @@
     "firebase-admin": "^12.0.0",
     "highlight.js": "^11.7.0",
     "lodash": "^4.17.21",
+    "node-cache": "^5.1.2",
     "octokit": "^2.0.14",
     "open-graph-scraper": "^5.2.2",
     "pinia": "^2.0.35",

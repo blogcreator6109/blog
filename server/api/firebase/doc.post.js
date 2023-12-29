@@ -1,14 +1,29 @@
 import admin from "firebase-admin";
+import NodeCache from "node-cache";
+
+const myCache = new NodeCache({ stdTTL: 300 });
 export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
 
-    console.log("Doc 요청", doc);
-    let q = admin.firestore().doc(doc);
+    const cacheKey = `${doc}`;
 
-    const result = await q.get();
+    // 캐시에서 데이터 조회
+    let cachedData = myCache.get(cacheKey);
 
-    return result.data();
+    if (cachedData) {
+      console.log("캐시 데이터 반환", cacheKey);
+      return cachedData;
+    } else {
+      console.log("Doc 요청", doc);
+      let q = admin.firestore().doc(doc);
+
+      const result = await q.get();
+
+      myCache.set(cacheKey, result.data());
+
+      return result.data();
+    }
   } catch (error) {
     console.error("Firebase error:", error);
     return [];
