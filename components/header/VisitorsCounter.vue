@@ -21,7 +21,7 @@ const cookie = useCookie("bc6109-visitor", {
 });
 
 if (process.server) {
-  if (!cookie.value) {
+  if (!cookie.value || Date.now() - cookie.value.timestamp > 60 * 60 * 1000) {
     // Visitors 기록
     useFetch("/api/firebase/visitors");
     // Visitors 조회
@@ -31,11 +31,13 @@ if (process.server) {
         col: "visitors",
       },
     });
+    visitors.value = result.data.value?.length || 0;
 
     const sessionId = uuidv4();
     cookie.value = {
       sessionId,
-      visitors: result.data.value?.length || 0,
+      visitors: visitors.value,
+      timestamp: Date.now(),
     };
   }
 } else {
