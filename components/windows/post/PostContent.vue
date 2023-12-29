@@ -138,7 +138,9 @@ const addComment = () => {
 };
 
 onMounted(() => {
-  nextTick(() => {});
+  nextTick(() => {
+    addComment();
+  });
 });
 </script>
 
