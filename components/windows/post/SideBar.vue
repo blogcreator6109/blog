@@ -1,4 +1,9 @@
 <template>
+  <div
+    class="overlay"
+    v-show="sidebarActive"
+    @click="postStore.closeSidebar()"
+  ></div>
   <Transition name="slide-left">
     <aside class="sidebar" v-show="sidebarActive">
       <!-- 검색 -->
@@ -16,10 +21,21 @@ import { storeToRefs } from "pinia";
 import { usePostStore } from "@/stores/post";
 // import Search from "./sidebar/Search.vue";
 import Menu from "./sidebar/Menu.vue";
-const { sidebarActive } = storeToRefs(usePostStore());
+const postStore = usePostStore();
+
+const { sidebarActive } = storeToRefs(postStore);
 </script>
 
 <style lang="scss" scoped>
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0000005a;
+  backdrop-filter: blur(4px);
+}
 .sidebar {
   position: absolute;
   top: $window-header-height;

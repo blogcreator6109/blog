@@ -37,8 +37,6 @@
       </NuxtLink>
 
       <Loading v-if="isLoading" />
-
-      <GoogleAdsense type="1" />
     </div>
     <Loading v-else />
   </div>
