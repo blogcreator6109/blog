@@ -98,7 +98,6 @@ setTimeout(() => {
 
   .ad-popup {
     position: relative;
-    background-color: white;
     transform: translateX(calc(100% + 1.5rem));
     transition: transform 0.2s ease-in-out;
 
@@ -270,6 +269,7 @@ setTimeout(() => {
     top: $header-height-tablet;
     .ad-popup {
       padding: 0 1rem;
+      max-width: 100%;
       height: 312px;
       box-sizing: border-box;
       .close-btn {
