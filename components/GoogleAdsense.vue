@@ -55,6 +55,10 @@ onMounted(() => {
     }
   });
 });
+
+onBeforeUnmount(() => {
+  adsense.value.innerHTML = "";
+});
 </script>
 
 <style lang="scss" scoped>
