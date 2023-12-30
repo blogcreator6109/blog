@@ -46,7 +46,7 @@ onMounted(() => {
   nextTick(() => {
     try {
       document.querySelectorAll(".adsbygoogle").forEach((el) => {
-        if (el.innerHTML.trim().length == 0) {
+        if (el && el.innerHTML.trim().length == 0) {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
         } else {
           window.adsbygoogle.push({});
