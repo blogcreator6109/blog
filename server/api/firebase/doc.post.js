@@ -6,7 +6,7 @@ export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
 
-    const cacheKey = `${doc}`;
+    const cacheKey = `bc-${doc}`;
 
     // 캐시에서 데이터 조회
     let cachedData = myCache.get(cacheKey);
