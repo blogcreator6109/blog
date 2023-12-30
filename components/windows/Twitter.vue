@@ -32,6 +32,7 @@
         data-safari="transparent nofooter noborders noheader noscrollbar"
         href="https://twitter.com/BlogCreator6109?ref_src=twsrc%5Etfw"
       ></a>
+      <Loading v-if="loading" />
     </div>
   </div>
 </template>
@@ -42,11 +43,12 @@ const loaded = ref(false);
 const router = useRouter();
 router.push("/twitter");
 
-useFetch("/api/twitter").then(({ data }) => {
-  user.value = data.value;
-});
+const loading = ref(false);
 
 onMounted(() => {
+  useFetch("/api/twitter").then(({ data }) => {
+    user.value = data.value;
+  });
   window.twttr = (function (d, s, id) {
     var js,
       fjs = d.getElementsByTagName(s)[0],
@@ -60,6 +62,7 @@ onMounted(() => {
     t._e = [];
     t.ready = function (f) {
       t._e.push(f);
+      loading.value = true;
     };
 
     return t;
