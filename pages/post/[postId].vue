@@ -30,21 +30,23 @@ useFetch("/api/firebase/doc", {
   body: { doc: "posts/" + route.params.postId },
 }).then((result) => {
   const post = result.data.value;
-  postStore.setPost(post);
-  useSeoMeta({
-    icon: "/favicon.ico",
-    lang: "ko_KR",
-    title: post.title,
-    description: post.description,
-    ogDescription: post.description,
-    image: post.cover,
-    ogImage: post.cover,
-    ogUrl: `https://blogcreator.blog/post/${post.number}`,
-    ogTitle: post.title,
-    ogType: "article",
-    twitterCard: "summary_large_image",
-    twitterImage: post.cover,
-    twitterDescription: post.description,
-  });
+  if (post) {
+    postStore.setPost(post);
+    useSeoMeta({
+      icon: "/favicon.ico",
+      lang: "ko_KR",
+      title: post.title,
+      description: post.description,
+      ogDescription: post.description,
+      image: post.cover,
+      ogImage: post.cover,
+      ogUrl: `https://blogcreator.blog/post/${post.number}`,
+      ogTitle: post.title,
+      ogType: "article",
+      twitterCard: "summary_large_image",
+      twitterImage: post.cover,
+      twitterDescription: post.description,
+    });
+  }
 });
 </script>
