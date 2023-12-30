@@ -58,8 +58,8 @@ onMounted(() => {
   });
 });
 
-onBeforeMount(() => {
-  adsense.value.innerHTML = "";
+onBeforeUnmount(() => {
+  adsense?.value?.innerHTML = "";
 });
 </script>
 
