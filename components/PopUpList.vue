@@ -97,6 +97,7 @@ setTimeout(() => {
   row-gap: 1rem;
 
   .ad-popup {
+    user-select: none;
     position: relative;
     transform: translateX(calc(100% + 1.5rem));
     transition: transform 0.2s ease-in-out;
@@ -146,6 +147,7 @@ setTimeout(() => {
   }
 
   .item {
+    -webkit-user-drag: none;
     user-select: none;
     position: relative;
 

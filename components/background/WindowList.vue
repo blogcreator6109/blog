@@ -4,10 +4,10 @@
     :style="{ cursor }"
     @mousedown="onMouseDown"
     @mouseup="onMouseUp"
-    @mousemove="onMouseMove($event)"
+    @mousemove.capture="onMouseMove"
   >
     <slot></slot>
-    <!-- <CoupangPartners /> -->
+
     <Window
       v-for="(w, i) of store.loadedWindows"
       :key="w.name"

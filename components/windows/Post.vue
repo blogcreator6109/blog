@@ -33,9 +33,9 @@ onBeforeMount(() => {
 onMounted(() => {
   // 데스크톱에서는 열 때에는 세로 최대화
   if (window.innerWidth > 768) {
-    const padding = 20;
     let { x, y } = windowStore.boundary;
-    const w = windowStore.topWindow.width;
+    const w = windowStore.topWindow.w;
+
     const h = window.innerHeight - y;
     windowStore.updateTopRect(x, y, w, h);
   }
