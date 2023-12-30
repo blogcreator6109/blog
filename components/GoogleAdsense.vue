@@ -48,18 +48,12 @@ onMounted(() => {
       document.querySelectorAll(".adsbygoogle").forEach((el) => {
         if (el && el.innerHTML.trim().length == 0) {
           (window.adsbygoogle = window.adsbygoogle || []).push({});
-        } else {
-          window.adsbygoogle.push({});
         }
       });
     } catch (e) {
       console.error("GoogleAdsense Error", e);
     }
   });
-});
-
-onBeforeUnmount(() => {
-  adsense?.value?.innerHTML = "";
 });
 </script>
 
