@@ -1,5 +1,5 @@
 <template>
-  <div class="post-content" v-if="post">
+  <div class="post-content" v-if="!post">
     <div class="post-content__cover" v-if="post?.cover">
       <img :src="post.cover" v-if="post.cover" alt="cover" />
     </div>
@@ -139,7 +139,7 @@ const addComment = () => {
 
 onMounted(() => {
   nextTick(() => {
-    addComment();
+    // addComment();
   });
 });
 </script>
@@ -330,28 +330,27 @@ onMounted(() => {
 }
 
 .skeleton {
-  padding: 3rem;
   box-sizing: border-box;
   .cover {
     width: 100%;
-    height: 30rem;
+    height: 40rem;
     @include skeleton;
   }
 
   .container {
-    width: 100%;
+    width: 768px;
     margin: 0 auto;
     .title {
-      margin-top: 8rem;
+      margin-top: 4rem;
       height: 4rem;
-      width: 70%;
+      width: 80%;
       @include skeleton;
     }
 
     .table {
       width: 100%;
       display: grid;
-      grid-template-columns: 1fr 2fr;
+      grid-template-columns: 20% 30%;
       grid-auto-rows: 2rem;
       gap: 1rem;
       margin-top: 3rem;

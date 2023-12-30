@@ -53,3 +53,9 @@ onMounted(() => {
   });
 });
 </script>
+
+<style lang="scss" scoped>
+ins {
+  user-select: none;
+}
+</style>

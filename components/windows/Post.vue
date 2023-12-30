@@ -31,14 +31,12 @@ onBeforeMount(() => {
   postStore.closeSidebar();
 });
 onMounted(() => {
-  // 데스크톱에서는 열 때 최대화!
+  // 데스크톱에서는 열 때에는 세로 최대화
   if (window.innerWidth > 768) {
     const padding = 20;
     let { x, y } = windowStore.boundary;
-    x += padding;
-    y += padding;
-    const w = window.innerWidth - x - padding;
-    const h = window.innerHeight - y - padding;
+    const w = windowStore.topWindow.width;
+    const h = window.innerHeight - y;
     windowStore.updateTopRect(x, y, w, h);
   }
 });
