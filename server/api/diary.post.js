@@ -1,9 +1,8 @@
 import { notion, getProp } from "./utils/notion";
 
-export default defineEventHandler(async (e) => {
+let count = 0;
+const request = async (startCursor) => {
   try {
-    const { startCursor } = await readBody(e);
-
     const res = await notion.databases.query({
       database_id: process.env.NOTION_DIARY_TABLE_ID,
       page_size: 4,
@@ -28,6 +27,15 @@ export default defineEventHandler(async (e) => {
     };
   } catch (error) {
     console.error("Diary 불러오기 실패", error);
-    return [];
+    let result = [];
+    if (count++ < 20) {
+      result = await request(startCursor);
+    }
+    return result;
   }
+};
+
+export default defineEventHandler(async (e) => {
+  const { startCursor } = await readBody(e);
+  return await request(startCursor);
 });

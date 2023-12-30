@@ -30,14 +30,12 @@ const request = async function () {
 
   if (data.value?.list?.length > 0) {
     list.value.push(...data.value.list);
+    startCursor = data.value?.startCursor;
   }
-
-  startCursor = data.value.startCursor;
 };
 
-await request();
-
-onMounted(() => {
+onMounted(async () => {
+  await request();
   const io = new IntersectionObserver(
     async (entries, io) => {
       // observe 하고 있는 entry들
