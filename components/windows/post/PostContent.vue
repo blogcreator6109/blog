@@ -105,7 +105,6 @@ const backToCategory = () => {
   router.push("/post/category/" + post.value.category.toLowerCase());
 };
 
-console.log(post.value);
 const commentEl = ref(null);
 
 let count = 0;
