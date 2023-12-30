@@ -1,9 +1,9 @@
 import { notion, getProp } from "../utils/notion";
 import { collectPaginatedAPI } from "@notionhq/client";
 
-export default defineEventHandler(async (e) => {
+let count = 0;
+const request = async (id) => {
   try {
-    const { id } = await readBody(e);
     const blocks = await collectPaginatedAPI(notion.blocks.children.list, {
       block_id: id,
     });
@@ -11,6 +11,15 @@ export default defineEventHandler(async (e) => {
     return blocks;
   } catch (error) {
     console.error("Book content 불러오기 실패", error);
-    return [];
+    let result = [];
+    if (count++ < 20) {
+      result = await request(id);
+    }
+    return result;
   }
+};
+
+export default defineEventHandler(async (e) => {
+  const { id } = await readBody(e);
+  return await request(id);
 });

@@ -1,6 +1,7 @@
 import { notion, getProp } from "../utils/notion";
 
-export default defineEventHandler(async (e) => {
+let count = 0;
+const request = async () => {
   try {
     const { results: table } = await notion.databases.query({
       database_id: process.env.NOTION_BOOK_TABLE_ID,
@@ -23,7 +24,15 @@ export default defineEventHandler(async (e) => {
       title: getProp(v.properties?.title),
     }));
   } catch (error) {
-    console.error("Book List 불러오기 실패", error);
-    return [];
+    let result = null;
+    if (count++ < 20) {
+      result = await request();
+    }
+    return result;
   }
+};
+
+export default defineEventHandler(async (e) => {
+  const result = await request();
+  return result;
 });

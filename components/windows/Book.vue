@@ -68,7 +68,7 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useBookStore } from "@/stores/book";
-import Article from "@/components/windows/post/Article.vue";
+import Article from "@/components/windows/book/Article.vue";
 
 const bookStore = useBookStore();
 const { sidebarActive } = storeToRefs(bookStore);
