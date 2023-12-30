@@ -1,7 +1,7 @@
 import admin from "firebase-admin";
 import NodeCache from "node-cache";
 
-const myCache = new NodeCache({ stdTTL: 300 });
+const myCache = new NodeCache({ stdTTL: 100 });
 export default defineEventHandler(async (e) => {
   try {
     const { doc } = await readBody(e);
