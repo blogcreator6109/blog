@@ -99,7 +99,6 @@ onMounted(() => {
   );
 
   const items = document.querySelectorAll(".post-list .item");
-  console.log(items.length, LIMIT, items.length >= LIMIT);
 
   if (items.length >= LIMIT) {
     io.observe(items[items.length - 1]);
@@ -214,6 +213,10 @@ watch(
             &.vue {
               background-color: #e6fbe6;
               color: rgb(42, 209, 42);
+            }
+            &.nuxt {
+              background-color: #e6fbe6;
+              color: #17450f;
             }
             &.etc {
               background-color: #e6e6e6;
