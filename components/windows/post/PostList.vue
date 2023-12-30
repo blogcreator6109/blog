@@ -38,7 +38,9 @@
 
       <Loading v-if="isLoading" />
     </div>
-    <Loading v-else />
+    <div class="skeleton" v-else>
+      <div class="container" v-for="i of 5" :key="i"></div>
+    </div>
   </div>
 </template>
 
@@ -121,7 +123,7 @@ watch(
 );
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .post-list {
   display: flex;
   flex-direction: column;
@@ -264,6 +266,19 @@ watch(
           border-radius: 10%;
         }
       }
+    }
+  }
+
+  .skeleton {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-top: 2rem;
+    .container {
+      width: 100%;
+      height: 14rem;
+      @include skeleton;
     }
   }
 }

@@ -25,30 +25,30 @@ if (postStore.categories.length == 0) {
   postStore.setCategories(result.data.value);
 }
 
-useAsyncData(async () => {
-  const result = await useFetch("/api/firebase/doc", {
-    method: "post",
-    body: { doc: "posts/" + route.params.postId },
-  });
+postStore.setPost(null);
 
-  const post = result.data.value;
-  if (post) {
-    postStore.setPost(post);
-    useSeoMeta({
-      icon: "/favicon.ico",
-      lang: "ko_KR",
-      title: post.title,
-      description: post.description,
-      ogDescription: post.description,
-      image: post.cover,
-      ogImage: post.cover,
-      ogUrl: `https://blogcreator.blog/post/${post.number}`,
-      ogTitle: post.title,
-      ogType: "article",
-      twitterCard: "summary_large_image",
-      twitterImage: post.cover,
-      twitterDescription: post.description,
-    });
-  }
+const result = await useFetch("/api/firebase/doc", {
+  method: "post",
+  body: { doc: "posts/" + route.params.postId },
 });
+
+const post = result.data.value;
+if (post) {
+  postStore.setPost(post);
+  useSeoMeta({
+    icon: "/favicon.ico",
+    lang: "ko_KR",
+    title: post.title,
+    description: post.description,
+    ogDescription: post.description,
+    image: post.cover,
+    ogImage: post.cover,
+    ogUrl: `https://blogcreator.blog/post/${post.number}`,
+    ogTitle: post.title,
+    ogType: "article",
+    twitterCard: "summary_large_image",
+    twitterImage: post.cover,
+    twitterDescription: post.description,
+  });
+}
 </script>

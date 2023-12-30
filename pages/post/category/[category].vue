@@ -30,6 +30,7 @@ if (postStore.categories.length == 0) {
   postStore.setCategories(result.data.value);
 }
 
+postStore.setPostList(null);
 useFetch("/api/firebase/table", {
   method: "post",
   body: {

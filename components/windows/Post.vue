@@ -3,8 +3,10 @@ import Content from "./post/PostContent.vue";
 import List from "./post/PostList.vue";
 import SideBar from "./post/SideBar.vue";
 import { usePostStore } from "~/stores/post";
+import { useWindowStore } from "~/stores/window";
 
 const postStore = usePostStore();
+const windowStore = useWindowStore();
 
 watch(
   () => postStore.view,
@@ -27,6 +29,18 @@ watch(
 onBeforeMount(() => {
   // 닫히기전에 사이드바가 열려있었다면 닫아준다
   postStore.closeSidebar();
+});
+onMounted(() => {
+  // 데스크톱에서는 열 때 최대화!
+  if (window.innerWidth > 768) {
+    const padding = 20;
+    let { x, y } = windowStore.boundary;
+    x += padding;
+    y += padding;
+    const w = window.innerWidth - x - padding;
+    const h = window.innerHeight - y - padding;
+    windowStore.updateTopRect(x, y, w, h);
+  }
 });
 </script>
 

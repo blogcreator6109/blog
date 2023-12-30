@@ -144,7 +144,7 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .post-content {
   display: flex;
   flex-direction: column;

@@ -16,7 +16,7 @@ export default defineEventHandler(async (e) => {
     let cachedData = myCache.get(cacheKey);
 
     if (cachedData) {
-      console.log("캐시 데이터 반환");
+      console.log("캐시 데이터 반환", cacheKey);
       return cachedData;
     } else {
       console.log("TABLE 요청", col, condition, order, limit, select);
