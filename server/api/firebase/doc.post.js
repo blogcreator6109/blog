@@ -12,7 +12,7 @@ export default defineEventHandler(async (e) => {
     let cachedData = myCache.get(cacheKey);
 
     if (cachedData) {
-      console.log("캐시 데이터 반환", cacheKey);
+      console.log("캐시 데이터 반환", cachedData?.title);
       return cachedData;
     } else {
       console.log("Doc 요청", doc);

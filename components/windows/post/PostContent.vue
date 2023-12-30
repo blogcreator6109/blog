@@ -1,5 +1,5 @@
 <template>
-  <div class="post-content" v-if="!post">
+  <div class="post-content" v-if="post">
     <div class="post-content__cover" v-if="post?.cover">
       <img :src="post.cover" v-if="post.cover" alt="cover" />
     </div>
@@ -105,6 +105,7 @@ const backToCategory = () => {
   router.push("/post/category/" + post.value.category.toLowerCase());
 };
 
+console.log(post.value);
 const commentEl = ref(null);
 
 let count = 0;
@@ -139,7 +140,7 @@ const addComment = () => {
 
 onMounted(() => {
   nextTick(() => {
-    // addComment();
+    addComment();
   });
 });
 </script>
