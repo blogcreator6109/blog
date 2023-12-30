@@ -1,5 +1,6 @@
 <template>
   <ins
+    ref="adsense"
     class="adsbygoogle"
     style="display: block"
     data-ad-client="ca-pub-4009482052735536"
@@ -39,16 +40,26 @@ if (props.type == 0) {
   };
 }
 
+const adsense = ref(null);
+
 onMounted(() => {
   nextTick(() => {
     try {
       document.querySelectorAll(".adsbygoogle").forEach((el) => {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        if (el.innerHTML.trim().length == 0) {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } else {
+          window.adsbygoogle.push({});
+        }
       });
     } catch (e) {
       console.error("GoogleAdsense Error", e);
     }
   });
+});
+
+onBeforeMount(() => {
+  adsense.value.innerHTML = "";
 });
 </script>
 
