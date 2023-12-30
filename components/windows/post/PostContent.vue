@@ -61,7 +61,6 @@
 
     <div class="post-content__body">
       <Article :content="post.content" />
-      <div ref="commentEl" class="comment"></div>
       <GoogleAdsense type="3" />
     </div>
   </div>
@@ -104,44 +103,6 @@ const backToCategory = () => {
   postStore.setView("list");
   router.push("/post/category/" + post.value.category.toLowerCase());
 };
-
-const commentEl = ref(null);
-
-let count = 0;
-const addComment = () => {
-  let script = document.createElement("script");
-  script.src = "https://giscus.app/client.js";
-  script.setAttribute("data-repo", "blogcreator6109/blog-post-comment");
-  script.setAttribute("data-repo-id", "R_kgDOK-a-XA");
-  script.setAttribute("data-category", "Announcements");
-  script.setAttribute("data-category-id", "DIC_kwDOK-a-XM4CcDDj");
-  script.setAttribute("data-mapping", "title");
-  script.setAttribute("data-strict", "0");
-  script.setAttribute("data-reactions-enabled", "1");
-  script.setAttribute("data-emit-metadata", "0");
-  script.setAttribute("data-input-position", "top");
-  script.setAttribute("data-theme", "light");
-  script.setAttribute("data-lang", "ko");
-  script.setAttribute("data-loading", "lazy");
-
-  try {
-    commentEl.value.appendChild(script);
-  } catch (e) {
-    console.error(e);
-    // 5회 시도
-    if (++count < 5) {
-      setTimeout(() => {
-        addComment();
-      }, 1000);
-    }
-  }
-};
-
-onMounted(() => {
-  nextTick(() => {
-    addComment();
-  });
-});
 </script>
 
 <style lang="scss" scoped>
@@ -391,12 +352,6 @@ onMounted(() => {
       }
     }
   }
-}
-
-.comment {
-  padding: 2rem 0;
-  box-sizing: border-box;
-  margin-bottom: 4rem;
 }
 
 @media (max-width: $breakpoint-tablet) {

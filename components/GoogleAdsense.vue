@@ -42,11 +42,9 @@ if (props.type == 0) {
 onMounted(() => {
   nextTick(() => {
     try {
-      if (adsbygoogle && !adsbygoogle.loaded) {
-        window.adsbygoogle.push({});
-      } else {
+      document.querySelectorAll(".adsbygoogle").forEach((el) => {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-      }
+      });
     } catch (e) {
       console.error("GoogleAdsense Error", e);
     }
