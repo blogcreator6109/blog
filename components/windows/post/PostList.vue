@@ -35,6 +35,7 @@
           <img class="cover no-image" src="/images/logo.svg" v-else />
         </div>
       </NuxtLink>
+      <GoogleAdsense type="1" />
 
       <Loading v-if="isLoading" />
     </div>
