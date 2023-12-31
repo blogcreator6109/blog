@@ -125,6 +125,8 @@ onMounted(() => {
       line-height: 1.6;
       color: #ddd;
       text-align: center;
+      user-select: text;
+
       strong {
         color: #55a5ff;
       }

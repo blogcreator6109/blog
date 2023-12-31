@@ -1,5 +1,5 @@
 <template>
-  <div class="visitors-counter" v-if="visitors != null">
+  <div class="visitors-counter" v-show="visitors != null">
     <img src="@/assets/images/visitors.webp" alt="visitors" />
     <div class="counter">{{ visitors }}</div>
     <div class="tooltip">일일 방문자 수</div>
@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
 import { v4 as uuidv4 } from "uuid";
 
 const visitors = ref(null);
@@ -20,30 +19,28 @@ const cookie = useCookie("bc6109-visit", {
   maxAge: 60 * 60,
 });
 
-if (process.server) {
-  if (!cookie.value || Date.now() - cookie.value.timestamp > 60 * 60 * 1000) {
-    // Visitors 기록
-    useFetch("/api/firebase/visitors");
-    // Visitors 조회
-    const result = await useFetch("/api/firebase/table", {
-      method: "post",
-      body: {
-        col: "visitors",
-      },
-    });
-    visitors.value = result.data.value?.length || 0;
+if (!cookie.value || Date.now() - cookie.value.timestamp > 60 * 60 * 1000) {
+  // Visitors 기록
+  useFetch("/api/firebase/visitors");
+  const config = useRuntimeConfig();
+  // Visitors 조회
+  const result = await useFetch("/api/firebase/table", {
+    method: "post",
+    body: {
+      col: config.public.visitors,
+      noCaching: true,
+    },
+  });
+  visitors.value = result.data.value?.length || 0;
 
-    const sessionId = uuidv4();
-    cookie.value = {
-      sessionId,
-      visitors: visitors.value,
-      timestamp: Date.now(),
-    };
-  }
+  const sessionId = uuidv4();
+  cookie.value = {
+    sessionId,
+    visitors: visitors.value,
+    timestamp: Date.now(),
+  };
 } else {
-  if (cookie.value) {
-    visitors.value = cookie.value.visitors;
-  }
+  visitors.value = cookie.value.visitors;
 }
 
 // Perform the fetch

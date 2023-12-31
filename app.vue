@@ -1,10 +1,10 @@
 <template>
   <MainLoading />
-  <MainPage />
-  <Header />
-  <Dock />
 
   <NuxtPage />
+  <Header />
+  <MainPage />
+  <Dock />
 </template>
 
 <script setup>

@@ -7,14 +7,14 @@
             <span class="material-symbols-outlined"> close </span>
           </button>
           <div class="main-image">
-            <img :src="d.imgSrc" />
+            <img :src="d.imgSrc" alt="main-image" />
           </div>
           <h3 class="title">{{ d.title }}</h3>
           <p class="content">
             {{ d.content }}
           </p>
           <div class="sub-image" v-if="d.subImgSrc">
-            <img :src="d.subImgSrc" />
+            <img :src="d.subImgSrc" alt="sub-image" />
           </div>
           <span class="time">방금</span>
         </a>

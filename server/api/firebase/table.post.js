@@ -1,23 +1,27 @@
 import admin from "firebase-admin";
 import NodeCache from "node-cache";
 
-const myCache = new NodeCache({ stdTTL: 100 });
+const nodeCache = new NodeCache({ stdTTL: 500 });
 
 export default defineEventHandler(async (e) => {
   try {
-    const { col, condition, order, limit, select } = await readBody(e);
+    const { col, condition, order, limit, select, noCaching } = await readBody(
+      e
+    );
 
-    const cacheKey = `${col}-${JSON.stringify(
-      condition || null
-    )}-${JSON.stringify(order || null)}-${limit || null}-${JSON.stringify(
-      select || null
-    )}`;
-    // 캐시에서 데이터 조회
-    let cachedData = myCache.get(cacheKey);
+    let cache = {};
+    if (!noCaching) {
+      cache.key = `${col}-${JSON.stringify(condition || null)}-${JSON.stringify(
+        order || null
+      )}-${limit || null}-${JSON.stringify(select || null)}`;
+      // 캐시에서 데이터 조회
 
-    if (cachedData) {
-      console.log("캐시 데이터 반환", cacheKey);
-      return cachedData;
+      cache.data = nodeCache.get(cache.key);
+    }
+
+    if (!noCaching && cache.data) {
+      console.log("캐시 데이터 반환", cache.key);
+      return cache.data;
     } else {
       console.log("TABLE 요청", col, condition, order, limit, select);
       let q = admin.firestore().collection(col);
@@ -49,7 +53,9 @@ export default defineEventHandler(async (e) => {
       });
 
       // 결과 캐싱
-      myCache.set(cacheKey, result);
+      if (!noCaching) {
+        nodeCache.set(cache.key, result);
+      }
 
       return result;
     }

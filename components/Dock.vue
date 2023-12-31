@@ -7,6 +7,7 @@
   >
     <button
       class="app-item"
+      aria-label="app-item"
       v-for="(name, i) in windowNames"
       :key="name"
       @click="selectDockItem(name)"
@@ -106,12 +107,17 @@ const selectDockItem = function (name) {
   // Post를 열면서도 열려 있지 않은 경우만 열기
   // 열려있는 경우는 route 변경 안하기 위함
   const router = useRouter();
+
   if (name == "Post") {
     const isPostOpened =
       loadedWindows.filter((w) => w.name === "Post").length > 0;
     if (!isPostOpened) {
-      router.push({ path: "/post/category/all" });
+      router.push("/post/category/all");
     }
+  } else if (name == "Book") {
+    router.push("/book/vue-notion/0");
+  } else {
+    router.push(name.toLowerCase());
   }
 
   if (window.innerWidth < 768) {

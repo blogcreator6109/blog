@@ -16,8 +16,9 @@ if (!admin.apps.length) {
 
 exports.handler = async function (event, context) {
   try {
+    const config = useRuntimeConfig();
     const db = admin.firestore();
-    const visitsRef = db.collection("visits");
+    const visitsRef = db.collection(config.public.visitors);
 
     // Firestore 문서 삭제 로직
     const snapshot = await visitsRef.get();
