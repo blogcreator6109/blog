@@ -1,91 +1,96 @@
 <template>
-  <div class="post-content" v-if="post">
-    <div class="post-content__cover" v-if="post?.cover">
-      <img :src="post.cover" v-if="post.cover" alt="cover" />
-    </div>
-    <div class="post-content__info">
-      <h1 class="title">{{ post.title }}</h1>
-      <div class="table">
-        <div class="label">
-          <img
-            src="@/assets/images/windows/post/article/category.svg"
-            alt="category"
-          />
-          <span>Category</span>
-        </div>
-        <NuxtLink
-          :to="`/post/category/${post?.category?.toLowerCase()}`"
-          @click="backToCategory"
-          class="value cate notion-select"
-          aria-label="Back to Category"
-        >
-          {{ post.categoryName }}
-        </NuxtLink>
-        <div class="label">
-          <img src="@/assets/images/windows/post/article/tags.svg" alt="tags" />
-          <span>Tags</span>
-        </div>
-        <div class="value tags">
-          <div
-            class="tag notion-select"
-            v-for="tag of post.tags"
-            :key="tag"
-            :class="tag.color"
+  <div class="post-content-wrapper">
+    <div class="post-content" v-if="post">
+      <div class="post-content__cover" v-if="post?.cover">
+        <img :src="post.cover" v-if="post.cover" alt="cover" />
+      </div>
+      <div class="post-content__info">
+        <h1 class="title">{{ post.title }}</h1>
+        <div class="table">
+          <div class="label">
+            <img
+              src="@/assets/images/windows/post/article/category.svg"
+              alt="category"
+            />
+            <span>Category</span>
+          </div>
+          <NuxtLink
+            :to="`/post/category/${post?.category?.toLowerCase()}`"
+            @click="backToCategory"
+            class="value cate notion-select"
+            aria-label="Back to Category"
           >
-            {{ tag.name }}
+            {{ post.categoryName }}
+          </NuxtLink>
+          <div class="label">
+            <img
+              src="@/assets/images/windows/post/article/tags.svg"
+              alt="tags"
+            />
+            <span>Tags</span>
+          </div>
+          <div class="value tags">
+            <div
+              class="tag notion-select"
+              v-for="tag of post.tags"
+              :key="tag"
+              :class="tag.color"
+            >
+              {{ tag.name }}
+            </div>
+          </div>
+          <div class="label">
+            <img
+              src="@/assets/images/windows/post/article/calendar.svg"
+              alt="calendar"
+            />
+            <span>Created</span>
+          </div>
+          <div class="value date">
+            {{ useDateFormat(post.created, "YYYY-MM-DD A HH:mm") }}
+          </div>
+          <div class="label">
+            <img
+              src="@/assets/images/windows/post/article/calendar.svg"
+              alt="calendar"
+            />
+            <span>Updated</span>
+          </div>
+          <div class="value date">
+            {{ useDateFormat(post.updated, "YYYY-MM-DD A HH:mm") }}
           </div>
         </div>
-        <div class="label">
-          <img
-            src="@/assets/images/windows/post/article/calendar.svg"
-            alt="calendar"
-          />
-          <span>Created</span>
-        </div>
-        <div class="value date">
-          {{ useDateFormat(post.created, "YYYY-MM-DD A HH:mm") }}
-        </div>
-        <div class="label">
-          <img
-            src="@/assets/images/windows/post/article/calendar.svg"
-            alt="calendar"
-          />
-          <span>Updated</span>
-        </div>
-        <div class="value date">
-          {{ useDateFormat(post.updated, "YYYY-MM-DD A HH:mm") }}
-        </div>
+        <hr />
       </div>
-      <hr />
+
+      <div class="post-content__body">
+        <Article :content="post.content" />
+        <GoogleAdsense type="3" />
+      </div>
     </div>
 
-    <div class="post-content__body">
-      <Article :content="post.content" />
-      <GoogleAdsense type="3" />
-    </div>
-  </div>
-
-  <div class="skeleton" v-else>
-    <div class="cover"></div>
-    <div class="container">
-      <div class="title"></div>
-      <div class="table">
-        <div class="label"></div>
-        <div class="value"></div>
-        <div class="label"></div>
-        <div class="value"></div>
-        <div class="label"></div>
-        <div class="value"></div>
-        <div class="label"></div>
-        <div class="value"></div>
-      </div>
-      <div class="content">
-        <div class="text"></div>
-        <div class="text"></div>
-        <div class="text"></div>
-        <div class="image"></div>
-        <div class="text"></div>
-        <div class="text"></div>
+    <div class="skeleton" v-else>
+      <div class="cover"></div>
+      <div class="container">
+        <div class="title"></div>
+        <div class="table">
+          <div class="label"></div>
+          <div class="value"></div>
+          <div class="label"></div>
+          <div class="value"></div>
+          <div class="label"></div>
+          <div class="value"></div>
+          <div class="label"></div>
+          <div class="value"></div>
+        </div>
+        <div class="content">
+          <div class="text"></div>
+          <div class="text"></div>
+          <div class="text"></div>
+          <div class="image"></div>
+          <div class="text"></div>
+          <div class="text"></div>
+        </div>
       </div>
     </div>
   </div>
