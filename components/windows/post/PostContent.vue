@@ -1,6 +1,6 @@
 <template>
   <div class="post-content-wrapper">
-    <div class="post-content" v-if="post">
+    <div class="post-content">
       <div class="post-content__cover" v-if="post?.cover">
         <img :src="post.cover" v-if="post.cover" alt="cover" />
       </div>
@@ -66,31 +66,6 @@
       <div class="post-content__body">
         <Article :content="post.content" />
         <GoogleAdsense type="3" />
-      </div>
-    </div>
-
-    <div class="skeleton" v-else>
-      <div class="cover"></div>
-      <div class="container">
-        <div class="title"></div>
-        <div class="table">
-          <div class="label"></div>
-          <div class="value"></div>
-          <div class="label"></div>
-          <div class="value"></div>
-          <div class="label"></div>
-          <div class="value"></div>
-          <div class="label"></div>
-          <div class="value"></div>
-        </div>
-        <div class="content">
-          <div class="text"></div>
-          <div class="text"></div>
-          <div class="text"></div>
-          <div class="image"></div>
-          <div class="text"></div>
-          <div class="text"></div>
-        </div>
       </div>
     </div>
   </div>
