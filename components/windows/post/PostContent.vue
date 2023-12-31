@@ -1,6 +1,6 @@
 <template>
   <div class="post-content-wrapper">
-    <div class="post-content">
+    <div class="post-content" v-if="post">
       <div class="post-content__cover" v-if="post?.cover">
         <img :src="post.cover" v-if="post.cover" alt="cover" />
       </div>
