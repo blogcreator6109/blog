@@ -1,10 +1,11 @@
 <template>
   <MainLoading />
 
-  <NuxtPage />
   <Header />
   <MainPage />
   <Dock />
+
+  <NuxtPage />
 </template>
 
 <script setup>
