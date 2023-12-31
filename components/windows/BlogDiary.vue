@@ -16,7 +16,7 @@
 
 <script setup>
 const router = useRouter();
-router.push("/diary");
+router.push("/blogdiary");
 
 let startCursor = undefined;
 const list = ref([]);
