@@ -29,7 +29,6 @@ export default defineNuxtConfig({
     // ...
     "@pinia/nuxt",
     "@nuxtjs/robots",
-    "@vueuse/nuxt",
   ],
 
   vite: {
