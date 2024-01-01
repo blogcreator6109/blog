@@ -40,5 +40,21 @@ diaryStore.setContent({
   blocks: content.value,
 });
 
+useSeoMeta({
+  icon: "/favicon.ico",
+  lang: "ko_KR",
+  title: contentInfo.title,
+  description: contentInfo.title,
+  ogDescription: contentInfo.title,
+  image: contentInfo.cover,
+  ogImage: contentInfo.cover,
+  ogUrl: `https://blogcreator.blog/blogdiary/${contentInfo.number}`,
+  ogTitle: contentInfo.title,
+  ogType: "article",
+  twitterCard: "summary_large_image",
+  twitterImage: contentInfo.cover,
+  twitterDescription: contentInfo.description,
+});
+
 openWindow("BlogDiary");
 </script>
