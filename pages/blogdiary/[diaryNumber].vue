@@ -1,0 +1,44 @@
+<template>
+  <div></div>
+</template>
+
+<script setup>
+import { useWindowStore } from "@/stores/window";
+import { useDiaryStore } from "@/stores/blogdiary";
+
+const { openWindow } = useWindowStore();
+const diaryStore = useDiaryStore();
+
+const route = useRoute();
+const router = useRouter();
+
+if (diaryStore.list.length == 0) {
+  const { data: list } = await useFetch("/api/blogdiary/list");
+
+  diaryStore.setList(list.value);
+}
+
+let diaryNumber = diaryStore.list[0].number;
+
+// Dock에서 클릭하면 0으로 이동하게 함
+if (route.params.diaryNumber != "0") {
+  diaryNumber = route.params.diaryNumber;
+}
+
+const contentInfo = diaryStore.list.find((item) => item.number == diaryNumber);
+
+diaryStore.setContent(null);
+const { data: content } = await useFetch("/api/blogdiary/content", {
+  method: "post",
+  body: {
+    id: contentInfo?.id,
+  },
+});
+
+diaryStore.setContent({
+  ...contentInfo,
+  blocks: content.value,
+});
+
+openWindow("BlogDiary");
+</script>

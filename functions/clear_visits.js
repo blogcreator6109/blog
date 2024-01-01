@@ -16,9 +16,8 @@ if (!admin.apps.length) {
 
 exports.handler = async function (event, context) {
   try {
-    const config = useRuntimeConfig();
     const db = admin.firestore();
-    const visitsRef = db.collection(config.public.visitors);
+    const visitsRef = db.collection("visitors");
 
     // Firestore 문서 삭제 로직
     const snapshot = await visitsRef.get();
@@ -34,6 +33,7 @@ exports.handler = async function (event, context) {
       body: JSON.stringify({ message: "Visits cleared" }),
     };
   } catch (err) {
+    console.log(err);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: "Failed to clear visits" }),

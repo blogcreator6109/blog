@@ -16,7 +16,7 @@ const windowOpts = {
     minH: 650,
   },
   BlogDiary: {
-    w: 500,
+    w: 1000,
     h: 800,
   },
   Book: {

@@ -26,6 +26,8 @@ const getProp = function (prop) {
       }));
     case "files":
       return prop[t]?.[0]?.file?.url;
+    case "date":
+      return prop[t]?.start;
   }
 };
 

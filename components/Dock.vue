@@ -114,6 +114,8 @@ const selectDockItem = function (name) {
     if (!isPostOpened) {
       router.push("/post/category/all");
     }
+  } else if (name == "BlogDiary") {
+    router.push("/blogdiary/0");
   }
 
   if (window.innerWidth < 768) {
