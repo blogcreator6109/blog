@@ -17,6 +17,7 @@ import type { logLevelSeverity } from '@notionhq/client/build/src/logging';
   <Heading v-else-if="block.type.startsWith('heading_')" :block="block" />
   <Youtube v-else-if="block.type == 'video'" :block="block" />
   <Audio v-else-if="block.type == 'audio'" :block="block" />
+  <CheckList v-else-if="block.type == 'to_do'" :block="block" />
 </template>
 
 <script setup>
@@ -30,6 +31,7 @@ import List from "./blocks/List.vue";
 import Youtube from "./blocks/Youtube.vue";
 import Audio from "./blocks/Audio.vue";
 import CodeBlock from "./blocks/CodeBlock.vue";
+import CheckList from "./blocks/CheckList.vue";
 
 const { block } = defineProps(["block"]);
 </script>
