@@ -21,17 +21,8 @@ const cookie = useCookie("bc6109-visit", {
 
 if (!cookie.value || Date.now() - cookie.value.timestamp > 60 * 60 * 1000) {
   // Visitors 기록
-  useFetch("/api/firebase/visitors");
-  const config = useRuntimeConfig();
-  // Visitors 조회
-  const result = await useFetch("/api/firebase/table", {
-    method: "post",
-    body: {
-      col: config.public.visitors,
-      noCaching: true,
-    },
-  });
-  visitors.value = result.data.value?.length || 0;
+  const { data } = useFetch("/api/firebase/visitors");
+  visitors.value = data.value || 0;
 
   const sessionId = uuidv4();
   cookie.value = {
