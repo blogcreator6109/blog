@@ -1,6 +1,9 @@
 <template>
   <div class="diary-content">
-    <template v-if="content">
+    <div class="private" v-if="content == 'private'">
+      <p>비공개 일기입니다.</p>
+    </div>
+    <template v-else-if="content">
       <img
         class="cover"
         v-if="content?.cover"
@@ -35,6 +38,14 @@ const { content } = storeToRefs(diaryStore);
 .diary-content {
   width: 100%;
   overflow-y: auto;
+
+  .private {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+  }
 
   > .cover {
     width: 100%;

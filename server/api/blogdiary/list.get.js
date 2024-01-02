@@ -24,6 +24,7 @@ const request = async () => {
       number: getProp(v.properties?.number),
       cover: v.cover?.file?.url,
       created: v.created_time,
+      private: getProp(v.properties?.private),
       title: getProp(v.properties?.title),
       tags: getProp(v.properties?.tags),
     }));

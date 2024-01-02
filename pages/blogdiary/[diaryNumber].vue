@@ -28,33 +28,37 @@ if (route.params.diaryNumber != "0") {
 const contentInfo = diaryStore.list.find((item) => item.number == diaryNumber);
 
 diaryStore.setContent(null);
-const { data: content } = await useFetch("/api/blogdiary/content", {
-  method: "post",
-  body: {
-    id: contentInfo?.id,
-  },
-});
+if (contentInfo.private) {
+  diaryStore.setContent("private");
+} else {
+  const { data: content } = await useFetch("/api/blogdiary/content", {
+    method: "post",
+    body: {
+      id: contentInfo?.id,
+    },
+  });
 
-diaryStore.setContent({
-  ...contentInfo,
-  blocks: content.value,
-});
+  diaryStore.setContent({
+    ...contentInfo,
+    blocks: content.value,
+  });
 
-useSeoMeta({
-  icon: "/favicon.ico",
-  lang: "ko_KR",
-  title: contentInfo.title,
-  description: contentInfo.title,
-  ogDescription: contentInfo.title,
-  image: contentInfo.cover,
-  ogImage: contentInfo.cover,
-  ogUrl: `https://blogcreator.blog/blogdiary/${contentInfo.number}`,
-  ogTitle: contentInfo.title,
-  ogType: "article",
-  twitterCard: "summary_large_image",
-  twitterImage: contentInfo.cover,
-  twitterDescription: contentInfo.description,
-});
+  useSeoMeta({
+    icon: "/favicon.ico",
+    lang: "ko_KR",
+    title: contentInfo.title,
+    description: contentInfo.title,
+    ogDescription: contentInfo.title,
+    image: contentInfo.cover,
+    ogImage: contentInfo.cover,
+    ogUrl: `https://blogcreator.blog/blogdiary/${contentInfo.number}`,
+    ogTitle: contentInfo.title,
+    ogType: "article",
+    twitterCard: "summary_large_image",
+    twitterImage: contentInfo.cover,
+    twitterDescription: contentInfo.description,
+  });
+}
 
 openWindow("BlogDiary");
 </script>

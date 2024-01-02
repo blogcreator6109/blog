@@ -6,21 +6,29 @@
         <li
           class="item"
           v-for="item of group.list"
-          :class="{ selected: item.id === diaryStore.content?.id }"
+          :class="{
+            selected: item.id === diaryStore.content?.id,
+            private: item.private,
+          }"
           @click="$emit('select', item.number)"
         >
           <div class="text">
-            <h3 class="title">{{ item.title }}</h3>
-            <ul class="tags">
-              <li
-                v-for="tag of item.tags"
-                :key="tag"
-                class="tag"
-                :style="{ color: tag.color }"
-              >
-                # {{ tag.name }}
-              </li>
-            </ul>
+            <template v-if="item.private">
+              <p class="private-title">비공개 일기입니다.</p>
+            </template>
+            <template v-else>
+              <h3 class="title">{{ item.title }}</h3>
+              <ul class="tags">
+                <li
+                  v-for="tag of item.tags"
+                  :key="tag"
+                  class="tag"
+                  :style="{ color: tag.color }"
+                >
+                  # {{ tag.name }}
+                </li>
+              </ul>
+            </template>
 
             <p class="date">{{ useDateFormat(item.date, "l") }}</p>
           </div>
@@ -86,6 +94,14 @@ const diaryList = computed(() => {
 
         &.selected {
           background-color: #e8f8ff;
+        }
+
+        &.private {
+          opacity: 0.5;
+          .private-title {
+            font-size: 1.8rem;
+            font-weight: 500;
+          }
         }
 
         .text {

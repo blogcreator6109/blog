@@ -16,7 +16,11 @@
           class="day"
           v-for="day of cal.days"
           :key="day.num"
-          :class="{ active: day.active, selected: day.selected }"
+          :class="{
+            active: day.active,
+            selected: day.selected,
+            private: day.private,
+          }"
           @click="$emit('select', day.number)"
         >
           {{ day.num }}
@@ -78,6 +82,7 @@ const loadedMonthCal = computed(() => {
         active: true,
         number: item?.number || null,
         selected: isSelected,
+        private: item.private,
       };
     } else {
       const days = [];
@@ -96,6 +101,7 @@ const loadedMonthCal = computed(() => {
           active: day === i,
           number: item?.number || null,
           selected: isSelected && day === i,
+          private: item.private && day === i,
         });
       }
       result.push({
@@ -171,6 +177,9 @@ const loadedMonthCal = computed(() => {
         &.selected {
           background-color: #ff9999;
           color: white;
+        }
+        &.private {
+          background-color: #ccc;
         }
       }
     }
