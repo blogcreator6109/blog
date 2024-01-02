@@ -18,11 +18,12 @@ const cookie = useCookie("bc6109-visit", {
   path: "/",
   maxAge: 60 * 60,
 });
+console.log(cookie.value);
 
 if (!cookie.value || Date.now() - cookie.value.timestamp > 60 * 60 * 1000) {
   // Visitors 기록
   const { data } = useFetch("/api/firebase/visitors");
-  visitors.value = data.value || 0;
+  visitors.value = data.value;
 
   const sessionId = uuidv4();
   cookie.value = {
