@@ -1,16 +1,16 @@
 <template>
   <div class="book" ref="container">
     <aside class="sidebar" :class="{ active: sidebarActive }">
-      <button
+      <NuxtLink
         class="item"
         :class="buttonClass(item)"
         :disabled="!item.published"
         v-for="item of list"
         :key="item.id"
-        @click="getPage(item.id, item.number)"
+        :to="`/book/vue-notion/${item.number}`"
       >
         {{ item.title }}
-      </button>
+      </NuxtLink>
     </aside>
     <div class="content">
       <div class="container" v-if="content">
