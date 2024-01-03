@@ -114,6 +114,8 @@ const selectDockItem = function (name) {
     if (!isPostOpened) {
       router.push("/post/category/all");
     }
+  } else if (name == "Book") {
+    router.push("/book/vue-notion/0");
   } else if (name == "BlogDiary") {
     router.push("/blogdiary/0");
   }

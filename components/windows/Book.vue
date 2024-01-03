@@ -13,36 +13,37 @@
       </button>
     </aside>
     <div class="content">
-      <div class="container" v-if="blocks">
-        <header class="header" v-if="currPage">
-          <h1 class="title">{{ currPage.title }}</h1>
+      <div class="container" v-if="content">
+        <header class="header">
+          <h1 class="title">{{ content.title }}</h1>
           <div class="created">
             Created:
-            {{ useDateFormat(currPage.created, "YYYY. MM. DD hh:mm A") }}
+            {{ useDateFormat(content.created, "YYYY. MM. DD hh:mm A") }}
           </div>
           <div class="updated">
             Updated:
-            {{ useDateFormat(currPage.updated, "YYYY. MM. DD hh:mm A") }}
+            {{ useDateFormat(content.updated, "YYYY. MM. DD hh:mm A") }}
           </div>
         </header>
-        <Article :blocks="blocks" />
+        <Article :blocks="content.blocks" />
         <div class="prev-next">
-          <button
-            @click="getPage(prevPage.id, prevPage.number)"
+          <NuxtLink
+            :to="`/book/vue-notion/${prevPageInfo.number}`"
             class="prev"
-            v-if="prevPage && prevPage.published"
+            v-if="prevPageInfo && prevPageInfo.published"
           >
             <img src="@/assets/images/left-arrow.svg" alt="left-arrow" />
-            <span>{{ prevPage.title }}</span>
-          </button>
-          <button
-            @click="getPage(nextPage.id, nextPage.number)"
+            <span>{{ prevPageInfo.title }}</span>
+          </NuxtLink>
+          <NuxtLink
+            :to="`/book/vue-notion/${nextPageInfo.number}`"
+            @click="getPage(nextPageInfo.id, nextPageInfo.number)"
             class="next"
-            v-if="nextPage && nextPage.published"
+            v-if="nextPageInfo && nextPageInfo.published"
           >
-            <span>{{ nextPage.title }}</span>
+            <span>{{ nextPageInfo.title }}</span>
             <img src="@/assets/images/right-arrow.svg" alt="right-arrow" />
-          </button>
+          </NuxtLink>
         </div>
       </div>
       <div class="content skeleton" v-else>
@@ -71,27 +72,16 @@ import { useBookStore } from "@/stores/book";
 import Article from "@/components/windows/book/Article.vue";
 
 const bookStore = useBookStore();
-const { sidebarActive } = storeToRefs(bookStore);
-const router = useRouter();
-const route = useRoute();
+const { sidebarActive, list, content, currNumber, nextPageInfo, prevPageInfo } =
+  storeToRefs(bookStore);
 
-const list = ref([]);
-const blocks = ref([]);
-const currNum = ref(route.params.number || 0);
-
-const prevPage = computed(() => {
-  return list.value[parseInt(currNum.value) - 1];
-});
-const nextPage = computed(() => {
-  return list.value[parseInt(currNum.value) + 1];
-});
-const currPage = computed(() => {
-  return list.value[parseInt(currNum.value)];
-});
-
+/**
+ * 현재 일치하는 페이지를 active 한다.
+ * @param {*} item
+ */
 const buttonClass = (item) => {
   const result = [];
-  if (item.number == currNum.value) {
+  if (item.number == currNumber.value) {
     result.push("active");
   }
 
@@ -99,36 +89,6 @@ const buttonClass = (item) => {
 
   return result;
 };
-
-const getPage = function (id, number) {
-  // mobile에서 클릭하면 닫히기
-  if (window.innerWidth < 768) {
-    bookStore.closeSidebar();
-  }
-  currNum.value = number;
-  router.push("/book/vue-notion/" + number);
-
-  blocks.value = null;
-  useFetch("/api/book/content", {
-    method: "post",
-    body: { id },
-  }).then(({ data }) => {
-    blocks.value = data.value;
-  });
-};
-
-watch(
-  route,
-  () => {
-    if (list.value.length == 0) {
-      useFetch("/api/book/list").then(({ data }) => {
-        list.value = data.value;
-        getPage(list.value[currNum.value].id, currNum.value);
-      });
-    }
-  },
-  { immediate: true }
-);
 </script>
 
 <style lang="scss" scoped>

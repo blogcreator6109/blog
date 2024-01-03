@@ -10,7 +10,6 @@ const { openWindow } = useWindowStore();
 const diaryStore = useDiaryStore();
 
 const route = useRoute();
-const router = useRouter();
 
 if (diaryStore.list.length == 0) {
   const { data: list } = await useFetch("/api/blogdiary/list");
