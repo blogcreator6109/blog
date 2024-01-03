@@ -1,16 +1,16 @@
 <template>
   <div class="book" ref="container">
     <aside class="sidebar" :class="{ active: sidebarActive }">
-      <NuxtLink
+      <button
         class="item"
         :class="buttonClass(item)"
         :disabled="!item.published"
         v-for="item of list"
         :key="item.id"
-        :to="`/book/vue-notion/${item.number}`"
+        @click="movePage(item.number)"
       >
         {{ item.title }}
-      </NuxtLink>
+      </button>
     </aside>
     <div class="content">
       <div class="container" v-if="content">
@@ -71,9 +71,15 @@ import { storeToRefs } from "pinia";
 import { useBookStore } from "@/stores/book";
 import Article from "@/components/windows/book/Article.vue";
 
+const router = useRouter();
+
 const bookStore = useBookStore();
 const { sidebarActive, list, content, currNumber, nextPageInfo, prevPageInfo } =
   storeToRefs(bookStore);
+
+const movePage = (number) => {
+  router.push(`/book/vue-notion/${number}`);
+};
 
 /**
  * 현재 일치하는 페이지를 active 한다.
