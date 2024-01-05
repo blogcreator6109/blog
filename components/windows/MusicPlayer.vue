@@ -121,6 +121,8 @@ const changeMusic = (idx) => {
   if (player && videoId) {
     player.loadVideoById(videoId);
     play(); // 비디오 재생
+
+    document.querySelector(".music-player").scrollTo(0, 0);
   }
 };
 const play = () => {
@@ -215,6 +217,7 @@ onMounted(() => {
   }
 });
 
+// 이상하게 onMounted에서 실행하면 currentMusic.value가 undefined로 나옴
 onUpdated(() => {
   if (!player && currentMusic.value) {
     createAPIScript();
