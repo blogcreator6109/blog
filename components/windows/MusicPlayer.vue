@@ -1,6 +1,6 @@
 <template>
   <div class="music-player" v-if="musicStore.list">
-    <div class="curr-music">
+    <div class="curr-music" v-if="currentMusic">
       <div class="bg">
         <img :src="currentMusic.thumbnail" alt="bg" />
       </div>
@@ -209,8 +209,17 @@ const removeAPIScript = () => {
 };
 
 onMounted(() => {
-  createAPIScript();
-  initYTPlayer();
+  if (!player && currentMusic.value) {
+    createAPIScript();
+    initYTPlayer();
+  }
+});
+
+onUpdated(() => {
+  if (!player && currentMusic.value) {
+    createAPIScript();
+    initYTPlayer();
+  }
 });
 
 onBeforeUnmount(() => {
