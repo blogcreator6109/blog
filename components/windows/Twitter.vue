@@ -78,10 +78,12 @@ onMounted(() => {
 <style lang="scss">
 .twitter-wrapper {
   width: 100%;
-  height: fit-content;
+  height: 100%;
   min-height: 100%;
   background-color: #262626;
   color: white;
+  overflow-y: auto;
+  @include scrollTheme;
 
   .head {
     position: relative;

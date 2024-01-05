@@ -56,6 +56,7 @@ export default defineEventHandler(async (e) => {
       if (!noCaching) {
         nodeCache.set(cache.key, result);
       }
+      console.log(result);
 
       return result;
     }

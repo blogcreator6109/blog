@@ -1,54 +1,90 @@
 <template>
-  <div class="music-player">
-    <div class="controls" v-show="ready">
-      <img
-        class="controls__btn"
-        @click="prev"
-        src="@/assets/images/prev.svg"
-        alt="prev"
-      />
-      <img
-        class="controls__btn pause"
-        v-show="playing"
-        src="@/assets/images/pause.svg"
-        alt="pause"
-        @click="pause"
-      />
-      <img
-        class="controls__btn play"
-        v-show="!playing"
-        src="@/assets/images/play.svg"
-        alt="play"
-        @click="play"
-      />
-      <img
-        class="controls__btn"
-        @click="next"
-        src="@/assets/images/next.svg"
-        alt="next"
-      />
-      <div class="volume" v-if="ready">
-        <div class="btn" @click.stop="showSlider = !showSlider">
-          <img src="@/assets/images/volume-mute.svg" v-show="volume == 0" />
-          <img
-            src="@/assets/images/volume-min.svg"
-            v-show="0 < volume && volume < 33"
-          />
-          <img
-            src="@/assets/images/volume-mid.svg"
-            v-show="33 <= volume && volume < 66"
-          />
-          <img
-            src="@/assets/images/volume-max.svg"
-            v-show="66 <= volume && volume <= 100"
-          />
+  <div class="music-player" v-if="musicStore.list">
+    <div class="curr-music">
+      <div class="bg">
+        <img :src="currentMusic.thumbnail" alt="bg" />
+      </div>
+      <div class="music-info">
+        <div class="thumbnail">
+          <img :src="currentMusic.thumbnail" alt="thumbnail" />
         </div>
-        <Slider v-model="volume" v-show="showSlider" @click.self.stop />
+        <div class="title">
+          {{ currentMusic.title }}
+        </div>
+        <div class="channel">
+          {{ currentMusic.channel }}
+        </div>
+        <div class="progress">
+          <!-- <Slider v-model="progress" /> -->
+        </div>
+        <div class="controls" v-if="readyToPlay">
+          <!-- <img
+            class="shuffle"
+            src="@/assets/images/windows/musicplayer/shuffle.svg"
+            alt="shuffle"
+          /> -->
+          <img
+            class="prev"
+            src="@/assets/images/windows/musicplayer/prev.svg"
+            alt="prev"
+            @click="prev"
+          />
+          <img
+            v-show="!isPlaying"
+            class="play"
+            src="@/assets/images/windows/musicplayer/play.svg"
+            alt="play"
+            @click="play"
+          />
+          <img
+            v-show="isPlaying"
+            class="pause"
+            src="@/assets/images/windows/musicplayer/pause.svg"
+            alt="pause"
+            @click="pause"
+          />
+          <img
+            class="next"
+            src="@/assets/images/windows/musicplayer/next.svg"
+            alt="next"
+            @click="next"
+          />
+          <!-- <img
+            class="repeat"
+            src="@/assets/images/windows/musicplayer/repeat.svg"
+            alt="repeat"
+          /> -->
+        </div>
+      </div>
+    </div>
+    <div class="music-list">
+      <h2 class="list-title">Play List</h2>
+      <p class="desc">
+        유튜브로 재생되기 때문에 유튜브 프리미엄이 있어야 광고가 들리지
+        않습니다.
+      </p>
+      <div
+        v-for="(music, idx) of musicStore.list"
+        :key="music.id"
+        class="music-item"
+        :class="{ active: mIdx == idx }"
+        @click="changeMusic(idx)"
+      >
+        <div class="thumbnail">
+          <img :src="music.thumbnail" alt="thumbnail" />
+        </div>
+        <div class="text">
+          <div class="title">{{ music.title }}</div>
+          <div class="channel">{{ music.channel }}</div>
+        </div>
+        <div class="duration">
+          {{ music.duration }}
+        </div>
       </div>
     </div>
 
-    <Teleport to=".window-list">
-      <div class="player-wrapper">
+    <Teleport to=".window-list" :disabled="isDisabled">
+      <div class="video">
         <div class="container">
           <div class="player" id="player"></div>
         </div>
@@ -58,38 +94,56 @@
 </template>
 
 <script setup>
+import { useMusicStore } from "~/stores/music";
+
+const musicStore = useMusicStore();
+
 const router = useRouter();
 router.push("/musicplayer");
 
-const player = ref(null);
-const ready = ref(false);
-const playing = ref(false);
-const showSlider = ref(false);
-const volume = ref(20);
+const isDisabled = ref(true);
 
-function play() {
+const mIdx = ref(0);
+const currentMusic = computed(() => {
+  return musicStore.list[mIdx.value];
+});
+
+const isShuffle = ref(false);
+const sound = ref(50);
+const repeatMode = ref("none");
+const progress = ref(0);
+const isPlaying = ref(false);
+let player = null;
+
+const changeMusic = (idx) => {
+  mIdx.value = idx;
+  const videoId = currentMusic.value.videoId;
+  if (player && videoId) {
+    player.loadVideoById(videoId);
+    play(); // 비디오 재생
+  }
+};
+const play = () => {
   player.playVideo();
-}
-
-function prev() {
-  player.previousVideo();
-}
-
-function pause() {
-  player.pauseVideo();
-}
-
-function next() {
-  player.nextVideo();
-}
-
-const onReady = function (event) {
-  // 준비 되었을 때
-  ready.value = true;
 };
 
-const onStateChange = function (event) {
-  // 상태 변화 감지
+const prev = () => {
+  changeMusic(mIdx.value - 1 < 0 ? musicStore.list.length - 1 : mIdx.value - 1);
+};
+
+const pause = () => {
+  player.pauseVideo();
+};
+
+const next = () => {
+  changeMusic(mIdx.value + 1 >= musicStore.list.length ? 0 : mIdx.value + 1);
+};
+
+const readyToPlay = ref(false);
+const onPlayerReady = function (event) {
+  readyToPlay.value = true;
+};
+function onPlayerStateChange(event) {
   const playerState =
     event.data == YT.PlayerState.ENDED
       ? "종료됨"
@@ -105,164 +159,289 @@ const onStateChange = function (event) {
       ? "시작되지 않음"
       : "예외";
 
-  playing.value = event.data == YT.PlayerState.PLAYING;
+  isPlaying.value = event.data == YT.PlayerState.PLAYING;
   console.log("Youtube 실행", playerState);
+}
+
+const initYTPlayer = () => {
+  window.onYouTubeIframeAPIReady = function () {
+    try {
+      player = new YT.Player("player", {
+        videoId: currentMusic.value.videoId,
+        playerVars: {
+          autoplay: 0,
+          controls: 0,
+          rel: 0,
+          playsinline: 1,
+          modestbranding: 1,
+          frameborder: "no",
+        },
+        events: {
+          onReady: onPlayerReady,
+          onStateChange: onPlayerStateChange,
+        },
+      });
+    } catch (e) {
+      console.error("Music Player Error", e);
+    }
+  };
 };
 
-const addIframeAPIScript = () => {
+const createAPIScript = () => {
   const tag = document.createElement("script");
-
   tag.src = "https://www.youtube.com/iframe_api";
   const firstScriptTag = document.getElementsByTagName("script")[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 };
 
-const handleYoutubeIframeReady = () => {
-  try {
-    player.value = new YT.Player("player", {
-      playerVars: {
-        autoplay: 0, // 자동 재생 안함
-        controls: 0, // 재생 컨트롤 노출 안함
-        rel: 0, // 동영상 재생 완료 후 유사 동영상 노출 안함
-        playsinline: 1, // 현페이지에서 재생
-        modestbranding: 1, // 유튜브 로고 노출 안함
-        frameborder: "no", // iframe 경계선 노출 안함
-        listType: "playlist", // 재생목록 유형
-        list: "PLWTycz4el4t7ZCxkGYyekoP1iBxmOM4zZ", // 왁타버스 플레이 리스트
-      },
-      events: {
-        onReady,
-        onStateChange,
-      },
-    });
-  } catch (e) {
-    console.error("Music Player Error", e);
+const removeAPIScript = () => {
+  const apiScript = document.querySelector(
+    'script[src="https://www.youtube.com/iframe_api"]'
+  );
+  if (apiScript) {
+    apiScript.remove();
   }
-};
 
-const videos = ref(null);
-const fetchPlaylistVideos = async () => {
-  const playlistId = "PLWTycz4el4t7ZCxkGYyekoP1iBxmOM4zZ";
-  const apiKey = "AIzaSyB-5Z4Z6Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3Z3";
-  const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&key=${apiKey}&maxResults=25`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
-    videos.value = data.items.map((item) => {
-      return {
-        title: item.snippet.title,
-        thumbnail: item.snippet.thumbnails.default.url,
-        videoId: item.snippet.resourceId.videoId,
-      };
-    });
-    console.log(videos.value);
-  } catch (error) {
-    console.error("Error fetching playlist videos:", error);
+  const widgetScript = document.querySelector("#www-widgetapi-script");
+  if (widgetScript) {
+    widgetScript.remove();
   }
 };
 
 onMounted(() => {
-  // 이전에 유튜브 API를 로드한 적이 있는지 확인
-  if (!player.value) {
-    // 없으면 API 로드
-    addIframeAPIScript();
-  }
-
-  fetchPlaylistVideos();
-
-  window.onYouTubeIframeAPIReady = handleYoutubeIframeReady;
+  createAPIScript();
+  initYTPlayer();
 });
 
 onBeforeUnmount(() => {
-  // 컴포넌트가 제거되기 전에 player 제거
-  if (player.value) {
-    player.value.destroy();
-  }
+  window.YT = null;
+  player.destroy();
+  removeAPIScript();
 });
 </script>
 
 <style lang="scss">
 .music-player {
+  color: #ddd;
   display: flex;
-  align-items: center;
   height: 100%;
-  margin-right: 2.5rem;
-  .controls {
-    display: flex;
-    align-items: center;
-    column-gap: 2rem;
-    height: 100%;
-    &__btn {
-      height: 40%;
-      &.play,
-      &.pause {
-        transform: scale(1.2);
-      }
+  overflow-y: auto;
+  background-color: #333;
 
-      &:active {
-        opacity: 0.7;
+  .curr-music {
+    flex: 0 0 35rem;
+    overflow: hidden;
+    position: relative;
+
+    .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      filter: brightness(0.5) opacity(0.3);
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
       }
     }
 
-    .volume {
+    .music-info {
       position: relative;
       display: flex;
-      height: 60%;
-      .btn {
-        height: 100%;
+      padding: 4rem;
+      box-sizing: border-box;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      .thumbnail {
+        width: 70%;
+        border: 5px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
         img {
-          height: 100%;
+          width: 100%;
+          aspect-ratio: 1;
+          border-radius: 50%;
+          object-fit: cover;
         }
+      }
+      .title {
+        margin-top: 1rem;
+        font-size: 1.8rem;
+        text-align: center;
+        line-height: 1.4;
+        color: white;
+      }
+      .channel {
+        margin-top: 1rem;
+        font-size: 1.4rem;
+        color: gray;
+      }
+      .controls {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-top: 3rem;
+        img {
+          height: 2rem;
+
+          &.shuffle {
+            margin-right: 3rem;
+            height: 1.5rem;
+          }
+          &.play,
+          &.pause {
+            height: 3rem;
+            margin: 0 2rem;
+          }
+
+          &.repeat {
+            margin-left: 3rem;
+            height: 1.5rem;
+          }
+        }
+      }
+      .progress {
+        height: 0.3rem;
+        width: 100%;
+        position: relative;
       }
     }
   }
-}
+  .music-list {
+    flex: 1 1 30rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
 
-.player-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  overflow: hidden;
-  background-color: black;
+    .list-title {
+      font-size: 1.8rem;
+      padding: 1rem 2rem;
+      color: white;
+    }
 
-  .container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    aspect-ratio: 16 / 9;
+    .desc {
+      padding: 0 2rem;
+      color: gray;
+      margin-bottom: 1rem;
+    }
 
-    .player {
+    .music-item {
       width: 100%;
-      height: 100%;
+      height: 8rem;
+      padding: 1rem 2rem;
+      box-sizing: border-box;
+      display: flex;
+      column-gap: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #888;
+        .text {
+          .title {
+            color: white;
+          }
+          .channel {
+            color: #ddd;
+          }
+        }
+      }
+      &.active {
+        background-color: white;
+        .text {
+          .title {
+            color: black;
+          }
+          .channel {
+            color: gray;
+          }
+        }
+      }
+
+      .thumbnail {
+        height: 100%;
+        img {
+          height: 100%;
+          border-radius: 1rem;
+        }
+      }
+      .text {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+
+        .title {
+          line-height: 1.4;
+        }
+        .channel {
+          color: gray;
+        }
+      }
+
+      .duration {
+        margin: auto 0 auto auto;
+        font-size: 1.2rem;
+        color: gray;
+      }
+    }
+  }
+  .video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+    overflow: hidden;
+    background-color: black;
+    pointer-events: none;
+    opacity: 0;
+
+    .container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%;
+      aspect-ratio: 16 / 9;
+
+      .player {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 }
 
 @media (max-width: $breakpoint-tablet) {
-}
-.fade-enter-from {
-  background-color: black;
-  &::before,
-  &::after {
-    opacity: 0;
+  .music-player {
+    flex-direction: column;
+    .curr-music {
+      flex: 0 0 auto;
+      overflow: initial;
+    }
+    .music-list {
+      overflow: initial;
+      padding: 1rem 0;
+    }
   }
-}
-
-.fade-enter-to {
-  background-color: white;
-  &::before,
-  &::after {
-    opacity: 1;
-  }
-}
-
-.fade-enter-active {
-  transition: all 3s;
 }
 </style>

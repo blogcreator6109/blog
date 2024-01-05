@@ -86,7 +86,6 @@ const maximizeWindow = function () {
   }
 
   .body {
-    overflow-y: auto;
     height: calc(100% - #{$window-header-height});
     display: flex;
     background-color: white;

@@ -23,10 +23,11 @@ const windowOpts = {
     w: 767, // 모바일 모드가 되도록
     h: 800,
   },
-  // MusicPlayer: {
-  //   w: 400,
-  //   h: 800,
-  // },
+  MusicPlayer: {
+    w: 800,
+    h: 500,
+    minW: 650,
+  },
 };
 export const windowNames = Object.keys(windowOpts);
 
