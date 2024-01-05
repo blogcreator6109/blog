@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-export const useMusicStore = defineStore("blogdiary", {
+export const useMusicStore = defineStore("music", {
   state: () => ({
     list: [],
     player: null,
