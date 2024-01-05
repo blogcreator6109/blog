@@ -29,8 +29,7 @@
                 </li>
               </ul>
             </template>
-
-            <p class="date">{{ useDateFormat(item.date, "l") }}</p>
+            <p class="date">{{ useDateFormat(item.created, "l") }}</p>
           </div>
           <img class="image" v-if="item.cover" :src="item.cover" />
         </li>
