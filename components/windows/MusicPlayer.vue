@@ -1,5 +1,5 @@
 <template>
-  <div class="music-player" v-if="musicStore.list">
+  <div class="music-player" v-if="list">
     <div class="curr-music" v-if="currentMusic">
       <div class="bg">
         <img :src="currentMusic.thumbnail" alt="bg" />
@@ -95,8 +95,10 @@
 
 <script setup>
 import { useMusicStore } from "~/stores/music";
+import { storeToRefs } from "pinia";
 
 const musicStore = useMusicStore();
+const { player, list } = storeToRefs(musicStore);
 
 const router = useRouter();
 router.push("/musicplayer");
@@ -105,7 +107,7 @@ const isDisabled = ref(true);
 
 const mIdx = ref(0);
 const currentMusic = computed(() => {
-  return musicStore.list[mIdx.value];
+  return list.value[mIdx.value];
 });
 
 const isShuffle = ref(false);
@@ -113,20 +115,19 @@ const sound = ref(50);
 const repeatMode = ref("none");
 const progress = ref(0);
 const isPlaying = ref(false);
-let player = null;
 
 const changeMusic = (idx) => {
   mIdx.value = idx;
   const videoId = currentMusic.value.videoId;
-  if (player && videoId) {
-    player.loadVideoById(videoId);
+  if (player.value && videoId) {
+    player.value.loadVideoById(videoId);
     play(); // 비디오 재생
 
     document.querySelector(".music-player").scrollTo(0, 0);
   }
 };
 const play = () => {
-  player.playVideo();
+  player.value.playVideo();
 };
 
 const prev = () => {
@@ -134,7 +135,7 @@ const prev = () => {
 };
 
 const pause = () => {
-  player.pauseVideo();
+  player.value.pauseVideo();
 };
 
 const next = () => {
@@ -168,7 +169,7 @@ function onPlayerStateChange(event) {
 const initYTPlayer = () => {
   window.onYouTubeIframeAPIReady = function () {
     try {
-      player = new YT.Player("player", {
+      const player = new YT.Player("player", {
         videoId: currentMusic.value.videoId,
         playerVars: {
           autoplay: 0,
@@ -183,6 +184,8 @@ const initYTPlayer = () => {
           onStateChange: onPlayerStateChange,
         },
       });
+      console.log(player);
+      musicStore.setPlayer(player);
     } catch (e) {
       console.error("Music Player Error", e);
     }
@@ -211,7 +214,7 @@ const removeAPIScript = () => {
 };
 
 onMounted(() => {
-  if (!player && currentMusic.value) {
+  if (!player.value && currentMusic.value) {
     createAPIScript();
     initYTPlayer();
   }
@@ -219,7 +222,7 @@ onMounted(() => {
 
 // 이상하게 onMounted에서 실행하면 currentMusic.value가 undefined로 나옴
 onUpdated(() => {
-  if (!player && currentMusic.value) {
+  if (!player.value && currentMusic.value) {
     createAPIScript();
     initYTPlayer();
   }
@@ -227,7 +230,10 @@ onUpdated(() => {
 
 onBeforeUnmount(() => {
   window.YT = null;
-  player.destroy();
+  if (player.value) {
+    player.value.destroy();
+  }
+  musicStore.setPlayer(null);
   removeAPIScript();
 });
 </script>
