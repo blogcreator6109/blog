@@ -2,7 +2,7 @@
   <nav class="pop-up-list">
     <TransitionGroup name="slide-right">
       <template v-for="d of data" :key="d.title">
-        <a class="item" v-show="d.isActive" :href="d.href" target="_blank">
+        <a class="item" v-show="d.isActive" :href="d.href" :target="d.target">
           <button class="close-btn" @click.stop.prevent="d.isActive = false">
             <span class="material-symbols-outlined"> close </span>
           </button>
@@ -78,6 +78,7 @@ const data = ref([
     content: "이 강의는 Vue.js로 만들어졌는데요. 한 번 배워보실래요?!",
     href: "https://inf.run/raB1f",
     time: useRelTime("2023-12-15"),
+    target: "_blank",
   },
   {
     isActive: false,
@@ -87,6 +88,7 @@ const data = ref([
       "문의 하실 것이 있다면 익명으로 편하게 1대1 오픈 채팅을 해요! (과외 신청, 강의, 프로젝트 등)",
     href: "https://open.kakao.com/o/sPMaTY1f",
     time: useRelTime("2024-01-05"),
+    target: "_self",
   },
 ]);
 

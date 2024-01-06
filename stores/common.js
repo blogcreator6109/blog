@@ -5,6 +5,7 @@ export const useCommonStore = defineStore("common", {
     dockInfo: {
       active: false,
     },
+
     showProfile: false,
     triggerPopUp: false, // 값이 바뀔 때마다 Popup의 모든 창이 나타난다.
     isMainMenuOpened: false,
