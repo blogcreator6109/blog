@@ -10,13 +10,13 @@
             <img :src="d.imgSrc" alt="main-image" />
           </div>
           <h3 class="title">{{ d.title }}</h3>
-          <p class="content">
+          <p class="content" :class="{ wide: !d.subImgSrc }">
             {{ d.content }}
           </p>
           <div class="sub-image" v-if="d.subImgSrc">
             <img :src="d.subImgSrc" alt="sub-image" />
           </div>
-          <span class="time">방금</span>
+          <span class="time">{{ d.time }}</span>
         </a>
       </template>
     </TransitionGroup>
@@ -30,6 +30,7 @@
 </template>
 
 <script setup>
+import dayjs from "dayjs";
 import { ref, watch } from "vue";
 
 import vueImage from "~/assets/images/popup/vue.webp";
@@ -66,14 +67,26 @@ const controlActives = (bool) => {
   adActive.value = bool;
 };
 
+const now = dayjs();
+
 const data = ref([
   {
     isActive: false,
     imgSrc: vueImage,
     subImgSrc: inflearnImage,
     title: "블로거의 Vue 강의",
-    content: "이번에 Vue.js 강의를 만들었어요. 한 번 보고 가세요~!",
+    content: "이 강의는 Vue.js로 만들어졌는데요. 한 번 배워보실래요?!",
     href: "https://inf.run/raB1f",
+    time: useRelTime("2023-12-15"),
+  },
+  {
+    isActive: false,
+    imgSrc: "/images/apps/GuestBook.webp",
+    title: "1:1 카톡 문의",
+    content:
+      "문의 하실 것이 있다면 익명으로 편하게 1대1 오픈 채팅을 해요! (과외 신청, 강의, 프로젝트 등)",
+    href: "https://open.kakao.com/o/sPMaTY1f",
+    time: useRelTime("2024-01-05"),
   },
 ]);
 
@@ -160,7 +173,7 @@ setTimeout(() => {
     background-color: rgba(#333, 0.8);
     backdrop-filter: blur(8px);
     border-radius: 2rem;
-    padding: 1.2rem 2rem 0.3rem 2rem;
+    padding: 1.2rem 2rem 0.6rem 2rem;
     box-sizing: border-box;
     color: #ddd;
 
@@ -224,6 +237,10 @@ setTimeout(() => {
       line-height: 1.4;
       grid-row: 2;
       grid-column: 2;
+
+      &.wide {
+        grid-column: 2 / 4;
+      }
     }
     .time {
       grid-column: 3;
