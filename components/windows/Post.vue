@@ -53,8 +53,8 @@ onMounted(() => {
 <style lang="scss">
 .post {
   width: 100%;
-  min-height: 100%;
-  height: fit-content;
+  height: 100%;
   background-color: #e9eef4;
+  overflow-y: auto;
 }
 </style>
