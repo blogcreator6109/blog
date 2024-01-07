@@ -25,7 +25,7 @@ const windowOpts = {
   },
   MusicPlayer: {
     w: 800,
-    h: 500,
+    h: 550,
     minW: 650,
   },
 };

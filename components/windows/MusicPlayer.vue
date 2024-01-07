@@ -15,7 +15,18 @@
           {{ currentMusic.channel }}
         </div>
         <div class="progress">
-          <!-- <Slider v-model="progress" /> -->
+          <div class="times">
+            <div class="curr-time">{{ formatTime(parseInt(currTime)) }}</div>
+            <div class="total-time">
+              {{ formatTime(currentMusic.duration) }}
+            </div>
+          </div>
+          <Slider
+            class="progress-bar"
+            :value="progress"
+            @update="updateProgress"
+            :max="10000"
+          />
         </div>
         <div class="controls" v-if="readyToPlay">
           <!-- <img
@@ -78,7 +89,7 @@
           <div class="channel">{{ music.channel }}</div>
         </div>
         <div class="duration">
-          {{ music.duration }}
+          {{ formatTime(music.duration) }}
         </div>
       </div>
     </div>
@@ -96,6 +107,7 @@
 <script setup>
 import { useMusicStore } from "~/stores/music";
 import { storeToRefs } from "pinia";
+import { update } from "firebase/database";
 
 const musicStore = useMusicStore();
 const { player, list } = storeToRefs(musicStore);
@@ -111,10 +123,23 @@ const currentMusic = computed(() => {
 });
 
 const isShuffle = ref(false);
-const sound = ref(50);
+const volume = ref(50);
 const repeatMode = ref("none");
 const progress = ref(0);
 const isPlaying = ref(false);
+
+function formatTime(seconds) {
+  const pad = (s) => (s < 10 ? "0" + s : s);
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const sec = seconds % 60;
+
+  if (hours > 0) {
+    return `${hours}:${pad(minutes)}:${pad(sec)}`;
+  } else {
+    return `${minutes}:${pad(sec)}`;
+  }
+}
 
 const changeMusic = (idx) => {
   mIdx.value = idx;
@@ -126,6 +151,7 @@ const changeMusic = (idx) => {
     document.querySelector(".music-player").scrollTo(0, 0);
   }
 };
+
 const play = () => {
   player.value.playVideo();
 };
@@ -146,24 +172,66 @@ const readyToPlay = ref(false);
 const onPlayerReady = function (event) {
   readyToPlay.value = true;
 };
+
+let progTimer = null;
+let currTime = ref(0);
+const updateProgress = (val) => {
+  if (player.value) {
+    const duration = currentMusic.value.duration;
+    if (val) {
+      currTime.value = (val / 10000) * duration;
+
+      // 끝까지 갔을 때 1초 전으로 돌아가게 (다음으로 넘어가는 것을 방지)
+      if (duration - currTime.value < 2) {
+        currTime.value = duration - 2;
+      }
+      player.value.seekTo(currTime.value);
+    } else {
+      currTime.value = player.value.getCurrentTime();
+    }
+    progress.value = (currTime.value / duration) * 10000;
+  }
+};
+
 function onPlayerStateChange(event) {
   const playerState =
     event.data == YT.PlayerState.ENDED
-      ? "종료됨"
+      ? "ended"
       : event.data == YT.PlayerState.PLAYING
-      ? "재생 중"
+      ? "playing"
       : event.data == YT.PlayerState.PAUSED
-      ? "일시중지 됨"
+      ? "paused"
       : event.data == YT.PlayerState.BUFFERING
-      ? "버퍼링 중"
+      ? "buffering"
       : event.data == YT.PlayerState.CUED
-      ? "재생준비 완료됨"
+      ? "cued"
       : event.data == -1
-      ? "시작되지 않음"
+      ? "not started"
       : "예외";
 
-  isPlaying.value = event.data == YT.PlayerState.PLAYING;
-  console.log("Youtube 실행", playerState);
+  isPlaying.value =
+    event.data == YT.PlayerState.PLAYING ||
+    event.data == YT.PlayerState.BUFFERING;
+  if (playerState == "playing") {
+    progTimer = setInterval(updateProgress, 1000);
+  } else if (playerState == "not started") {
+    updateProgress(0);
+  } else if (playerState == "ended") {
+    updateProgress(1000);
+    clearInterval(progTimer);
+
+    if (repeatMode.value == "none") {
+      next();
+    } else if (repeatMode.value == "one") {
+      changeMusic(mIdx.value);
+    } else if (repeatMode.value == "all") {
+      next();
+    }
+  } else {
+    clearInterval(progTimer);
+  }
+
+  console.log(playerState, progress.value, currTime.value);
 }
 
 const initYTPlayer = () => {
@@ -184,7 +252,6 @@ const initYTPlayer = () => {
           onStateChange: onPlayerStateChange,
         },
       });
-      console.log(player);
       musicStore.setPlayer(player);
     } catch (e) {
       console.error("Music Player Error", e);
@@ -232,6 +299,9 @@ onBeforeUnmount(() => {
   window.YT = null;
   if (player.value) {
     player.value.destroy();
+  }
+  if (progTimer) {
+    clearInterval(progTimer);
   }
   musicStore.setPlayer(null);
   removeAPIScript();
@@ -334,9 +404,18 @@ onBeforeUnmount(() => {
         }
       }
       .progress {
-        height: 0.3rem;
         width: 100%;
-        position: relative;
+
+        .times {
+          display: flex;
+          align-items: center;
+          font-size: 1.3rem;
+          justify-content: space-between;
+        }
+        &-bar {
+          height: 0.3rem;
+          margin-top: 0.9rem;
+        }
       }
     }
   }
