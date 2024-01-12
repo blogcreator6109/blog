@@ -5,67 +5,134 @@
         <img :src="currentMusic.thumbnail" alt="bg" />
       </div>
       <div class="music-info">
-        <div class="thumbnail">
-          <img :src="currentMusic.thumbnail" alt="thumbnail" />
+        <div class="screen-mode" :class="screenMode">
+          <button @click="screenMode = 'thumbnail'">썸네일</button>
+          <button @click="screenMode = 'video'">동영상</button>
         </div>
+        <div class="screen">
+          <img
+            class="thumbnail"
+            v-show="screenMode == 'thumbnail'"
+            :src="currentMusic.thumbnail"
+            alt="thumbnail"
+          />
+
+          <div class="video-wrapper" v-show="screenMode == 'video'">
+            <Teleport to=".window-list" :disabled="isDisabled">
+              <div class="video">
+                <div class="container">
+                  <div class="player" id="player"></div>
+                </div>
+              </div>
+            </Teleport>
+          </div>
+        </div>
+
         <div class="title">
           {{ currentMusic.title }}
         </div>
         <div class="channel">
           {{ currentMusic.channel }}
         </div>
-        <div class="progress">
-          <div class="times">
-            <div class="curr-time">{{ formatTime(parseInt(currTime)) }}</div>
-            <div class="total-time">
-              {{ formatTime(currentMusic.duration) }}
+        <template v-if="readyToPlay">
+          <div class="progress">
+            <div class="times">
+              <div class="curr-time">{{ formatTime(parseInt(currTime)) }}</div>
+              <div class="total-time">
+                {{ formatTime(currentMusic.duration) }}
+              </div>
+            </div>
+            <Slider
+              class="progress-bar"
+              :value="progress"
+              @update="updateProgress"
+              :max="10000"
+            />
+          </div>
+          <div class="controls">
+            <img
+              class="shuffle"
+              src="@/assets/images/windows/musicplayer/shuffle.svg"
+              alt="shuffle"
+              @click="shuffle"
+            />
+            <img
+              class="prev"
+              src="@/assets/images/windows/musicplayer/prev.svg"
+              alt="prev"
+              @click="prev"
+            />
+            <img
+              v-show="!isPlaying"
+              class="play"
+              src="@/assets/images/windows/musicplayer/play.svg"
+              alt="play"
+              @click="play"
+            />
+            <img
+              v-show="isPlaying"
+              class="pause"
+              src="@/assets/images/windows/musicplayer/pause.svg"
+              alt="pause"
+              @click="pause"
+            />
+            <img
+              class="next"
+              src="@/assets/images/windows/musicplayer/next.svg"
+              alt="next"
+              @click="next"
+            />
+            <div
+              class="repeat"
+              :class="repeatMode"
+              @click="
+                repeatMode =
+                  repeatMode == 'none'
+                    ? 'one'
+                    : repeatMode == 'one'
+                    ? 'all'
+                    : 'none'
+              "
+            >
+              <img
+                src="@/assets/images/windows/musicplayer/repeat.svg"
+                alt="repeat"
+              />
+              <div class="mode" v-show="repeatMode == 'one'">1</div>
+              <div class="mode" v-show="repeatMode == 'all'">all</div>
             </div>
           </div>
-          <Slider
-            class="progress-bar"
-            :value="progress"
-            @update="updateProgress"
-            :max="10000"
-          />
-        </div>
-        <div class="controls" v-if="readyToPlay">
-          <!-- <img
-            class="shuffle"
-            src="@/assets/images/windows/musicplayer/shuffle.svg"
-            alt="shuffle"
-          /> -->
-          <img
-            class="prev"
-            src="@/assets/images/windows/musicplayer/prev.svg"
-            alt="prev"
-            @click="prev"
-          />
-          <img
-            v-show="!isPlaying"
-            class="play"
-            src="@/assets/images/windows/musicplayer/play.svg"
-            alt="play"
-            @click="play"
-          />
-          <img
-            v-show="isPlaying"
-            class="pause"
-            src="@/assets/images/windows/musicplayer/pause.svg"
-            alt="pause"
-            @click="pause"
-          />
-          <img
-            class="next"
-            src="@/assets/images/windows/musicplayer/next.svg"
-            alt="next"
-            @click="next"
-          />
-          <!-- <img
-            class="repeat"
-            src="@/assets/images/windows/musicplayer/repeat.svg"
-            alt="repeat"
-          /> -->
-        </div>
+
+          <div class="volume">
+            <div class="volume-sound" @click="clickSoundIcon">
+              <img
+                v-show="volume <= 0"
+                class="sound"
+                src="@/assets/images/windows/musicplayer/volume-mute.svg"
+                alt="mute"
+              />
+              <img
+                v-show="volume > 0 && volume < 30"
+                class="sound"
+                src="@/assets/images/windows/musicplayer/volume-low.svg"
+                alt="low"
+              />
+              <img
+                v-show="volume >= 30 && volume < 70"
+                class="sound"
+                src="@/assets/images/windows/musicplayer/volume-mid.svg"
+                alt="mid"
+              />
+              <img
+                v-show="volume >= 70"
+                class="sound"
+                src="@/assets/images/windows/musicplayer/volume-high.svg"
+                alt="high"
+              />
+            </div>
+            <Slider class="volume-bar" :value="volume" @update="updateVolume" />
+          </div>
+        </template>
       </div>
     </div>
     <div class="music-list">
@@ -93,21 +160,12 @@
         </div>
       </div>
     </div>
-
-    <Teleport to=".window-list" :disabled="isDisabled">
-      <div class="video">
-        <div class="container">
-          <div class="player" id="player"></div>
-        </div>
-      </div>
-    </Teleport>
   </div>
 </template>
 
 <script setup>
 import { useMusicStore } from "~/stores/music";
 import { storeToRefs } from "pinia";
-import { update } from "firebase/database";
 
 const musicStore = useMusicStore();
 const { player, list } = storeToRefs(musicStore);
@@ -117,16 +175,28 @@ router.push("/musicplayer");
 
 const isDisabled = ref(true);
 
+const screenMode = ref("thumbnail"); // thumbnail or video
+
 const mIdx = ref(0);
 const currentMusic = computed(() => {
   return list.value[mIdx.value];
 });
 
-const isShuffle = ref(false);
 const volume = ref(50);
 const repeatMode = ref("none");
 const progress = ref(0);
 const isPlaying = ref(false);
+
+// newList의 첫 번째 값은 현재 재생중인 음악을 넣고
+// 나머지 음악은 섞는다.
+const shuffle = () => {
+  const newList = [...list.value];
+  const currMusic = newList.splice(mIdx.value, 1)[0];
+  newList.sort(() => Math.random() - 0.5);
+  newList.unshift(currMusic);
+  mIdx.value = 0;
+  musicStore.setList(newList);
+};
 
 function formatTime(seconds) {
   const pad = (s) => (s < 10 ? "0" + s : s);
@@ -193,6 +263,13 @@ const updateProgress = (val) => {
   }
 };
 
+const updateVolume = (val) => {
+  if (player.value) {
+    volume.value = val;
+    player.value.setVolume(val);
+  }
+};
+
 function onPlayerStateChange(event) {
   const playerState =
     event.data == YT.PlayerState.ENDED
@@ -221,7 +298,12 @@ function onPlayerStateChange(event) {
     clearInterval(progTimer);
 
     if (repeatMode.value == "none") {
-      next();
+      if (mIdx.value + 1 >= musicStore.list.length) {
+        updateProgress(0);
+        pause();
+      } else {
+        next();
+      }
     } else if (repeatMode.value == "one") {
       changeMusic(mIdx.value);
     } else if (repeatMode.value == "all") {
@@ -230,8 +312,6 @@ function onPlayerStateChange(event) {
   } else {
     clearInterval(progTimer);
   }
-
-  console.log(playerState, progress.value, currTime.value);
 }
 
 const initYTPlayer = () => {
@@ -280,6 +360,16 @@ const removeAPIScript = () => {
   }
 };
 
+let prevVolume = 0;
+const clickSoundIcon = () => {
+  if (volume.value > 0) {
+    prevVolume = volume.value;
+    updateVolume(0);
+  } else {
+    updateVolume(prevVolume);
+  }
+};
+
 onMounted(() => {
   if (!player.value && currentMusic.value) {
     createAPIScript();
@@ -317,7 +407,7 @@ onBeforeUnmount(() => {
   background-color: #333;
 
   .curr-music {
-    flex: 0 0 35rem;
+    flex: 1 1 35rem;
     overflow: hidden;
     position: relative;
 
@@ -354,24 +444,91 @@ onBeforeUnmount(() => {
       height: 100%;
       flex-direction: column;
       align-items: center;
-      .thumbnail {
-        width: 70%;
-        border: 5px solid white;
-        border-radius: 50%;
-        box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
-        img {
-          width: 100%;
+
+      .screen-mode {
+        font-size: 1.4rem;
+        border-radius: 5rem;
+        background-color: #555;
+
+        &.thumbnail {
+          button:nth-child(1) {
+            background-color: #777;
+            position: relative;
+          }
+        }
+
+        &.video {
+          button:nth-child(2) {
+            background-color: #777;
+            position: relative;
+          }
+        }
+
+        button {
+          padding: 1rem 1.5rem;
+          background-color: #555;
+          border-radius: 5rem;
+          &:nth-child(1) {
+            margin-right: -0.5rem;
+          }
+        }
+      }
+
+      .screen {
+        width: 100%;
+        margin-top: 2rem;
+        .thumbnail {
+          display: flex;
+          margin: 0 auto;
+          width: 60%;
           aspect-ratio: 1;
           border-radius: 50%;
           object-fit: cover;
+          border: 5px solid white;
+          border-radius: 50%;
+          box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.5);
+        }
+
+        .video-wrapper {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          border-radius: 1rem;
+          overflow: hidden;
+
+          .video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: black;
+            pointer-events: none;
+
+            .container {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              min-width: 100%;
+              aspect-ratio: 16 / 9;
+
+              .player {
+                width: 100%;
+                height: 100%;
+              }
+            }
+          }
         }
       }
       .title {
-        margin-top: 1rem;
+        margin-top: 1.8rem;
         font-size: 1.8rem;
         text-align: center;
         line-height: 1.4;
         color: white;
+        @include textClip(2);
       }
       .channel {
         margin-top: 1rem;
@@ -386,20 +543,50 @@ onBeforeUnmount(() => {
         margin-top: 3rem;
         img {
           height: 2rem;
+          cursor: pointer;
 
           &.shuffle {
             margin-right: 3rem;
-            height: 1.5rem;
+            height: 3rem;
+            opacity: 0.5;
+            &:active {
+              opacity: 1;
+            }
           }
           &.play,
           &.pause {
             height: 3rem;
             margin: 0 2rem;
           }
+        }
 
-          &.repeat {
-            margin-left: 3rem;
-            height: 1.5rem;
+        .repeat {
+          margin-left: 3rem;
+          height: 2.5rem;
+          position: relative;
+          cursor: pointer;
+          img {
+            height: 100%;
+          }
+
+          .mode {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding-bottom: 0.2rem;
+          }
+
+          &.none {
+            opacity: 0.5;
+          }
+
+          &.one {
+            opacity: 1;
+          }
+
+          &.all {
+            opacity: 1;
           }
         }
       }
@@ -417,10 +604,31 @@ onBeforeUnmount(() => {
           margin-top: 0.9rem;
         }
       }
+
+      .volume {
+        width: 20rem;
+        margin-top: 1.9rem;
+        display: flex;
+        align-items: center;
+
+        &-sound {
+          height: 2.5rem;
+          display: flex;
+          margin-right: 1rem;
+          cursor: pointer;
+          img {
+            height: 100%;
+          }
+        }
+
+        &-bar {
+          height: 0.5rem;
+        }
+      }
     }
   }
   .music-list {
-    flex: 1 1 30rem;
+    flex: 2 2 30rem;
     overflow-x: hidden;
     overflow-y: auto;
     display: flex;
@@ -457,6 +665,9 @@ onBeforeUnmount(() => {
           .channel {
             color: #ddd;
           }
+        }
+        .duration {
+          color: white;
         }
       }
       &.active {
@@ -497,32 +708,6 @@ onBeforeUnmount(() => {
         margin: auto 0 auto auto;
         font-size: 1.2rem;
         color: gray;
-      }
-    }
-  }
-  .video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -100;
-    overflow: hidden;
-    background-color: black;
-    pointer-events: none;
-    opacity: 0;
-
-    .container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      aspect-ratio: 16 / 9;
-
-      .player {
-        width: 100%;
-        height: 100%;
       }
     }
   }

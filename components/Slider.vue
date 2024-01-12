@@ -28,13 +28,30 @@ defineProps({
   input {
     position: absolute;
     left: 0;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     height: 100%;
     width: 100%;
     border-radius: 1rem;
     box-sizing: border-box;
     margin: 0;
+    cursor: pointer;
     -webkit-appearance: none;
+
+    $height: 1.5rem;
+
+    &:hover {
+      height: 120%;
+      &::-webkit-slider-thumb {
+        transform: scale(1.2);
+      }
+      &::-moz-range-thumb {
+        transform: scale(1.2);
+      }
+      &::-ms-thumb {
+        transform: scale(1.2);
+      }
+    }
 
     &::-webkit-slider-thumb {
       box-shadow: 1px 1px 3px #000000;
@@ -44,9 +61,6 @@ defineProps({
       background: #ffffff;
       cursor: pointer;
       -webkit-appearance: none;
-    }
-    &:focus::-webkit-slider-runnable-track {
-      background: #50555c;
     }
     &::-moz-range-track {
       width: 100%;
