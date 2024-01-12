@@ -2,18 +2,12 @@
   <img
     ref="img"
     class="image"
+    :class="loading ? 'loading' : ''"
     :src="data?.file?.url"
     :alt="alt"
     decoding="async"
   />
-  <!-- <nuxt-img
-    class="image"
-    :src="data?.file?.url"
-    :alt="alt"
-    ref="img"
-    @load="loading = false"
-  /> -->
-  <div class="img-caption">{{ alt }}</div>
+  <div class="img-caption" v-show="loading">{{ alt }}</div>
   <Loading v-show="loading" />
 </template>
 
@@ -31,3 +25,13 @@ onMounted(() => {
   };
 });
 </script>
+
+<style scoped lang="scss">
+img {
+  opacity: 1;
+
+  &.loading {
+    opacity: 0;
+  }
+}
+</style>
