@@ -13,7 +13,7 @@ const { data } = await useFetch("/api/firebase/table", {
   method: "post",
   body: {
     col: "musics",
-    order: ["order", "asc"],
+    order: ["order", "desc"],
   },
 });
 
