@@ -49,6 +49,8 @@ const { content } = storeToRefs(diaryStore);
 
   > .cover {
     width: 100%;
+    max-height: 80%;
+    object-fit: cover;
   }
   .content-info {
     padding: 1.5rem;
