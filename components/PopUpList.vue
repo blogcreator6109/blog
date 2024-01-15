@@ -10,12 +10,10 @@
             <img :src="d.imgSrc" alt="main-image" />
           </div>
           <h3 class="title">{{ d.title }}</h3>
-          <p class="content" :class="{ wide: !d.subImgSrc }">
+          <p class="content">
             {{ d.content }}
           </p>
-          <div class="sub-image" v-if="d.subImgSrc">
-            <img :src="d.subImgSrc" alt="sub-image" />
-          </div>
+
           <span class="time">{{ d.time }}</span>
         </a>
       </template>
@@ -35,6 +33,7 @@ import { ref, watch } from "vue";
 
 import vueImage from "~/assets/images/popup/vue.webp";
 import inflearnImage from "~/assets/images/popup/inflearn.webp";
+import soomgoImage from "~/assets/images/popup/soomgo.webp";
 
 import { storeToRefs } from "pinia";
 import { useCommonStore } from "@/stores/common";
@@ -82,13 +81,13 @@ const data = ref([
   },
   {
     isActive: false,
-    imgSrc: "/images/apps/GuestBook.webp",
-    title: "1:1 카톡 문의",
+    imgSrc: soomgoImage,
+    title: "Vue.js 1대1 과외",
     content:
-      "문의 하실 것이 있다면 익명으로 편하게 1대1 오픈 채팅을 해요! (과외 신청, 강의, 프로젝트 등)",
-    href: "https://open.kakao.com/o/sPMaTY1f",
-    time: useRelTime("2024-01-05"),
-    target: "_self",
+      "Vue.js에 기본에 대해서 확실히 배우고 싶으시다면 숨고로 저에게 연락주세요!",
+    href: "https://soomgo.com/profile/users/11963007?prev=searchPro&hasFilter=false&serviceSelected=false&from=search_result",
+    time: useRelTime("2024-01-15"),
+    target: "_blank",
   },
 ]);
 
@@ -167,7 +166,7 @@ setTimeout(() => {
     position: relative;
 
     display: grid;
-    grid-template-columns: 3rem 1fr 3.5rem;
+    grid-template-columns: 3rem 1fr 4.5rem;
     grid-template-rows: auto 1fr;
     row-gap: 0.3rem;
     column-gap: 1.2rem;
@@ -219,17 +218,7 @@ setTimeout(() => {
         border-radius: 0.2rem;
       }
     }
-    .sub-image {
-      grid-row: 2;
-      grid-column: 3;
-      display: flex;
-      align-items: flex-end;
-      margin-bottom: 0.5rem;
-      img {
-        width: 100%;
-        border-radius: 0.4rem;
-      }
-    }
+
     .title {
       grid-row: 1;
       font-size: 1.1em;
@@ -238,11 +227,8 @@ setTimeout(() => {
     .content {
       line-height: 1.4;
       grid-row: 2;
-      grid-column: 2;
-
-      &.wide {
-        grid-column: 2 / 4;
-      }
+      grid-column: 2 / 4;
+      line-break: anywhere;
     }
     .time {
       grid-column: 3;
