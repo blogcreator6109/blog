@@ -71,10 +71,10 @@ const now = dayjs();
 const data = ref([
   {
     isActive: false,
-    imgSrc: vueImage,
-    subImgSrc: inflearnImage,
-    title: "블로거의 Vue 강의",
-    content: "이 강의는 Vue.js로 만들어졌는데요. 한 번 배워보실래요?!",
+    imgSrc: inflearnImage,
+    title: "쉽고 빠르게 배우는 Vue 3 기본",
+    content:
+      "인프런에 Vue.js 강의를 출시했습니다! 영혼을 갈아넣었으니 한 번 보고가세요~",
     href: "https://inf.run/raB1f",
     time: useRelTime("2023-12-15"),
     target: "_blank",
@@ -84,7 +84,7 @@ const data = ref([
     imgSrc: soomgoImage,
     title: "Vue.js 1대1 과외",
     content:
-      "Vue.js에 기본에 대해서 확실히 배우고 싶으시다면 숨고로 저에게 연락주세요!",
+      "혹시 저에게 1대1로 배우고 싶으신가요? 숨고로 연락주세요. 이런 블로그를 어떻게 만들었는지까지 다양하게 말씀드릴게요",
     href: "https://soomgo.com/profile/users/11963007?prev=searchPro&hasFilter=false&serviceSelected=false&from=search_result",
     time: useRelTime("2024-01-15"),
     target: "_blank",
