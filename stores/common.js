@@ -32,5 +32,8 @@ export const useCommonStore = defineStore("common", {
     closeMainMenu() {
       this.isMainMenuOpened = false;
     },
+    closeShowProfile() {
+      this.showProfile = false;
+    },
   },
 });

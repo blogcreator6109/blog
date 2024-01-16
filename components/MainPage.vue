@@ -9,11 +9,8 @@
     <FallingSnow />
     <WindowList>
       <PopUpList />
-    </WindowList>
-
-    <KeepAlive>
       <Profile v-if="showProfile" />
-    </KeepAlive>
+    </WindowList>
   </div>
 </template>
 
