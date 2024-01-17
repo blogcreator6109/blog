@@ -24,6 +24,9 @@ const getProp = function (prop) {
         name: v.name,
         color: v.color,
       }));
+    case "file":
+    case "external":
+      return prop[t]?.url;
     case "files":
       return prop[t]?.[0]?.file?.url;
     case "date":

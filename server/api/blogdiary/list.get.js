@@ -19,15 +19,17 @@ const request = async () => {
       },
     });
 
-    return table.map((v) => ({
-      id: v.id,
-      number: getProp(v.properties?.number),
-      cover: v.cover?.file?.url,
-      created: v.created_time,
-      private: getProp(v.properties?.private),
-      title: getProp(v.properties?.title),
-      tags: getProp(v.properties?.tags),
-    }));
+    return table.map((v) => {
+      return {
+        id: v.id,
+        number: getProp(v.properties?.number),
+        cover: getProp(v.cover),
+        created: v.created_time,
+        private: getProp(v.properties?.private),
+        title: getProp(v.properties?.title),
+        tags: getProp(v.properties?.tags),
+      };
+    });
   } catch (error) {
     console.error("[ERROR] notion.databases.query", error);
     let result = null;
