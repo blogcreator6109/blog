@@ -31,9 +31,7 @@
 import dayjs from "dayjs";
 import { ref, watch } from "vue";
 
-import vueImage from "~/assets/images/popup/vue.webp";
 import inflearnImage from "~/assets/images/popup/inflearn.webp";
-import soomgoImage from "~/assets/images/popup/soomgo.webp";
 
 import { storeToRefs } from "pinia";
 import { useCommonStore } from "@/stores/common";
@@ -77,16 +75,6 @@ const data = ref([
       "인프런에 Vue.js 강의를 출시했습니다! 영혼을 갈아넣었으니 한 번 보고가세요~",
     href: "https://inf.run/raB1f",
     time: useRelTime("2023-12-15"),
-    target: "_blank",
-  },
-  {
-    isActive: false,
-    imgSrc: soomgoImage,
-    title: "Vue.js 1대1 과외",
-    content:
-      "혹시 저에게 1대1로 배우고 싶으신가요? 숨고로 연락주세요. 이런 블로그를 어떻게 만들었는지까지 다양하게 말씀드릴게요",
-    href: "https://soomgo.com/profile/users/11963007?prev=searchPro&hasFilter=false&serviceSelected=false&from=search_result",
-    time: useRelTime("2024-01-15"),
     target: "_blank",
   },
 ]);

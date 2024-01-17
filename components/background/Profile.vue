@@ -49,6 +49,16 @@
         </a>
       </div>
 
+      <div class="link-wrapper soomgo">
+        <a class="link" href="https://kmong.com/gig/540007">
+          <div class="text">
+            <div class="bg"></div>
+            <h3>티스토리 스킨 수정 (크몽)</h3>
+            <p>티스토리 스킨을 살짝 수정해보고 싶으시다면 의뢰하세요!</p>
+          </div>
+        </a>
+      </div>
+
       <div class="buttons">
         <button v-for="item of btns" :key="item.text">
           <div class="overlay"></div>
