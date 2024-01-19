@@ -6,6 +6,7 @@ const notion = new Client({
 });
 
 const getProp = function (prop) {
+  if (!prop?.type) return null;
   const t = prop.type;
   switch (t) {
     case "select":
