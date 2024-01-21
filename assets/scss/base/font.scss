@@ -2,13 +2,13 @@
   font-family: "NotoSansKR";
   font-weight: normal;
   src: local("NotoSansKR"), local("NotoSansKR-Regular"),
-    url("@/assets/fonts/NotoSansKR-Regular.ttf") format("truetype");
+    url("@/assets/fonts/NotoSans-Regular.woff") format("truetype");
 }
 @font-face {
   font-family: "NotoSansKR";
   font-weight: bold;
   src: local("NotoSansKR"), local("NotoSansKR-Bold"),
-    url("@/assets/fonts/NotoSansKR-Bold.ttf") format("truetype");
+    url("@/assets/fonts/NotoSans-Bold.woff") format("truetype");
 }
 
 html {

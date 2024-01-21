@@ -49,11 +49,9 @@ defineProps(["content"]);
   }
 
   .link {
-    color: #507ed1;
-
-    &:hover {
-      text-decoration: underline;
-    }
+    color: #1b65ff;
+    font-weight: bold;
+    text-decoration: underline;
   }
 
   audio {

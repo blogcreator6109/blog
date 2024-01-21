@@ -22,5 +22,3 @@
 <script setup>
 const { text } = defineProps(["text"]);
 </script>
-
-<style lang="scss" scoped></style>
