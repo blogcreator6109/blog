@@ -2,9 +2,12 @@
   <div class="site-background">
     <picture class="main-bg">
       <!-- https://cafe.naver.com/steamindiegame/4134639 -->
-      <source media="(min-width: 768px)" srcset="/images/desktop-bg.webp" />
+      <source
+        media="(min-width: 768px)"
+        srcset="@/assets/images/desktop-bg.webp"
+      />
       <!-- https://cafe.naver.com/steamindiegame/13427559 -->
-      <img src="/images/mobile-bg.webp" alt="Responsive image" />
+      <img src="@/assets/images/mobile-bg.webp" alt="Responsive image" />
     </picture>
     <FallingSnow />
     <WindowList>
