@@ -1,10 +1,10 @@
 <template>
   <div class="blog-diary-header">
     <button class="btn calendar" @click="calHandler">
-      <span class="material-symbols-outlined"> calendar_month </span>
+      <img src="@/assets/images/calendar.svg" alt="calendar" />
     </button>
     <button class="btn list" @click="listHandler">
-      <span class="material-symbols-outlined"> format_list_bulleted </span>
+      <img src="@/assets/images/list.svg" alt="list" />
     </button>
   </div>
 </template>
@@ -50,8 +50,9 @@ const listHandler = function () {
       transition: all 0.3s;
     }
 
-    span {
-      font-size: 2.4rem;
+    img {
+      filter: invert(1);
+      height: 2rem;
     }
   }
 }

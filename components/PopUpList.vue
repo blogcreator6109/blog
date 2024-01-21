@@ -4,7 +4,7 @@
       <template v-for="d of data" :key="d.title">
         <a class="item" v-show="d.isActive" :href="d.href" :target="d.target">
           <button class="close-btn" @click.stop.prevent="d.isActive = false">
-            <span class="material-symbols-outlined"> close </span>
+            <img src="@/assets/images/close.svg" alt="close" />
           </button>
           <div class="main-image">
             <img :src="d.imgSrc" alt="main-image" />
@@ -20,7 +20,7 @@
     </TransitionGroup>
     <div class="ad-popup" :class="{ active: adActive, hidden: !adActive }">
       <button class="close-btn" @click.stop.prevent="adActive = false">
-        <span class="material-symbols-outlined"> close </span>
+        <img src="@/assets/images/close.svg" alt="close" />
       </button>
       <GoogleAdsense type="0" />
     </div>
@@ -136,8 +136,9 @@ setTimeout(() => {
       background-color: rgba(#333, 0.8);
       border: 1px solid rgb(120, 120, 120);
       z-index: 40;
-      span {
-        font-size: 1.4rem;
+
+      img {
+        height: 50%;
       }
     }
 
@@ -191,8 +192,9 @@ setTimeout(() => {
       border-radius: 50%;
       background-color: rgba(#333, 0.8);
       border: 1px solid rgb(120, 120, 120);
-      span {
-        font-size: 1.4rem;
+
+      img {
+        height: 50%;
       }
     }
 
@@ -252,8 +254,8 @@ setTimeout(() => {
       border-radius: 50%;
       background-color: rgba(#333, 0.8);
       border: 1px solid rgb(120, 120, 120);
-      span {
-        font-size: 1.4rem;
+      img {
+        height: 50%;
       }
     }
   }

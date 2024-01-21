@@ -2,7 +2,7 @@
   <main class="guestbook-msg-list">
     <section class="msgs-of-date" v-for="m of messages">
       <h3 class="date">
-        <span class="material-symbols-outlined"> calendar_month </span>
+        <img src="@/assets/images/calendar.svg" alt="calendar" />
         {{ m.date }}
       </h3>
       <article
@@ -29,7 +29,7 @@
               v-show="store.isAuthenticated"
               @click="$emit('remove', msg.id)"
             >
-              <span class="material-symbols-outlined"> delete </span>
+              <img src="@/assets/images/delete.svg" alt="delete" />
             </button>
             <div class="time">{{ msg.time }}</div>
           </div>
@@ -150,21 +150,22 @@ onUpdated(() => {
       margin-top: 0;
     }
     .date {
-      [class*="material-symbols"] {
-        font-size: 1.2em;
-        margin-right: 0.4rem;
-      }
       color: #ccc;
       font-size: 1.3rem;
       background-color: #3a3a3a;
       width: fit-content;
       margin: 0 auto;
       padding: 0.6rem 1.3rem;
-      line-height: 0;
       display: flex;
       align-items: center;
-
       border-radius: 4rem;
+
+      img {
+        height: 1.2rem;
+        margin-right: 0.4rem;
+        filter: invert(1);
+        margin-bottom: 0.3rem;
+      }
     }
 
     .msg {
@@ -277,8 +278,8 @@ onUpdated(() => {
             align-items: center;
             color: #999;
 
-            span {
-              font-size: 1.2em;
+            img {
+              height: 1.2rem;
               margin: 0.5rem;
             }
           }

@@ -36,20 +36,14 @@
           </div>
         </div>
         <div class="label">
-          <img
-            src="@/assets/images/windows/post/article/calendar.svg"
-            alt="calendar"
-          />
+          <img src="@/assets/images/calendar.svg" alt="calendar" />
           <span>Created</span>
         </div>
         <div class="value date">
           {{ useDateFormat(post.created, "YYYY-MM-DD A HH:mm") }}
         </div>
         <div class="label">
-          <img
-            src="@/assets/images/windows/post/article/calendar.svg"
-            alt="calendar"
-          />
+          <img src="@/assets/images/calendar.svg" alt="calendar" />
           <span>Updated</span>
         </div>
         <div class="value date">

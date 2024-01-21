@@ -1,5 +1,9 @@
 <template>
-  <button :class="{ active: dockInfo.active }" @click="toggleDock">
+  <button
+    :class="{ active: dockInfo.active }"
+    @click="toggleDock"
+    aria-label="mobile-dock-btn"
+  >
     <div></div>
     <div></div>
     <div></div>

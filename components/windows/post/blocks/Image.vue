@@ -1,5 +1,5 @@
 <template>
-  <img ref="img" class="image" :src="src" :alt="alt" decoding="async" />
+  <img ref="img" class="image" :src="src" :alt="alt ? alt : 'image'" />
 
   <div class="img-caption">{{ alt }}</div>
   <Loading v-show="loading" />

@@ -1,6 +1,6 @@
 <template>
   <div class="callout" :class="theme">
-    <img :src="`/images/${theme}.svg`" />
+    <img :src="`/images/${theme}.svg`" :alt="theme" />
     <pre>
       <Text :text="text" />
     </pre>
