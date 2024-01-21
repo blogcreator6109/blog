@@ -66,6 +66,12 @@ export default defineNuxtConfig({
           href: "/favicon.ico",
         },
       ],
+      meta: [
+        {
+          name: "naver-site-verification",
+          content: "0a206cd8c8459d557904dab8b1a699db97b2aa45",
+        },
+      ],
 
       script: [
         {
