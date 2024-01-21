@@ -27,7 +27,7 @@ useHead({
     {
       hid: "og:image",
       property: "og:image",
-      content: "/logo.svg",
+      content: "/images/logo.png",
     },
     {
       hid: "og:url",
@@ -57,7 +57,7 @@ useHead({
     {
       hid: "twitter:image",
       name: "twitter:image",
-      content: "/logo.svg",
+      content: "/images/logo.png",
     },
     {
       hid: "twitter:card",
