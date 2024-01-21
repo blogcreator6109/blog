@@ -74,7 +74,7 @@ $transform-duration: 0.3s;
   .text {
     position: absolute;
     font-size: 1.3rem;
-    font-weight: bold;
+    font-weight: 700;
     left: 0;
     opacity: 0;
     transition: all $transform-duration;

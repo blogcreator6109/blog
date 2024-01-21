@@ -142,7 +142,7 @@ const buttonClass = (item) => {
       &.depth-1 {
         margin-top: 2rem;
         font-size: 1.5rem;
-        font-weight: bold;
+        font-weight: 700;
         color: rgb(68, 123, 142);
       }
       &.depth-2 {
@@ -187,7 +187,7 @@ const buttonClass = (item) => {
       .header {
         .title {
           font-size: 3rem;
-          font-weight: bold;
+          font-weight: 700;
           line-height: 1.4;
           text-align: center;
           margin-bottom: 1rem;

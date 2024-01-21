@@ -1,9 +1,23 @@
-html,
-body {
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: normal;
+  src: local("NotoSansKR"), local("NotoSansKR-Regular"),
+    url("@/assets/fonts/NotoSansKR-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "NotoSansKR";
+  font-weight: bold;
+  src: local("NotoSansKR"), local("NotoSansKR-Bold"),
+    url("@/assets/fonts/NotoSansKR-Bold.ttf") format("truetype");
+}
+
+html {
   font-size: 10px;
+  font-family: "NotoSansKR", sans-serif;
 }
 
 input,
 textarea,
 button {
+  font-family: "NotoSansKR", sans-serif;
 }

@@ -124,7 +124,7 @@ const backToCategory = () => {
     .title {
       margin-top: 4rem;
       font-size: 4rem;
-      font-weight: bold;
+      font-weight: 700;
       color: #222;
       line-height: 1.4;
     }
@@ -155,7 +155,7 @@ const backToCategory = () => {
         width: fit-content;
 
         &.cate {
-          font-weight: bold;
+          font-weight: 700;
           &:hover {
             filter: invert(1);
           }
@@ -196,7 +196,7 @@ const backToCategory = () => {
       &-title {
         font-size: 2rem;
         margin-top: 5rem;
-        font-weight: bold;
+        font-weight: 700;
       }
 
       .prev,

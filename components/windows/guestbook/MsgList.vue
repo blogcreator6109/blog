@@ -248,7 +248,7 @@ onUpdated(() => {
         .name {
           display: none;
           margin-bottom: 1rem;
-          font-weight: bold;
+          font-weight: 700;
           color: #999;
         }
 

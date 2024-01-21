@@ -163,7 +163,7 @@ setTimeout(() => {
     background-color: rgba(#333, 0.8);
     backdrop-filter: blur(8px);
     border-radius: 2rem;
-    padding: 1.2rem 2rem 0.6rem 2rem;
+    padding: 1.2rem 2rem 1rem 2rem;
     box-sizing: border-box;
     color: #ddd;
 
@@ -212,7 +212,7 @@ setTimeout(() => {
     .title {
       grid-row: 1;
       font-size: 1.1em;
-      font-weight: bold;
+      font-weight: 700;
     }
     .content {
       line-height: 1.4;

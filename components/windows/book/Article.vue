@@ -36,7 +36,7 @@ onMounted(() => {
 
   strong {
     color: black;
-    font-weight: bold;
+    font-weight: 700;
   }
 
   em {
@@ -81,14 +81,14 @@ onMounted(() => {
     padding: 0.25rem 0.7rem;
     margin: 0;
     font-size: 0.95em;
-    font-weight: bold;
+    font-weight: 700;
     background-color: rgba(27, 31, 35, 0.05);
     border-radius: 3px;
   }
 
   h2 {
     font-size: 1.9em;
-    font-weight: bold;
+    font-weight: 700;
     margin-top: 3rem;
     padding-top: 3rem;
     margin-bottom: 1rem;
@@ -96,7 +96,7 @@ onMounted(() => {
 
   h3 {
     font-size: 1.4em;
-    font-weight: bold;
+    font-weight: 700;
     margin-top: 7rem;
     margin-bottom: 2rem;
     padding-left: 2.5rem;

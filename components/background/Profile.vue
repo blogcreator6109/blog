@@ -166,7 +166,7 @@ $bg-duration: 0.5s;
       h2 {
         margin-top: 2rem;
         font-size: 2.5rem;
-        font-weight: bold;
+        font-weight: 700;
       }
       p {
         margin-top: 2rem;
@@ -298,7 +298,7 @@ $bg-duration: 0.5s;
           }
 
           h3 {
-            font-weight: bold;
+            font-weight: 700;
             position: relative;
           }
           p {

@@ -83,7 +83,7 @@ onMounted(() => {
       padding: 0 1rem;
       margin-left: -0.5rem;
       height: 100%;
-      font-weight: bold;
+      font-weight: 700;
       &:active {
         background-color: #555;
       }
@@ -91,7 +91,7 @@ onMounted(() => {
   }
 
   .right {
-    font-weight: bold;
+    font-weight: 700;
     display: flex;
     align-items: center;
     margin-left: auto;
