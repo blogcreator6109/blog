@@ -649,7 +649,6 @@ onBeforeUnmount(() => {
 
     .music-item {
       width: 100%;
-      height: 8rem;
       padding: 1rem 2rem;
       box-sizing: border-box;
       display: flex;
@@ -684,8 +683,10 @@ onBeforeUnmount(() => {
 
       .thumbnail {
         height: 100%;
+        display: flex;
+        align-items: center;
         img {
-          height: 100%;
+          height: 8rem;
           border-radius: 1rem;
         }
       }
