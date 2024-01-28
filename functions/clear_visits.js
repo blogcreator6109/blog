@@ -1,4 +1,3 @@
-// netlify/functions/clearVisits.js
 const admin = require("firebase-admin");
 
 // Firebase Admin 초기화

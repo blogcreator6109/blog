@@ -27,6 +27,7 @@
     "octokit": "^2.0.14",
     "open-graph-scraper": "^5.2.2",
     "pinia": "^2.0.35",
+    "sharp": "^0.33.2",
     "sitemap": "^7.1.1",
     "twitter-api-v2": "^1.14.1"
   }
