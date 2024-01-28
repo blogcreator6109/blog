@@ -71,6 +71,10 @@ export default defineNuxtConfig({
           name: "naver-site-verification",
           content: "0a206cd8c8459d557904dab8b1a699db97b2aa45",
         },
+        {
+          name: "google-site-verification",
+          content: "u-DbnFBeB6xIAu-je_UUdxZqhT4NwXitusf8l6gN2Jk",
+        },
       ],
 
       script: [
