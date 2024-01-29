@@ -1,5 +1,5 @@
 <template>
-  <MainLoading />
+  <!-- <MainLoading /> -->
 
   <Header />
   <MainPage />

@@ -57,10 +57,11 @@ onMounted(() => {
     width: 100%;
     height: 100%;
     background-color: #333;
+    opacity: 0.3;
   }
 
   .logo {
-    width: 20%;
+    width: 10%;
     img {
       width: 100%;
       filter: invert(1);
@@ -70,7 +71,7 @@ onMounted(() => {
   .progress {
     position: relative;
     margin-top: 8vw;
-    height: 0.7rem;
+    height: 0.5rem;
     width: 30%;
     background-color: #fff;
     border-radius: 2rem;
