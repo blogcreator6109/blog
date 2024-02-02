@@ -49,7 +49,7 @@ const diaryList = computed(() => {
     let date = dayjs(item.created);
 
     const year = date.year();
-    const month = date.month();
+    const month = date.month() + 1;
 
     const group = result.find((group) => group.date === `${year}-${month}`);
     if (group) {
