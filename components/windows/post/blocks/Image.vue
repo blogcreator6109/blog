@@ -1,7 +1,13 @@
 <template>
-  <img ref="img" class="image" :src="src" :alt="alt ? alt : 'image'" />
+  <img
+    v-show="!loading"
+    ref="img"
+    class="image"
+    :src="src"
+    :alt="alt ? alt : 'image'"
+  />
 
-  <div class="img-caption">{{ alt }}</div>
+  <div v-show="!loading" class="img-caption">{{ alt }}</div>
   <Loading v-show="loading" />
 </template>
 
